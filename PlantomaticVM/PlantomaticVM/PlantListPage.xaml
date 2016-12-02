@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+  <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               xmlns:plants="clr-namespace:PlantMan.Plant;assembly=Plant"
+               xmlns:tools="clr-namespace:PlantomaticVM"
+               xmlns:theplantlist="clr-namespace:PlantomaticVM;assembly=PlantomaticVM"
+               x:Class="PlantomaticVM.PlantListPage"
+               Title="Plants" 
+               SizeChanged="OnPageSizeChanged"
+               BindingContext="{Binding Source={x:Static Application.Current}, Path=AppData}">
+    
+  <ContentPage.Padding> <OnPlatform x:TypeArguments="Thickness" iOS="0, 20, 0, 0" />  </ContentPage.Padding>
+
+    <ContentPage.Resources>
+      <ResourceDictionary>
+        <tools:ListToBoolConverter   x:Key="listToBoolConverter" /> 
+        <tools:BoolToStringConverter x:Key="AddRemoveCartText" 
+                                     TrueText="Remove from cart"
+                                     FalseText="Add to cart"/>
+        <tools:BoolToStringConverter x:Key="ShowListText" 
+                                     TrueText="Show matching plants"
+                                     FalseText="Show shopping list"/>
+      </ResourceDictionary> 
+    </ContentPage.Resources>
+    
+    <Grid x:Name="mainGrid">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="0" /> <!--Hiding this for now-->
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="*" />
+        <RowDefinition Height="*" />
+      </Grid.RowDefinitions>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="0" />
+      </Grid.ColumnDefinitions>
+
+    <!--TODO Am I going to have a title here? if not, delete this and update the page layout code
+    <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding MasterViewModel.PlantList.State, StringFormat='Native Plants of {0}'}"
+               FontSize="Large"
+               HorizontalTextAlignment="Center" />
+    -->
+   
+    <StackLayout Grid.Row="1" Grid.Column="0">
+      <Label Text="{Binding MasterViewModel.PlantList.MyPlants.Count, StringFormat = '{0} plants matching your conditions'}"
+             FontAttributes="Bold"
+             TextColor="Gray"/>
+      <Button x:Name="ToggleViewButton" Text="{Binding MasterViewModel.ShowingShoppingList, Converter={StaticResource ShowListText}}" BorderWidth="1" Clicked="OnToggleViewButtonClicked">
+        <Button.BackgroundColor>
+          <OnPlatform x:TypeArguments="Color" Android="#404040" />
+        </Button.BackgroundColor>
+        <Button.BorderColor>
+          <OnPlatform x:TypeArguments="Color" Android="White" WinPhone="Black" />
+        </Button.BorderColor>
+      </Button>
+    </StackLayout>
+    
+    <StackLayout Grid.Row="2" Grid.Column="0">
+      <Label Text="No matching plants" IsVisible="{Binding Source={x:Reference listView}, Path=ItemsSource, Converter={StaticResource listToBoolConverter}}"/>
+      
+      <!--The list of plants-->
+      <ListView x:Name="listView" Grid.Row="2" Grid.Column="0" ItemsSource="{Binding MasterViewModel.PlantList.MyPlants}" ItemTapped="OnPlantSelected">
+         <ListView.ItemTemplate>
+            <DataTemplate>
+              <ViewCell>
+                <!--Context menu-->
+                <ViewCell.ContextActions>
+                  <MenuItem Text="{Binding InCart, Converter={StaticResource AddRemoveCartText}}" Command="{Binding ToggleCartStatus}" /> <!--Text="{Binding InCartText}"-->
+                </ViewCell.ContextActions>                                                        
+              
+                <StackLayout BackgroundColor="#eee"
+                             Orientation="Vertical"
+                             Padding="3">
+                    <Label Text="{Binding Name}"
+                           TextColor="Green" />
+                </StackLayout>
+              </ViewCell>
+            </DataTemplate>
+          </ListView.ItemTemplate>
+        </ListView>
+      </StackLayout>
+      
+      <!--The detail that shows when a plant is selected-->
+      <StackLayout x:Name="detailLayout" 
+                   Grid.Row="3" Grid.Column="0" Padding="5" 
+                   BindingContext="{Binding Source={x:Reference listView}, Path=SelectedItem}" 
+                   HorizontalOptions="Start" VerticalOptions="Start">
+        <StackLayout Orientation="Vertical"
+                     Spacing="5">
+          <StackLayout.Resources>
+            <ResourceDictionary>
+              <Style TargetType="Label">
+                <Setter Property="Font" Value="Micro" />
+                <Setter Property="TextColor" Value="Black" />
+              </Style>
+            </ResourceDictionary>
+          </StackLayout.Resources>
+          
+          <!--At this point, the context of the binding is the selected item. So, all the labels can just point to specific fields. 
+              But, I can't figure out a way to show items that are from different contexts. -->
+          <Label x:Name="NameLabel" Text="{Binding Name}"/>
+          <Label Text="{Binding ScientificName}" FontAttributes="Italic"/>
+          <Label Text="{Binding LowTemp, StringFormat='Minimum Low Temp =  {0}'}" /> 
+          <Label Text="{Binding SunRequirements, StringFormat='Sun Requirements = {0}'}" />
+          <Label x:Name="MoreInfoURLLabel" Text="More info..." TextColor="Blue" IsVisible="false">  <!--invisible by default so it doesn't show until there's a selection-->
+            <Label.GestureRecognizers>
+              <TapGestureRecognizer Tapped="OnMoreInfoTapped"/>
+            </Label.GestureRecognizers>
+          </Label>
+          
+          <Button x:Name="AddToCartButton" Text="{Binding InCart, Converter={StaticResource AddRemoveCartText}}" BorderWidth="1" Command="{Binding ToggleCartStatus}" IsVisible="false">
+            <Button.BackgroundColor>
+              <OnPlatform x:TypeArguments="Color" Android="#404040" />
+            </Button.BackgroundColor>
+            <Button.BorderColor>
+              <OnPlatform x:TypeArguments="Color" Android="White" WinPhone="Black" />
+            </Button.BorderColor>
+          </Button>
+        
+        </StackLayout>
+      </StackLayout>
+
+    </Grid>
+
+</ContentPage>

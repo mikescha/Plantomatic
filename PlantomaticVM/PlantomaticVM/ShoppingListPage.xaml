@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+  <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               xmlns:plants="clr-namespace:PlantMan.Plant;assembly=Plant"
+               xmlns:tools="clr-namespace:PlantomaticVM"
+               x:Class="PlantomaticVM.ShoppingListPage"
+               Title="Shopping List"
+               BindingContext="{Binding Source={x:Static Application.Current}, Path=AppData}">
+
+    <ContentPage.Resources>
+      <ResourceDictionary>
+        <tools:ListToBoolConverter   x:Key="listToBoolConverter" />
+        <tools:BoolToStringConverter x:Key="AddRemoveCartText"
+                                     TrueText="Remove from cart"
+                                     FalseText="Add to cart"/>
+        <tools:BoolToStringConverter x:Key="ShowListText"
+                                     TrueText="Show matching plants"
+                                     FalseText="Show shopping list"/>
+      </ResourceDictionary>
+    </ContentPage.Resources>
+    
+    <!--TODO Put in the right padding to make this look good on all devices -->
+    
+    <!--Grid on this page has two rows and two columns-->
+    <Grid x:Name="mainGrid">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto" /> <!--For the count label-->
+        <RowDefinition Height="*" />    <!--For the list-->
+      </Grid.RowDefinitions>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*" />  <!--For the summary label-->
+        <ColumnDefinition Width="*" />  <!--For the summary-->
+      </Grid.ColumnDefinitions>
+
+      <!--Heading and Clear button-->
+      <StackLayout Grid.Row="0" Grid.Column="0">
+        <Label x:Name="countLabel"
+               FontAttributes="Bold" TextColor="Gray"/>
+     
+        <Button Text="Clear list" BorderWidth="1" Command="{Binding MasterViewModel.PlantList.ClearCart}">  
+          <Button.BackgroundColor>
+            <OnPlatform x:TypeArguments="Color" Android="#404040" />
+          </Button.BackgroundColor>
+          <Button.BorderColor>
+            <OnPlatform x:TypeArguments="Color" Android="White" WinPhone="Black" />
+          </Button.BorderColor>
+        </Button> 
+      
+      </StackLayout>
+      
+      <!--List of plants from shopping list. In a StackLayout just because I am not sure what other content I'll end up putting on the page-->
+      <StackLayout Grid.Row="1" Grid.Column="0">
+        <ListView x:Name="shoppingListView">
+          <ListView.ItemTemplate>
+            <DataTemplate>
+              <ViewCell>
+                <!--Context menu-->
+                <ViewCell.ContextActions>
+                  <MenuItem Text="{Binding InCart, Converter={StaticResource AddRemoveCartText}}" Command="{Binding ToggleCartStatus}" />
+                </ViewCell.ContextActions>
+                <StackLayout BackgroundColor="#eee"
+                             Orientation="Vertical"
+                             Padding="3">
+                    <Label Text="{Binding Name}"
+                           TextColor="Green" />
+                </StackLayout>            
+              </ViewCell>
+            </DataTemplate>
+          </ListView.ItemTemplate>
+        </ListView>
+      </StackLayout>
+
+      <!-- Summary data -->
+      <StackLayout Grid.Row="1" Grid.Column="1">
+        <Label Text="Months that you have flowers"
+             FontAttributes="Bold" TextColor="Gray"/>
+        <ListView x:Name="floweringMonthView" />
+        
+        <Label Text="Plants by sun requirements"
+             FontAttributes="Bold" TextColor="Gray"/>
+        <ListView x:Name="sunRequirementsView" />
+      </StackLayout>
+    
+    </Grid>
+  
+  </ContentPage>
