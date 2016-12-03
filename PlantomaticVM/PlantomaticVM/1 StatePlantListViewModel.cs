@@ -27,6 +27,7 @@ namespace PlantomaticVM
             {
                 PlantList.AllPlants.Add(new MyPlant(p));
             }
+            //test comment
 
             //Set up defaults
             PlantList.TargetPlant.LowTemp = 32;
