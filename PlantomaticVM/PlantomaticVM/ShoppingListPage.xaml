@@ -5,8 +5,9 @@
                xmlns:tools="clr-namespace:PlantomaticVM"
                x:Class="PlantomaticVM.ShoppingListPage"
                Title="Shopping List"
+               SizeChanged="OnPageSizeChanged"
                BindingContext="{Binding Source={x:Static Application.Current}, Path=AppData}">
-
+    
     <ContentPage.Resources>
       <ResourceDictionary>
         <tools:ListToBoolConverter   x:Key="listToBoolConverter" />
@@ -34,9 +35,11 @@
 
       <!--Heading and Clear button-->
       <StackLayout Grid.Row="0" Grid.Column="0">
-        <Label x:Name="countLabel"
-               FontAttributes="Bold" TextColor="Gray"/>
-     
+        <Label x:Name="countLabel"       
+               Text="{Binding MasterViewModel.PlantList.ShoppingListPlants.Count, StringFormat = '{0} plants in your list'}"
+               FontAttributes="Bold" 
+               TextColor="Gray"/>     
+        
         <Button Text="Clear list" BorderWidth="1" Command="{Binding MasterViewModel.PlantList.ClearCart}">  
           <Button.BackgroundColor>
             <OnPlatform x:TypeArguments="Color" Android="#404040" />
@@ -48,15 +51,23 @@
       
       </StackLayout>
       
-      <!--List of plants from shopping list. In a StackLayout just because I am not sure what other content I'll end up putting on the page-->
+      <!--List of plants from shopping list. In a StackLayout just because I am not sure what other content I'll end up putting on the page
+      ItemsSource="{Binding MasterViewModel.PlantList.ShoppingListPlants}"
+      -->
       <StackLayout Grid.Row="1" Grid.Column="0">
-        <ListView x:Name="shoppingListView">
+        <ListView x:Name="shoppingListView" SeparatorVisibility="None" >
           <ListView.ItemTemplate>
             <DataTemplate>
               <ViewCell>
                 <!--Context menu-->
                 <ViewCell.ContextActions>
-                  <MenuItem Text="{Binding InCart, Converter={StaticResource AddRemoveCartText}}" Command="{Binding ToggleCartStatus}" />
+
+                  <MenuItem Text="{Binding InCart, Converter={StaticResource AddRemoveCartText}}"  Clicked="OnContextMenuClicked"/>
+
+                  <!-- old 
+                  <MenuItem Text="{Binding InCart, Converter={StaticResource AddRemoveCartText}}" Command="{Binding ToggleCartStatus}" /> 
+                  -->
+                  
                 </ViewCell.ContextActions>
                 <StackLayout BackgroundColor="#eee"
                              Orientation="Vertical"
@@ -74,11 +85,11 @@
       <StackLayout Grid.Row="1" Grid.Column="1">
         <Label Text="Months that you have flowers"
              FontAttributes="Bold" TextColor="Gray"/>
-        <ListView x:Name="floweringMonthView" />
+        <ListView x:Name="floweringMonthView" SeparatorVisibility="None" />
         
         <Label Text="Plants by sun requirements"
              FontAttributes="Bold" TextColor="Gray"/>
-        <ListView x:Name="sunRequirementsView" />
+        <ListView x:Name="sunRequirementsView" SeparatorVisibility="None" />
       </StackLayout>
     
     </Grid>

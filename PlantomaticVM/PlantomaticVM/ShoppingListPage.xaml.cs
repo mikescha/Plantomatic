@@ -25,11 +25,24 @@ namespace PlantomaticVM
             //, {"All", SunRequirements.AllSunTypes }
         };
 
-
-
         public ShoppingListPage()
         {
             InitializeComponent();
+        }
+
+        public void OnContextMenuClicked(object sender, EventArgs args)
+        {
+            MenuItem m = (MenuItem)sender;
+            MyPlant p = (MyPlant) m.BindingContext;
+            AppData appData = (AppData)BindingContext;
+            appData.MasterViewModel.PlantList.ToggleStatus(p);
+
+        }
+
+        //TODO What happens when page size changes
+        void OnPageSizeChanged(object sender, EventArgs args)
+        {
+
         }
 
         //TODO Move this into a class related to MyPlant and make it listen for changes to the shopping cart, so it can update automatically
@@ -39,8 +52,6 @@ namespace PlantomaticVM
             
             // Get AppData object (set to BindingContext in XAML file). 
             AppData appData = (AppData)BindingContext;
-            countLabel.Text = appData.MasterViewModel.PlantList.ShoppingListPlants.Count.ToString() + " plants in list";
-            shoppingListView.ItemsSource = appData.MasterViewModel.PlantList.ShoppingListPlants;
 
             //Get the count of plants that flower in each month
             int maxMonths = 12;

@@ -18,11 +18,6 @@ using Xamarin.Forms;
  * 5) add grouping to the list of plants https://mallibone.com/post/xamarin.forms-grouped-listview
  * 6) Add multiple selection to the list of flowering months http://thatcsharpguy.com/post/multiselect-listview-mvvm-en/
  * 7) why, when the app is resumed (alt tab away, then back), does the list not redraw?
- * 
- * Should TargetPlant be a separate object? If so, then we need to
- * 1) Move the data types like FloweringMonth and the criteria out into a new class or be public
- * 2) If we move that out, then make Plant consume those data types instead of including them
- * 3) Make a new thing called MyCriteria that also consumes those data types
  */
 namespace PlantomaticVM
 {

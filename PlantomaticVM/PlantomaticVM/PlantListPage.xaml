@@ -59,7 +59,7 @@
       <Label Text="No matching plants" IsVisible="{Binding Source={x:Reference listView}, Path=ItemsSource, Converter={StaticResource listToBoolConverter}}"/>
       
       <!--The list of plants-->
-      <ListView x:Name="listView" Grid.Row="2" Grid.Column="0" ItemsSource="{Binding MasterViewModel.PlantList.MyPlants}" ItemTapped="OnPlantSelected">
+      <ListView x:Name="listView" Grid.Row="2" Grid.Column="0" ItemsSource="{Binding MasterViewModel.PlantList.MyPlants}" ItemTapped="OnPlantSelected" SeparatorVisibility="None">
          <ListView.ItemTemplate>
             <DataTemplate>
               <ViewCell>

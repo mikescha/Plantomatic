@@ -40,6 +40,7 @@
     </Compile>
     <Compile Include="App.cs" />
     <Compile Include="AppData.cs" />
+    <Compile Include="4 Criteria.cs" />
     <Compile Include="MoreInfoPage.xaml.cs">
       <DependentUpon>MoreInfoPage.xaml</DependentUpon>
     </Compile>

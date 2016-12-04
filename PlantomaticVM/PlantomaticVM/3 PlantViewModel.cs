@@ -26,7 +26,7 @@ namespace PlantomaticVM
                
         public MyPlant()
         {
-            //is there anything i should do here?
+            //TODO is there anything i should do here?
             
         }
 
@@ -43,8 +43,7 @@ namespace PlantomaticVM
             moreInfoURL = newPlant.URL;
             inCart = false;
         }
-
-        
+ 
         // The state of whether a plant is in the shopping cart or not
         public bool InCart
         {
@@ -165,6 +164,12 @@ namespace PlantomaticVM
                 }
                 return _toggleCartStatus;
             }
+        }
+
+        public bool ToggleListStatus()
+        {
+            InCart = !InCart;
+            return InCart;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

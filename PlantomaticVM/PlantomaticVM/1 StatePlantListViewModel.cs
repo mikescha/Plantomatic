@@ -30,10 +30,10 @@ namespace PlantomaticVM
             //test comment
 
             //Set up defaults
-            PlantList.TargetPlant.LowTemp = 32;
-            PlantList.TargetPlant.FloweringMonths = FloweringMonths.AllMonths;
-            PlantList.TargetPlant.SunRequirements = SunRequirements.AllSunTypes;
-            PlantList.TargetPlant.AttractsBirds = YesNoMaybe.Unassigned;
+            //PlantList.TargetPlant.LowTemp = 32;
+            //PlantList.TargetPlant.FloweringMonths = FloweringMonths.AllMonths;
+            //PlantList.TargetPlant.SunRequirements = SunRequirements.AllSunTypes;
+            //PlantList.TargetPlant.AttractsBirds = YesNoMaybe.Unassigned;
             
             //Generate MyPlants
             FilterPlantList();

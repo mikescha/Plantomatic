@@ -14,21 +14,7 @@ namespace PlantomaticVM
         List<MyPlant> allPlants = new List<MyPlant>(); // All the plants in the database
         ObservableCollection<MyPlant> myPlants = new ObservableCollection<MyPlant>(); // The subset of plants that match the current target
         ObservableCollection<MyPlant> shoppingListPlants = new ObservableCollection<MyPlant>(); // The subset of plants that are in the list
-        MyPlant targetPlant = new MyPlant(); // The criteria that we're trying to match
-
-        
-        public string State
-        {
-            set
-            {
-                if (state != value)
-                {
-                    state = value;
-                    OnPropertyChanged("State");
-                }
-            }
-            get { return state; }
-        }
+        MyCriteria targetPlant = new MyCriteria(); // The criteria that we're trying to match
         
         public ObservableCollection<MyPlant> MyPlants
         {
@@ -41,6 +27,14 @@ namespace PlantomaticVM
                 }
             }
             get { return myPlants; }
+        }
+        
+        //Attempt to toggle the cart status of the item passed in
+        public bool ToggleStatus(MyPlant p)
+        {
+            bool value = allPlants.Find(x => x.Name == p.Name).ToggleListStatus();
+            OnPropertyChanged("ShoppingListPlants");
+            return value;
         }
 
         // When the UI needs the list of plants in the shopping list, we do a LINQ query to get the right set
@@ -56,9 +50,10 @@ namespace PlantomaticVM
             }
             get
             {
-                ObservableCollection<MyPlant> list = new ObservableCollection<MyPlant>(myPlants.Where(i => i.InCart));
+                ObservableCollection<MyPlant> list = new ObservableCollection<MyPlant>(allPlants.Where(i => i.InCart));
                 OnPropertyChanged("ShoppingListPlants");
-                return list;
+                shoppingListPlants = list;
+                return shoppingListPlants;
             }
         }
 
@@ -76,8 +71,8 @@ namespace PlantomaticVM
         }
 
         // This holds all the criteria used in filtering
-        // TODO how do i initialize this?
-        public MyPlant TargetPlant
+        // TODO IS THIS NECESSARY?
+        public MyCriteria TargetPlant
         {
             set
             {
@@ -89,7 +84,20 @@ namespace PlantomaticVM
             }
             get { return targetPlant; }
         }
-       
+
+        public string State
+        {
+            set
+            {
+                if (state != value)
+                {
+                    state = value;
+                    OnPropertyChanged("State");
+                }
+            }
+            get { return state; }
+        }
+
         private Command _clearCart;
         public ICommand ClearCart
         {
