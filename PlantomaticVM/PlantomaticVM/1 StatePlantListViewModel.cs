@@ -27,14 +27,7 @@ namespace PlantomaticVM
             {
                 PlantList.AllPlants.Add(new MyPlant(p));
             }
-            //test comment
 
-            //Set up defaults
-            //PlantList.TargetPlant.LowTemp = 32;
-            //PlantList.TargetPlant.FloweringMonths = FloweringMonths.AllMonths;
-            //PlantList.TargetPlant.SunRequirements = SunRequirements.AllSunTypes;
-            //PlantList.TargetPlant.AttractsBirds = YesNoMaybe.Unassigned;
-            
             //Generate MyPlants
             FilterPlantList();
 
@@ -68,7 +61,7 @@ namespace PlantomaticVM
 
         }
 
-        //Filter the list
+        //Filter the list to show only plants that match Target, which is an element of PlantList
         public void FilterPlantList()
         {
             //Since we can't cast a List to an ObservableCollection, make a temp list to operate on and then copy each item
@@ -86,11 +79,7 @@ namespace PlantomaticVM
                 .ToList();
 
             //Clear the list if there is already something in it
-            PlantList.MyPlants = new ObservableCollection<MyPlant>();
-
-            foreach (MyPlant p in list)
-                PlantList.MyPlants.Add(p);
-
+            PlantList.MyPlants = new ObservableCollection<MyPlant>(list);
 
         }
 

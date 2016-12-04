@@ -52,10 +52,10 @@
       </StackLayout>
       
       <!--List of plants from shopping list. In a StackLayout just because I am not sure what other content I'll end up putting on the page
-      ItemsSource="{Binding MasterViewModel.PlantList.ShoppingListPlants}"
       -->
       <StackLayout Grid.Row="1" Grid.Column="0">
-        <ListView x:Name="shoppingListView" SeparatorVisibility="None" >
+            <ListView x:Name="shoppingListView" SeparatorVisibility="None"
+                      ItemsSource="{Binding MasterViewModel.PlantList.ShoppingListPlants}">
           <ListView.ItemTemplate>
             <DataTemplate>
               <ViewCell>

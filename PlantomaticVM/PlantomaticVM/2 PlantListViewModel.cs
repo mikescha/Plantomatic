@@ -33,10 +33,17 @@ namespace PlantomaticVM
         public bool ToggleStatus(MyPlant p)
         {
             bool value = allPlants.Find(x => x.Name == p.Name).ToggleListStatus();
-            OnPropertyChanged("ShoppingListPlants");
+            RefreshShoppingListPlants();
             return value;
         }
 
+        public void RefreshShoppingListPlants()
+        {
+            ObservableCollection<MyPlant> list = new ObservableCollection<MyPlant>(allPlants.Where(i => i.InCart));
+            shoppingListPlants = list;
+            OnPropertyChanged("ShoppingListPlants");
+
+        }
         // When the UI needs the list of plants in the shopping list, we do a LINQ query to get the right set
         public ObservableCollection<MyPlant> ShoppingListPlants
         {
@@ -50,9 +57,6 @@ namespace PlantomaticVM
             }
             get
             {
-                ObservableCollection<MyPlant> list = new ObservableCollection<MyPlant>(allPlants.Where(i => i.InCart));
-                OnPropertyChanged("ShoppingListPlants");
-                shoppingListPlants = list;
                 return shoppingListPlants;
             }
         }
@@ -111,7 +115,7 @@ namespace PlantomaticVM
                         {
                             p.InCart = false;
                         }
-                        OnPropertyChanged("ShoppingListPlants");
+                        RefreshShoppingListPlants();
                     });
                 }
                 return _clearCart;

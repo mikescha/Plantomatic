@@ -38,6 +38,7 @@ namespace PlantomaticVM
                         //TODO this assumes the sci name will be found, which it won't necessarily. Check that it is present before setting it to true.
                         this.AppData.MasterViewModel.PlantList.AllPlants.Find(x => x.ScientificName == sciName).InCart = true;
                     }
+                    this.AppData.MasterViewModel.PlantList.RefreshShoppingListPlants();
                 }
             }//end if Properties
 

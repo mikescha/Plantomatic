@@ -27,7 +27,18 @@ namespace PlantomaticVM
         {
             InitializeComponent();
         }
-        
+
+        //TODO Either figure out how to tell in code if sender is a Button or a Menu, or make a separate function that does that
+        public void OnContextMenuClicked(object sender, EventArgs args)
+        {
+            Button b = (Button)sender;
+            MyPlant p = (MyPlant)b.BindingContext;
+            AppData appData = (AppData)BindingContext;
+            appData.MasterViewModel.PlantList.ToggleStatus(p);
+
+        }
+
+
         void OnPageSizeChanged(object sender, EventArgs args)
         { 
             // Portrait mode. 

@@ -63,9 +63,10 @@
          <ListView.ItemTemplate>
             <DataTemplate>
               <ViewCell>
-                <!--Context menu-->
+                            <!--Context menu    Command="{Binding ToggleCartStatus}"  -->
                 <ViewCell.ContextActions>
-                  <MenuItem Text="{Binding InCart, Converter={StaticResource AddRemoveCartText}}" Command="{Binding ToggleCartStatus}" /> <!--Text="{Binding InCartText}"-->
+                  <MenuItem Text="{Binding InCart, Converter={StaticResource AddRemoveCartText}}" 
+                            Clicked="OnContextMenuClicked"/> 
                 </ViewCell.ContextActions>                                                        
               
                 <StackLayout BackgroundColor="#eee"
@@ -107,8 +108,13 @@
               <TapGestureRecognizer Tapped="OnMoreInfoTapped"/>
             </Label.GestureRecognizers>
           </Label>
-          
-          <Button x:Name="AddToCartButton" Text="{Binding InCart, Converter={StaticResource AddRemoveCartText}}" BorderWidth="1" Command="{Binding ToggleCartStatus}" IsVisible="false">
+
+                <!-- Command="{Binding ToggleCartStatus}"  -->  
+            
+            <Button x:Name="AddToCartButton" Text="{Binding InCart, Converter={StaticResource AddRemoveCartText}}" 
+                    BorderWidth="1"     
+                    Clicked="OnContextMenuClicked"
+                    IsVisible="false">
             <Button.BackgroundColor>
               <OnPlatform x:TypeArguments="Color" Android="#404040" />
             </Button.BackgroundColor>
