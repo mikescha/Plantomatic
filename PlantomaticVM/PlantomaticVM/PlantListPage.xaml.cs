@@ -95,24 +95,23 @@ namespace PlantomaticVM
             }
         }
 
+        //TODO This code allows the ShoppingList to be shown in the filter results browsing page. Not sure if we want to do this or not... if we
+        //don't then remove this and the associated button
         void OnToggleViewButtonClicked(object sender, EventArgs e)
         {            
-            //TODO Is this the way you're supposed to get the current state of the app? Or is it best to do it another way?
             AppData appData = (AppData)BindingContext;
 
             //Switch the source of the listview to be the proper list
             listView.ItemsSource = appData.MasterViewModel.ShowingShoppingList ? appData.MasterViewModel.PlantList.MyPlants : appData.MasterViewModel.PlantList.ShoppingListPlants;
             
-            //toggle the state so we keep track of what we did for the next toggle
+            //Toggle the state so we keep track of what we did for the next toggle
             appData.MasterViewModel.ShowingShoppingList = !appData.MasterViewModel.ShowingShoppingList;
-
         }
 
+        //TODO do we want to do anything here?
         protected override void OnAppearing()
         {
             base.OnAppearing();
-
-            //Anything to do here?
         }
     }
 }
