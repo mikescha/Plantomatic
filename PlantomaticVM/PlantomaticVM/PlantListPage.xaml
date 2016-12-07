@@ -20,7 +20,10 @@
         <tools:BoolToStringConverter x:Key="ShowListText" 
                                      TrueText="Show matching plants"
                                      FalseText="Show shopping list"/>
-      </ResourceDictionary> 
+        <tools:BoolToStringConverter x:Key="ColorIfInList" 
+                                     TrueText="Green"
+                                     FalseText="Black"/>
+        </ResourceDictionary> 
     </ContentPage.Resources>
     
     <Grid x:Name="mainGrid">
@@ -72,8 +75,9 @@
                 <StackLayout BackgroundColor="#eee"
                              Orientation="Vertical"
                              Padding="3">
+                    <!--TODO This changes label color if the plant is in the list. Decide if this is what we want-->
                     <Label Text="{Binding Name}"
-                           TextColor="Green" />
+                           TextColor="{Binding InCart, Converter={StaticResource ColorIfInList}}" /> 
                 </StackLayout>
               </ViewCell>
             </DataTemplate>
