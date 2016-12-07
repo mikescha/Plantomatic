@@ -78,9 +78,8 @@ namespace PlantomaticVM
                 .OrderBy(p => p.ScientificName)
                 .ToList();
 
-            //Clear the list if there is already something in it
+            //MyPlants is the field that stores the matching plants. Here, we take the list and convert it to an ObservableCollection for the UI 
             PlantList.MyPlants = new ObservableCollection<MyPlant>(list);
-
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

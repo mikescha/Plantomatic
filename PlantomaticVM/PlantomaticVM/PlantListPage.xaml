@@ -63,10 +63,10 @@
          <ListView.ItemTemplate>
             <DataTemplate>
               <ViewCell>
-                            <!--Context menu    Command="{Binding ToggleCartStatus}"  -->
+              
                 <ViewCell.ContextActions>
                   <MenuItem Text="{Binding InCart, Converter={StaticResource AddRemoveCartText}}" 
-                            Clicked="OnContextMenuClicked"/> 
+                            Clicked="OnToggleCartMenuClicked"/> 
                 </ViewCell.ContextActions>                                                        
               
                 <StackLayout BackgroundColor="#eee"
@@ -109,11 +109,11 @@
             </Label.GestureRecognizers>
           </Label>
 
-                <!-- Command="{Binding ToggleCartStatus}"  -->  
-            
+            <!-- If I can figure out how to do this as part of the viewmodel with binding, then instead of Clicked I would have 
+                 something like, Command="{Binding ToggleCartStatus}"  -->              
             <Button x:Name="AddToCartButton" Text="{Binding InCart, Converter={StaticResource AddRemoveCartText}}" 
                     BorderWidth="1"     
-                    Clicked="OnContextMenuClicked"
+                    Clicked="OnToggleCartButtonClicked"
                     IsVisible="false">
             <Button.BackgroundColor>
               <OnPlatform x:TypeArguments="Color" Android="#404040" />

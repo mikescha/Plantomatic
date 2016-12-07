@@ -85,11 +85,11 @@
       <StackLayout Grid.Row="1" Grid.Column="1">
         <Label Text="Months that you have flowers"
              FontAttributes="Bold" TextColor="Gray"/>
-        <ListView x:Name="floweringMonthView" SeparatorVisibility="None" />
+        <ListView x:Name="floweringMonthView" SeparatorVisibility="None" ItemsSource="{Binding MasterViewModel.PlantList.MonthSummary}" />
         
         <Label Text="Plants by sun requirements"
              FontAttributes="Bold" TextColor="Gray"/>
-        <ListView x:Name="sunRequirementsView" SeparatorVisibility="None" />
+            <ListView x:Name="sunRequirementsView" SeparatorVisibility="None" ItemsSource="{Binding MasterViewModel.PlantList.SunSummary}" />
       </StackLayout>
     
     </Grid>

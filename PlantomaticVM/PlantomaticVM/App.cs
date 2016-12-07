@@ -35,8 +35,12 @@ namespace PlantomaticVM
                     //rehydrate the list
                     foreach (string sciName in shoppingList)
                     {
-                        //TODO this assumes the sci name will be found, which it won't necessarily. Check that it is present before setting it to true.
-                        this.AppData.MasterViewModel.PlantList.AllPlants.Find(x => x.ScientificName == sciName).InCart = true;
+                        //Check that the plant exists before adding it to the cart. Store this in a variable so we don't do the query twice. The query
+                        //returns a reference to the actual object, not a copy of it, so this works as expected.
+                        MyPlant p = this.AppData.MasterViewModel.PlantList.AllPlants.Find(x => x.ScientificName == sciName);
+
+                        if (p != null)
+                            p.InCart = true;
                     }
                     this.AppData.MasterViewModel.PlantList.RefreshShoppingListPlants();
                 }

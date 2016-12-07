@@ -28,16 +28,24 @@ namespace PlantomaticVM
             InitializeComponent();
         }
 
-        //TODO Either figure out how to tell in code if sender is a Button or a Menu, or make a separate function that does that
-        public void OnContextMenuClicked(object sender, EventArgs args)
+        //TODO For some reason, even though it shows up in the debugger as having a BindingContext, the line, "(MenuItem)sender.BindingContext" fails
+        //to compile. Because of this, even though both a menuitem and a button have a BindingContext, I can't reference it with a single line
+        //of code. So, I have these two methods that do exactly the same thing. Is there a better way?
+        public void OnToggleCartMenuClicked(object sender, EventArgs args)
+        {
+            MenuItem m = (MenuItem)sender;
+            MyPlant p = (MyPlant)m.BindingContext;
+            AppData appData = (AppData)BindingContext;
+            appData.MasterViewModel.PlantList.ToggleStatus(p);
+        }
+
+        public void OnToggleCartButtonClicked(object sender, EventArgs args)
         {
             Button b = (Button)sender;
             MyPlant p = (MyPlant)b.BindingContext;
             AppData appData = (AppData)BindingContext;
             appData.MasterViewModel.PlantList.ToggleStatus(p);
-
         }
-
 
         void OnPageSizeChanged(object sender, EventArgs args)
         { 
