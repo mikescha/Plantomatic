@@ -43,19 +43,11 @@
                FontSize="Large"
                HorizontalTextAlignment="Center" />
     -->
-   
+    
     <StackLayout Grid.Row="1" Grid.Column="0">
       <Label Text="{Binding MasterViewModel.PlantList.MyPlants.Count, StringFormat = '{0} plants matching your conditions'}"
              FontAttributes="Bold"
              TextColor="Gray"/>
-      <Button x:Name="ToggleViewButton" Text="{Binding MasterViewModel.ShowingShoppingList, Converter={StaticResource ShowListText}}" BorderWidth="1" Clicked="OnToggleViewButtonClicked">
-        <Button.BackgroundColor>
-          <OnPlatform x:TypeArguments="Color" Android="#404040" />
-        </Button.BackgroundColor>
-        <Button.BorderColor>
-          <OnPlatform x:TypeArguments="Color" Android="White" WinPhone="Black" />
-        </Button.BorderColor>
-      </Button>
     </StackLayout>
     
     <StackLayout Grid.Row="2" Grid.Column="0">

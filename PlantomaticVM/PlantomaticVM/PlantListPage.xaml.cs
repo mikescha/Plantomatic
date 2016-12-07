@@ -94,24 +94,33 @@ namespace PlantomaticVM
                 //TODO: what to do if there is no URL for the plant
             }
         }
-
-        //TODO This code allows the ShoppingList to be shown in the filter results browsing page. Not sure if we want to do this or not... if we
-        //don't then remove this and the associated button
-        void OnToggleViewButtonClicked(object sender, EventArgs e)
-        {            
-            AppData appData = (AppData)BindingContext;
-
-            //Switch the source of the listview to be the proper list
-            listView.ItemsSource = appData.MasterViewModel.ShowingShoppingList ? appData.MasterViewModel.PlantList.MyPlants : appData.MasterViewModel.PlantList.ShoppingListPlants;
-            
-            //Toggle the state so we keep track of what we did for the next toggle
-            appData.MasterViewModel.ShowingShoppingList = !appData.MasterViewModel.ShowingShoppingList;
-        }
-
+    
         //TODO do we want to do anything here?
         protected override void OnAppearing()
         {
             base.OnAppearing();
         }
+
+        /* ********** Archive ********** 
+         * This is for code we used to have, but no longer need
+         */
+
+        /* This function allowed us to change which list was associated with the PlantList page. It was called by code in the XAML
+         * that looked like this:
+         * <Button x:Name="ToggleViewButton" Text="{Binding MasterViewModel.ShowingShoppingList, Converter={StaticResource ShowListText}}" BorderWidth="1" Clicked="OnToggleViewButtonClicked"></Button>
+         
+
+        void OnToggleViewButtonClicked(object sender, EventArgs e)
+        {
+            AppData appData = (AppData)BindingContext;
+
+            //Switch the source of the listview to be the proper list
+            listView.ItemsSource = appData.MasterViewModel.ShowingShoppingList ? appData.MasterViewModel.PlantList.MyPlants : appData.MasterViewModel.PlantList.ShoppingListPlants;
+
+            //Toggle the state so we keep track of what we did for the next toggle
+            appData.MasterViewModel.ShowingShoppingList = !appData.MasterViewModel.ShowingShoppingList;
+        }
+        */
     }
 }
+ 
