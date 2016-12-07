@@ -151,21 +151,6 @@ namespace PlantomaticVM
 
         public PlantList PlantList { set; get; }
 
-        private Command _toggleCartStatus;
-        public ICommand ToggleCartStatus
-        {
-            get
-            {
-                if (_toggleCartStatus == null)
-                {
-                    _toggleCartStatus = new Command(() => {
-                        InCart = !InCart;
-                    });
-                }
-                return _toggleCartStatus;
-            }
-        }
-
         public bool ToggleListStatus()
         {
             InCart = !InCart;
@@ -180,5 +165,22 @@ namespace PlantomaticVM
             if (handler != null)
                 handler(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        /* Should be fully deprecated, leaving it in but moving to a comment, just in case.
+        private Command _toggleCartStatus;
+        public ICommand ToggleCartStatus
+        {
+            get
+            {
+                if (_toggleCartStatus == null)
+                {
+                    _toggleCartStatus = new Command(() => {
+                        InCart = !InCart;
+                    });
+                }
+                return _toggleCartStatus;
+            }
+        }
+        */
     }
 }

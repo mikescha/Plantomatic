@@ -7,11 +7,11 @@ using PlantMan.Plant;
 using Xamarin.Forms;
 
 /* What I'm trying to do next..
- * 3) When you toggle the Add/Remove state of the cart while the ShoppingLIst is showing, then I'd like that item to immediately be removed 
  * 
+ * TODO Need to decide still what the overall UI is going to look like.
  * If this works, then get rid of the Shopping List page, and change the layout code to have a way to show the summary somewhere. OR, leave 
- * the separate page, but have it be all about the summary, e.g. which months you'll have flowers, how many square feet you'll need, etc. (and so should I 
- * let people type in the number of plants they want in their cart, so we can calculate sq ft needed?) i.e. change the Add TO Cart from a BOOL to INT
+ * the separate page, but have it be all about the summary, e.g. which months you'll have flowers, how many square feet you'll need, etc. 
+ * (and so should I let people type in the number of plants they want in their cart, so we can calculate sq ft needed? i.e. change the Add TO Cart from a BOOL to INT)
  * 
  * Then, I'd like to 
  * 3) add more filters

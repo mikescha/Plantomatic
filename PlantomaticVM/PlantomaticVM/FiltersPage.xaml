@@ -8,145 +8,189 @@
                Title="Filters"
                BindingContext="{Binding Source={x:Static Application.Current}, Path=AppData}">
 
+      <ContentPage.Padding>
+          <OnPlatform x:TypeArguments="Thickness" iOS="0, 20, 0, 0" />
+      </ContentPage.Padding>
+
     <Grid x:Name="mainGrid">
-      <Grid.RowDefinitions>
-        <RowDefinition Height="Auto" />
-        <RowDefinition Height="Auto" />
-        <RowDefinition Height="Auto" />
-      </Grid.RowDefinitions>
-      <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="*" />
-        <ColumnDefinition Width="*" />
-      </Grid.ColumnDefinitions>
-
-      <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
-             Text="{Binding MasterViewModel.PlantList.MyPlants.Count, StringFormat = 'Find plants for these conditions ({0} matches)'}"
-             FontAttributes="Bold"
-             TextColor="Gray"/>
-      
-      <!--After the title, the contents are divided into two stack layouts. The first one is for the first column of layout, 
-          the second is for the second. When in portrait mode, those are stacked into one column. When it landscape, they are
-          side by side. This is done by the page layout code, which gets called at launch to do the iniital setting-->
-      
-      <StackLayout x:Name="filtersSet1"> 
-        <Picker x:Name="lowTempPicker"
-          Title="Coldest temperature"
-          SelectedIndexChanged="OnPickerSelectedIndexChanged">
-          <Picker.Items>
-            <x:String>Any</x:String>
-            <x:String>-50F</x:String>
-            <x:String>-10F</x:String>
-            <x:String>0F</x:String>
-            <x:String>10F</x:String>
-            <x:String>20F</x:String>
-            <x:String>32F</x:String>
-          </Picker.Items>
-          <Picker.SelectedIndex>
-            <Binding Path="MasterViewModel.PlantList.TargetPlant.LowTemp">
-              <Binding.Converter>
-                <tools:ObjectToIndexConverter x:TypeArguments="x:Decimal">
-                  <x:Decimal>99</x:Decimal>
-                  <x:Decimal>-50</x:Decimal>
-                  <x:Decimal>-10</x:Decimal>
-                  <x:Decimal>0</x:Decimal>
-                  <x:Decimal>10</x:Decimal>
-                  <x:Decimal>20</x:Decimal>
-                  <x:Decimal>32</x:Decimal>
-                </tools:ObjectToIndexConverter>
-              </Binding.Converter>
-            </Binding>
-          </Picker.SelectedIndex>
-        </Picker>
-
-        <Picker x:Name="floweringMonthPicker"
-                Title="Flowering month"
-                SelectedIndexChanged="OnPickerSelectedIndexChanged">
-          <Picker.Items>
-            <x:String>All</x:String>
-            <x:String>January</x:String>
-            <x:String>February</x:String>
-            <x:String>March</x:String>
-            <x:String>April</x:String>
-            <x:String>May</x:String>
-            <x:String>June</x:String>
-            <x:String>July</x:String>
-            <x:String>August</x:String>
-            <x:String>September</x:String>
-            <x:String>October</x:String>
-            <x:String>November</x:String>
-            <x:String>December</x:String>
-          </Picker.Items>
-          <Picker.SelectedIndex>
-            <Binding Path="MasterViewModel.PlantList.TargetPlant.FloweringMonths">
-              <Binding.Converter>
-                <tools:ObjectToIndexConverter x:TypeArguments="plants:FloweringMonths">
-                  <plants:FloweringMonths>AllMonths</plants:FloweringMonths>
-                  <plants:FloweringMonths>Jan</plants:FloweringMonths>
-                  <plants:FloweringMonths>Feb</plants:FloweringMonths>
-                  <plants:FloweringMonths>Mar</plants:FloweringMonths>
-                  <plants:FloweringMonths>Apr</plants:FloweringMonths>
-                  <plants:FloweringMonths>May</plants:FloweringMonths>
-                  <plants:FloweringMonths>Jun</plants:FloweringMonths>
-                  <plants:FloweringMonths>Jul</plants:FloweringMonths>
-                  <plants:FloweringMonths>Aug</plants:FloweringMonths>
-                  <plants:FloweringMonths>Sep</plants:FloweringMonths>
-                  <plants:FloweringMonths>Oct</plants:FloweringMonths>
-                  <plants:FloweringMonths>Nov</plants:FloweringMonths>
-                  <plants:FloweringMonths>Dec</plants:FloweringMonths>
-                </tools:ObjectToIndexConverter>
-              </Binding.Converter>
-            </Binding>
-          </Picker.SelectedIndex>
-        </Picker>
-
-      </StackLayout>
-
-      <StackLayout x:Name="filtersSet2">
+        <!--Layout uses a nested grid to allow the Reset button to hang out on the right-->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
         
-        <Picker x:Name="sunMonthPicker"
-                Title="Sun requirements"
-                SelectedIndexChanged="OnPickerSelectedIndexChanged">
-          <Picker.Items>
-            <x:String>All</x:String>
-            <x:String>Full sun</x:String>
-            <x:String>Partial sun</x:String>
-            <x:String>Shade</x:String>
-          </Picker.Items>
-          <Picker.SelectedIndex>
-            <Binding Path="MasterViewModel.PlantList.TargetPlant.SunRequirements">
-              <Binding.Converter>
-                <tools:ObjectToIndexConverter x:TypeArguments="plants:SunRequirements">
-                  <plants:SunRequirements>AllSunTypes</plants:SunRequirements>
-                  <plants:SunRequirements>Full</plants:SunRequirements>
-                  <plants:SunRequirements>Partial</plants:SunRequirements>
-                  <plants:SunRequirements>Shade</plants:SunRequirements>
-                </tools:ObjectToIndexConverter>
-              </Binding.Converter>
-            </Binding>
-          </Picker.SelectedIndex>
-        </Picker>
+        <!--Heading-->
+        <Grid x:Name="headingGrid"
+              Grid.Row="0"> <!--Force heading into mainGrid row 0-->
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            
+            <!--Heading Elements-->
+            <Label  Grid.Row="0" Grid.Column="0" 
+                    Text="{Binding MasterViewModel.PlantList.MyPlants.Count, StringFormat = 'Find plants for these conditions ({0} matches)'}"
+                    VerticalTextAlignment="Center"
+                    FontAttributes="Bold"
+                    TextColor="Gray"/>
 
-        <Picker x:Name="birdPicker"
-                Title="Attracts birds?"
-                SelectedIndexChanged="OnPickerSelectedIndexChanged">
-          <Picker.Items>
-            <x:String>Doesn't matter</x:String>
-            <x:String>Yes</x:String>
-            <x:String>No</x:String>
-          </Picker.Items>
-          <Picker.SelectedIndex>
-            <Binding Path="MasterViewModel.PlantList.TargetPlant.AttractsBirds">
-              <Binding.Converter>
-                <tools:ObjectToIndexConverter x:TypeArguments="plants:YesNoMaybe">
-                <plants:YesNoMaybe>Unassigned</plants:YesNoMaybe>
-                <plants:YesNoMaybe>Yes</plants:YesNoMaybe>
-                <plants:YesNoMaybe>No</plants:YesNoMaybe>
-                </tools:ObjectToIndexConverter>
-              </Binding.Converter>
-            </Binding>
-          </Picker.SelectedIndex>
-        </Picker>
+            <Button Grid.Row="0" Grid.Column="1" 
+                    Text="Reset all" 
+                    HorizontalOptions="End"
+                    Command="{Binding MasterViewModel.PlantList.ResetCriteria}"
+                    BorderWidth="1">
+                <Button.BackgroundColor>
+                    <OnPlatform x:TypeArguments="Color" Android="#404040" />
+                </Button.BackgroundColor>
+                <Button.BorderColor>
+                    <OnPlatform x:TypeArguments="Color" Android="White" WinPhone="Black" />
+                </Button.BorderColor>
+            </Button>
+        </Grid>
+
         
-      </StackLayout>
+        <!--Body of page, where the filters go-->
+        <Grid x:Name="bodyGrid"
+              Grid.Row="1"> <!--Force heading into mainGrid row 1-->
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <!--After the heading, the contents are divided into two stack layouts. The first one is for the first column of layout, 
+                the second is for the second. When in portrait mode, those are stacked into one column. When it landscape, they are
+                side by side. This is done by the page layout code, which gets called at launch to do the iniital setting, so I don't
+                set them here.
+            -->
+
+            <StackLayout x:Name="filtersSet1">
+                <Picker x:Name="lowTempPicker"
+                        Title="Coldest temperature"
+                        SelectedIndexChanged="OnPickerSelectedIndexChanged">
+                    <Picker.Items>
+                            <x:String>Any</x:String>
+                            <x:String>-50F</x:String>
+                            <x:String>-10F</x:String>
+                            <x:String>0F</x:String>
+                            <x:String>10F</x:String>
+                            <x:String>20F</x:String>
+                            <x:String>32F</x:String>
+                        </Picker.Items>
+                        <Picker.SelectedIndex>
+                            <Binding Path="MasterViewModel.PlantList.TargetPlant.LowTemp">
+                                <Binding.Converter>
+                                    <tools:ObjectToIndexConverter x:TypeArguments="x:Decimal">
+                                        <x:Decimal>99</x:Decimal>
+                                        <x:Decimal>-50</x:Decimal>
+                                        <x:Decimal>-10</x:Decimal>
+                                        <x:Decimal>0</x:Decimal>
+                                        <x:Decimal>10</x:Decimal>
+                                        <x:Decimal>20</x:Decimal>
+                                        <x:Decimal>32</x:Decimal>
+                                    </tools:ObjectToIndexConverter>
+                                </Binding.Converter>
+                            </Binding>
+                        </Picker.SelectedIndex>
+                    </Picker>
+
+                <Picker x:Name="floweringMonthPicker"
+                        Title="Flowering month"
+                        SelectedIndexChanged="OnPickerSelectedIndexChanged">
+                    <Picker.Items>
+                        <x:String>All</x:String>
+                        <x:String>January</x:String>
+                        <x:String>February</x:String>
+                        <x:String>March</x:String>
+                        <x:String>April</x:String>
+                        <x:String>May</x:String>
+                        <x:String>June</x:String>
+                        <x:String>July</x:String>
+                        <x:String>August</x:String>
+                        <x:String>September</x:String>
+                        <x:String>October</x:String>
+                        <x:String>November</x:String>
+                        <x:String>December</x:String>
+                    </Picker.Items>
+                    <Picker.SelectedIndex>
+                        <Binding Path="MasterViewModel.PlantList.TargetPlant.FloweringMonths">
+                            <Binding.Converter>
+                                <tools:ObjectToIndexConverter x:TypeArguments="plants:FloweringMonths">
+                                    <plants:FloweringMonths>AllMonths</plants:FloweringMonths>
+                                    <plants:FloweringMonths>Jan</plants:FloweringMonths>
+                                    <plants:FloweringMonths>Feb</plants:FloweringMonths>
+                                    <plants:FloweringMonths>Mar</plants:FloweringMonths>
+                                    <plants:FloweringMonths>Apr</plants:FloweringMonths>
+                                    <plants:FloweringMonths>May</plants:FloweringMonths>
+                                    <plants:FloweringMonths>Jun</plants:FloweringMonths>
+                                    <plants:FloweringMonths>Jul</plants:FloweringMonths>
+                                    <plants:FloweringMonths>Aug</plants:FloweringMonths>
+                                    <plants:FloweringMonths>Sep</plants:FloweringMonths>
+                                    <plants:FloweringMonths>Oct</plants:FloweringMonths>
+                                    <plants:FloweringMonths>Nov</plants:FloweringMonths>
+                                    <plants:FloweringMonths>Dec</plants:FloweringMonths>
+                                </tools:ObjectToIndexConverter>
+                            </Binding.Converter>
+                        </Binding>
+                    </Picker.SelectedIndex>
+                </Picker>
+            </StackLayout>
+
+            <StackLayout x:Name="filtersSet2">
+                <Picker x:Name="sunMonthPicker"
+                        Title="Sun requirements"
+                        SelectedIndexChanged="OnPickerSelectedIndexChanged">
+                    <Picker.Items>
+                        <x:String>All</x:String>
+                        <x:String>Full sun</x:String>
+                        <x:String>Partial sun</x:String>
+                        <x:String>Shade</x:String>
+                    </Picker.Items>
+                    <Picker.SelectedIndex>
+                        <Binding Path="MasterViewModel.PlantList.TargetPlant.SunRequirements">
+                            <Binding.Converter>
+                                <tools:ObjectToIndexConverter x:TypeArguments="plants:SunRequirements">
+                                    <plants:SunRequirements>AllSunTypes</plants:SunRequirements>
+                                    <plants:SunRequirements>Full</plants:SunRequirements>
+                                    <plants:SunRequirements>Partial</plants:SunRequirements>
+                                    <plants:SunRequirements>Shade</plants:SunRequirements>
+                                </tools:ObjectToIndexConverter>
+                            </Binding.Converter>
+                        </Binding>
+                    </Picker.SelectedIndex>
+                </Picker>
+
+                <Picker x:Name="birdPicker"
+                        Title="Attracts birds?"
+                        SelectedIndexChanged="OnPickerSelectedIndexChanged">
+                    <Picker.Items>
+                        <x:String>Doesn't matter</x:String>
+                        <x:String>Yes</x:String>
+                        <x:String>No</x:String>
+                    </Picker.Items>
+                    <Picker.SelectedIndex>
+                        <Binding Path="MasterViewModel.PlantList.TargetPlant.AttractsBirds">
+                            <Binding.Converter>
+                                <tools:ObjectToIndexConverter x:TypeArguments="plants:YesNoMaybe">
+                                    <plants:YesNoMaybe>Unassigned</plants:YesNoMaybe>
+                                    <plants:YesNoMaybe>Yes</plants:YesNoMaybe>
+                                    <plants:YesNoMaybe>No</plants:YesNoMaybe>
+                                </tools:ObjectToIndexConverter>
+                            </Binding.Converter>
+                        </Binding>
+                    </Picker.SelectedIndex>
+                </Picker>
+            </StackLayout>
+        </Grid>
+      
     </Grid>
+  
   </ContentPage>

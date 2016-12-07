@@ -1,4 +1,6 @@
 ﻿using PlantMan.Plant;
+using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace PlantomaticVM
 {
@@ -9,12 +11,18 @@ namespace PlantomaticVM
         SunRequirements sunRequirements;
         YesNoMaybe attractsBirds;
 
+        decimal defaultLowTemp = 32;
+        FloweringMonths defaultFloweringMonths = FloweringMonths.AllMonths;
+        SunRequirements defaultSunRequirements = SunRequirements.AllSunTypes;
+        YesNoMaybe defaultAttractsBirds = YesNoMaybe.Unassigned;
+
+        // Constructor
         public MyCriteria()
         {
-            lowTemp = 32;
-            FloweringMonths = FloweringMonths.AllMonths;
-            SunRequirements = SunRequirements.AllSunTypes;
-            AttractsBirds = YesNoMaybe.Unassigned;
+            lowTemp = defaultLowTemp;
+            FloweringMonths = defaultFloweringMonths;
+            SunRequirements = defaultSunRequirements;
+            AttractsBirds = defaultAttractsBirds;
         }
 
         public decimal LowTemp
@@ -64,6 +72,7 @@ namespace PlantomaticVM
             }
             get { return attractsBirds; }
         }
+
     }
 }
 

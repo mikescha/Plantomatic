@@ -125,6 +125,13 @@ namespace PlantomaticVM
             get { return state; }
         }
 
+        /* ************************************************************************************************************************************
+         * 
+         * Commands 
+         * These are called by various bits of UI to manipulate the lists
+         * 
+         *************************************************************************************************************************************/
+        //Resets the shopping cart state of all the plants by walking through the list and setting each InCart to false
         private Command _clearCart;
         public ICommand ClearCart
         {
@@ -145,11 +152,33 @@ namespace PlantomaticVM
             }
         }
 
-        /* Analysis operations
+        //Command for restoring all defaults, called from Filters page
+        private Command _resetCriteria;
+        public ICommand ResetCriteria
+        {
+            get
+            {
+                if (_resetCriteria == null)
+                {
+                    _resetCriteria = new Command(() =>
+                    {
+                        //set everything back to defaults
+                        targetPlant = new MyCriteria();
+                        OnPropertyChanged("TargetPlant");
+                    });
+                }
+                return _resetCriteria;
+            }
+        }
+
+        /* ************************************************************************************************************************************
+         * 
+         * Analysis operations
          * These methods are used to summarize the contents of the shopping list. The listview controls in the view are bound to these lists.
          * 
          * To add a new summary, add the method below, and also add a PropertyChanged event to the RefreshShoppingListPlants method.
-         */
+         * 
+         *************************************************************************************************************************************/
         public List<string> MonthSummary
         {
             get
