@@ -78,9 +78,8 @@
       </StackLayout>
       
       <!--The detail that shows when a plant is selected-->
-        <ScrollView Grid.Row="3" Grid.Column="0" >
-            <StackLayout x:Name="detailLayout" 
-                   Padding="5" 
+        <ScrollView x:Name="detailLayout" Grid.Row="3" Grid.Column="0" >
+            <StackLayout Padding="5" 
                    BindingContext="{Binding Source={x:Reference listView}, Path=SelectedItem}" 
                    HorizontalOptions="Start" VerticalOptions="Start" Orientation="Vertical" Spacing="5">
                 <StackLayout.Resources>
@@ -102,7 +101,6 @@
                 <Label Text="{Binding Plant.FloweringMonths, StringFormat='Flowering months: {0}'}" />
                 <Label x:Name="MoreInfoURLLabel" Text="More info..." TextColor="Blue" IsVisible="false">
                     <!--invisible by default so it doesn't show until there's a selection-->
-                    `
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OnMoreInfoTapped"/>
                     </Label.GestureRecognizers>

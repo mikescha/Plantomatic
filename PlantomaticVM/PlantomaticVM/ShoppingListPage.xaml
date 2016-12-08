@@ -24,16 +24,15 @@
       </ResourceDictionary>
     </ContentPage.Resources>
         
-    <!--Grid on this page has two rows and two columns-->
+    <!--Grid on this page has one row and two columns-->
     <Grid x:Name="mainGrid">
-      <Grid.RowDefinitions>
-        <RowDefinition Height="Auto" /> <!--For the count label-->
-        <RowDefinition Height="*" />    <!--For the list-->
-      </Grid.RowDefinitions>
-      <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="*" />  <!--For the summary label-->
-        <ColumnDefinition Width="*" />  <!--For the summary-->
-      </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />  <!--For the plants-->
+            <ColumnDefinition Width="*" />  <!--For the summary-->
+        </Grid.ColumnDefinitions>
 
       <!--Heading and Clear button-->
       <StackLayout Grid.Row="0" Grid.Column="0">
@@ -51,43 +50,52 @@
           </Button.BorderColor>
         </Button> 
       
-      </StackLayout>
-      
-      <!--List of plants from shopping list. In a StackLayout just because I am not sure what other content I'll end up putting on the page
-      -->
-      <StackLayout Grid.Row="1" Grid.Column="0">
-            <ListView x:Name="shoppingListView" SeparatorVisibility="None"
-                      ItemsSource="{Binding MasterViewModel.PlantList.ShoppingListPlants}">
-          <ListView.ItemTemplate>
-            <DataTemplate>
-              <ViewCell>
-                <!--Context menu-->
-                <ViewCell.ContextActions>
-                    <MenuItem Text="{Binding InCart, Converter={StaticResource AddRemoveCartText}}"  Clicked="OnContextMenuClicked"/>
-                </ViewCell.ContextActions>
-                <StackLayout BackgroundColor="#eee"
-                             Orientation="Vertical"
-                             Padding="3">
-                    <Label Text="{Binding Plant.Name}"
-                           TextColor="Green" />
-                </StackLayout>            
-              </ViewCell>
-            </DataTemplate>
-          </ListView.ItemTemplate>
+        <!--List of plants from shopping list.  -->
+        <ListView x:Name="shoppingListView" SeparatorVisibility="None"
+                ItemsSource="{Binding MasterViewModel.PlantList.ShoppingListPlants}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <!--Context menu-->
+                        <ViewCell.ContextActions>
+                            <MenuItem Text="{Binding InCart, Converter={StaticResource AddRemoveCartText}}"  Clicked="OnContextMenuClicked"/>
+                        </ViewCell.ContextActions>
+                        <StackLayout BackgroundColor="#eee"
+                                Orientation="Vertical"
+                                Padding="3">
+                            <Label Text="{Binding Plant.Name}"
+                                    TextColor="Green" />
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
         </ListView>
+          
       </StackLayout>
-
-      <!-- Summary data -->
-      <StackLayout Grid.Row="1" Grid.Column="1">
-        <Label Text="Months that you have flowers"
-             FontAttributes="Bold" TextColor="Gray"/>
-        <ListView x:Name="floweringMonthView" SeparatorVisibility="None" ItemsSource="{Binding MasterViewModel.PlantList.MonthSummary}" />
         
-        <Label Text="Plants by sun requirements"
-             FontAttributes="Bold" TextColor="Gray"/>
-            <ListView x:Name="sunRequirementsView" SeparatorVisibility="None" ItemsSource="{Binding MasterViewModel.PlantList.SunSummary}" />
-      </StackLayout>
-    
+      <!-- Summary data -->
+      <ScrollView Grid.Row="0" Grid.Column="1" >
+          <StackLayout Orientation="Vertical" VerticalOptions="Start">
+              <Label Text="Months that you have flowers"
+                     FontSize="Small" TextColor="Gray"/>
+              <ListView x:Name="floweringMonthView"  ItemsSource="{Binding MasterViewModel.PlantList.SummaryMonths}" 
+                        VerticalOptions="FillAndExpand"
+                        RowHeight="20"
+                        
+                        SeparatorVisibility="None"/>
+                
+              <Label Text="Plants by sun requirements"
+                     FontSize="Small" TextColor="Gray"/>
+              <ListView x:Name="sunRequirementsView" ItemsSource="{Binding MasterViewModel.PlantList.SummarySun}" 
+                        VerticalOptions="FillAndExpand"
+                        RowHeight="20"
+                        SeparatorVisibility="None" />
+          
+              <Label Text="{Binding MasterViewModel.PlantList.SummaryTemp, StringFormat='Lowest temp for selected plants: {0}'}"
+                     FontSize="Small" TextColor="Gray"/>
+
+          </StackLayout>    
+      </ScrollView>
     </Grid>
   
   </ContentPage>

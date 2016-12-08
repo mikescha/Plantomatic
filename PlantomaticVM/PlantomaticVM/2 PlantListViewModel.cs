@@ -11,6 +11,7 @@ namespace PlantomaticVM
 {
     public class PlantList : INotifyPropertyChanged
     {
+        #region Dictionaries
         Dictionary<String, FloweringMonths> floweringMonthDict = new Dictionary<string, FloweringMonths>
         {
             {"January", FloweringMonths.Jan }, {"February", FloweringMonths.Feb }, {"March", FloweringMonths.Mar },
@@ -25,13 +26,17 @@ namespace PlantomaticVM
             {"Full sun", SunRequirements.Full }, {"Partial sun", SunRequirements.Partial}, {"Shade", SunRequirements.Shade}
             //, {"All", SunRequirements.AllSunTypes }
         };
+        #endregion Dictionaries
 
+        #region Fields
         string state;  // The US state that the list of plants is associated with
         List<MyPlant> allPlants = new List<MyPlant>(); // All the plants in the database
         ObservableCollection<MyPlant> myPlants = new ObservableCollection<MyPlant>(); // The subset of plants that match the current target
         ObservableCollection<MyPlant> shoppingListPlants = new ObservableCollection<MyPlant>(); // The subset of plants that are in the list
         MyCriteria targetPlant = new MyCriteria(); // The criteria that the user has selected so far
+        #endregion Fields
 
+        #region Constructors
         public ObservableCollection<MyPlant> MyPlants
         {
             set
@@ -43,29 +48,6 @@ namespace PlantomaticVM
                 }
             }
             get { return myPlants; }
-        }
-        
-        //Attempt to toggle the cart status of the item passed in
-        public bool ToggleStatus(MyPlant p)
-        {
-            //First, find the plant that matches the one passed in (this assumes each plant's name is spelled consistently, that
-            //the name is unique, and that it exists exactly once). And then, toggle the status of that plant.
-            bool value = allPlants.Find(x => x.Plant.Name == p.Plant.Name).ToggleListStatus();
-
-            //Now, regenerate the list so that it reflects the right set of plants and everybody knows it has changed
-            RefreshShoppingListPlants();
-            return value;
-        }
-
-        //Update the shopping list, and then generate a notification that it has changed.
-        public void RefreshShoppingListPlants()
-        {
-            shoppingListPlants = new ObservableCollection<MyPlant>(allPlants.Where(i => i.InCart));
-
-            //Generate notifications for everything that needs to know that the list has changed.
-            OnPropertyChanged("ShoppingListPlants");
-            OnPropertyChanged("MonthSummary");
-            OnPropertyChanged("SunSummary");
         }
 
         // Generic set/get for the ShoppingList
@@ -124,13 +106,41 @@ namespace PlantomaticVM
             }
             get { return state; }
         }
+        #endregion Constructors
 
-        /* ************************************************************************************************************************************
-         * 
+        #region KeyActions
+        //Attempt to toggle the cart status of the item passed in
+        public bool ToggleStatus(MyPlant p)
+        {
+            //First, find the plant that matches the one passed in (this assumes each plant's name is spelled consistently, that
+            //the name is unique, and that it exists exactly once). And then, toggle the status of that plant.
+            bool value = allPlants.Find(x => x.Plant.Name == p.Plant.Name).ToggleListStatus();
+
+            //Now, regenerate the list so that it reflects the right set of plants and everybody knows it has changed
+            RefreshShoppingListPlants();
+            return value;
+        }
+
+        //Update the shopping list, and then generate a notification that it has changed.
+        public void RefreshShoppingListPlants()
+        {
+            shoppingListPlants = new ObservableCollection<MyPlant>(allPlants.Where(i => i.InCart));
+
+            //Generate notifications for everything that needs to know that the list has changed.
+            OnPropertyChanged("ShoppingListPlants");
+            OnPropertyChanged("SummaryMonths");
+            OnPropertyChanged("SummarySun");
+            OnPropertyChanged("SummaryTemp");
+        }
+
+        #endregion KeyActions
+
+        #region Commands
+        /* 
          * Commands 
          * These are called by various bits of UI to manipulate the lists
-         * 
-         *************************************************************************************************************************************/
+         */
+
         //Resets the shopping cart state of all the plants by walking through the list and setting each InCart to false
         private Command _clearCart;
         public ICommand ClearCart
@@ -171,15 +181,16 @@ namespace PlantomaticVM
             }
         }
 
-        /* ************************************************************************************************************************************
-         * 
+        #endregion Commands
+
+        #region AnalysisOperations
+        /* 
          * Analysis operations
          * These methods are used to summarize the contents of the shopping list. The listview controls in the view are bound to these lists.
          * 
          * To add a new summary, add the method below, and also add a PropertyChanged event to the RefreshShoppingListPlants method.
-         * 
-         *************************************************************************************************************************************/
-        public List<string> MonthSummary
+         */
+        public List<string> SummaryMonths
         {
             get
             {
@@ -222,7 +233,7 @@ namespace PlantomaticVM
             }
         }
 
-        public List<string> SunSummary
+        public List<string> SummarySun
         {
             get {
 
@@ -263,6 +274,24 @@ namespace PlantomaticVM
             }
         }
 
+        public int SummaryTemp
+        {
+            get
+            {
+                int lowTemp = -99;
+
+                foreach(MyPlant p in shoppingListPlants)
+                {
+                    if (lowTemp <= p.Plant.MinWinterTempF.Value)
+                        lowTemp = (int)p.Plant.MinWinterTempF.Value;
+                }
+                return lowTemp;
+            }
+        }
+
+        #endregion AnalysisOperations
+
+        #region INPC
         public event PropertyChangedEventHandler PropertyChanged;
         void OnPropertyChanged(string propertyName)
         {
@@ -270,7 +299,7 @@ namespace PlantomaticVM
             if (handler != null)
                 handler(this, new PropertyChangedEventArgs(propertyName));
         }
-
+        #endregion INPC
     }
 
 }
