@@ -37,7 +37,7 @@ namespace PlantomaticVM
                     {
                         //Check that the plant exists before adding it to the cart. Store this in a variable so we don't do the query twice. The query
                         //returns a reference to the actual object, not a copy of it, so this works as expected.
-                        MyPlant p = this.AppData.MasterViewModel.PlantList.AllPlants.Find(x => x.ScientificName == sciName);
+                        MyPlant p = this.AppData.MasterViewModel.PlantList.AllPlants.Find(x => x.Plant.ScientificName == sciName);
 
                         if (p != null)
                             p.InCart = true;

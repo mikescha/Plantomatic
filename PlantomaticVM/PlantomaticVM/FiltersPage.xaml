@@ -86,7 +86,7 @@
                             <x:String>32F</x:String>
                         </Picker.Items>
                         <Picker.SelectedIndex>
-                            <Binding Path="MasterViewModel.PlantList.TargetPlant.LowTemp">
+                        <Binding Path="MasterViewModel.PlantList.TargetPlant.MinWinterTempF.Value">
                                 <Binding.Converter>
                                     <tools:ObjectToIndexConverter x:TypeArguments="x:Decimal">
                                         <x:Decimal>99</x:Decimal>

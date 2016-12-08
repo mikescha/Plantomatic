@@ -68,14 +68,14 @@ namespace PlantomaticVM
             List<MyPlant> list = new List<MyPlant>();
 
             list = PlantList.AllPlants
-                .Where(p => (PlantList.TargetPlant.FloweringMonths != FloweringMonths.AllMonths && p.FloweringMonths.HasFlag(PlantList.TargetPlant.FloweringMonths)) ||
+                .Where(p => (PlantList.TargetPlant.FloweringMonths != FloweringMonths.AllMonths && p.Plant.FloweringMonths.HasFlag(PlantList.TargetPlant.FloweringMonths)) ||
                     (PlantList.TargetPlant.FloweringMonths == FloweringMonths.AllMonths))
-                .Where(p => (PlantList.TargetPlant.SunRequirements != SunRequirements.AllSunTypes && p.SunRequirements.HasFlag(PlantList.TargetPlant.SunRequirements)) ||
+                .Where(p => (PlantList.TargetPlant.SunRequirements != SunRequirements.AllSunTypes && p.Plant.SunRequirements.HasFlag(PlantList.TargetPlant.SunRequirements)) ||
                     (PlantList.TargetPlant.SunRequirements == SunRequirements.AllSunTypes))
-                .Where(p => (p.LowTemp <= PlantList.TargetPlant.LowTemp))
+                .Where(p => (p.Plant.MinWinterTempF.Value <= PlantList.TargetPlant.MinWinterTempF.Value))
                 .Where(p => (PlantList.TargetPlant.AttractsBirds == YesNoMaybe.Unassigned) ||
-                    (p.AttractsBirds == PlantList.TargetPlant.AttractsBirds))
-                .OrderBy(p => p.ScientificName)
+                    (p.Plant.AttractsBirds == PlantList.TargetPlant.AttractsBirds))
+                .OrderBy(p => p.Plant.ScientificName)
                 .ToList();
 
             //MyPlants is the field that stores the matching plants. Here, we take the list and convert it to an ObservableCollection for the UI 

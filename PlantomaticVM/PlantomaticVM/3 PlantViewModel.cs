@@ -15,35 +15,36 @@ namespace PlantomaticVM
 {
     public class MyPlant : INotifyPropertyChanged
     {
-        string name;
-        string scientificName;
-        decimal lowTemp;
-        FloweringMonths floweringMonths;
-        SunRequirements sunRequirements;
-        string moreInfoURL;
-        YesNoMaybe attractsBirds;
+        Plant plant;
         bool inCart;       
                
         public MyPlant()
         {
-            //TODO is there anything i should do here?
-            
-        }
-
-        // Initialize a plant with all the data I need.
-        // TODO Should I just encapsulate the "Plant" inside this instead of breaking out each field? I have to know about the fields either way.
-        public MyPlant(Plant newPlant)
-        {
-            name = newPlant.Name;
-            scientificName = newPlant.ScientificName;
-            lowTemp = newPlant.MinWinterTempF.Value;
-            floweringMonths = newPlant.FloweringMonths;
-            sunRequirements = newPlant.SunRequirements;
-            attractsBirds = newPlant.AttractsBirds;
-            moreInfoURL = newPlant.URL;
+            plant = new Plant();
             inCart = false;
         }
- 
+
+        // Initialize a plant when one is passed in
+        public MyPlant(Plant newPlant)
+        {
+            plant = newPlant;
+            inCart = false;
+        }
+        
+        public Plant Plant
+        {
+            set {
+                if (plant != value)
+                {
+                    plant = value;
+                    OnPropertyChanged("Plant");
+                }
+            }
+            get {
+                return plant;
+            }
+        }
+
         // The state of whether a plant is in the shopping cart or not
         public bool InCart
         {
@@ -57,6 +58,42 @@ namespace PlantomaticVM
             }
             get { return inCart; }
         }
+
+        public bool ToggleListStatus()
+        {
+            InCart = !InCart;
+            return InCart;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        void OnPropertyChanged(string propertyName)
+        {
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if (handler != null)
+                handler(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        /* Should be fully deprecated, leaving it in but moving to a comment, just in case.
+        private Command _toggleCartStatus;
+        public ICommand ToggleCartStatus
+        {
+            get
+            {
+                if (_toggleCartStatus == null)
+                {
+                    _toggleCartStatus = new Command(() => {
+                        InCart = !InCart;
+                    });
+                }
+                return _toggleCartStatus;
+            }
+        }
+
+        //don't remember why i had this
+        public PlantList PlantList { set; get; }
+
+        //Legacy getters/setters from when I had my own fields
 
         public string Name
         {
@@ -149,38 +186,8 @@ namespace PlantomaticVM
             get { return attractsBirds; }
         }
 
-        public PlantList PlantList { set; get; }
 
-        public bool ToggleListStatus()
-        {
-            InCart = !InCart;
-            return InCart;
-        }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        void OnPropertyChanged(string propertyName)
-        {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null)
-                handler(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        /* Should be fully deprecated, leaving it in but moving to a comment, just in case.
-        private Command _toggleCartStatus;
-        public ICommand ToggleCartStatus
-        {
-            get
-            {
-                if (_toggleCartStatus == null)
-                {
-                    _toggleCartStatus = new Command(() => {
-                        InCart = !InCart;
-                    });
-                }
-                return _toggleCartStatus;
-            }
-        }
         */
     }
 }

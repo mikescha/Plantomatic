@@ -68,7 +68,7 @@
                              Orientation="Vertical"
                              Padding="3">
                     <!--TODO This changes label color if the plant is in the list. Decide if this is what we want-->
-                    <Label Text="{Binding Name}"
+                    <Label Text="{Binding Plant.Name}"
                            TextColor="{Binding InCart, Converter={StaticResource ColorIfInList}}" /> 
                 </StackLayout>
               </ViewCell>
@@ -78,49 +78,53 @@
       </StackLayout>
       
       <!--The detail that shows when a plant is selected-->
-      <StackLayout x:Name="detailLayout" 
-                   Grid.Row="3" Grid.Column="0" Padding="5" 
+        <ScrollView Grid.Row="3" Grid.Column="0" >
+            <StackLayout x:Name="detailLayout" 
+                   Padding="5" 
                    BindingContext="{Binding Source={x:Reference listView}, Path=SelectedItem}" 
-                   HorizontalOptions="Start" VerticalOptions="Start">
-        <StackLayout Orientation="Vertical"
-                     Spacing="5">
-          <StackLayout.Resources>
-            <ResourceDictionary>
-              <Style TargetType="Label">
-                <Setter Property="Font" Value="Micro" />
-                <Setter Property="TextColor" Value="Black" />
-              </Style>
-            </ResourceDictionary>
-          </StackLayout.Resources>
-          
-          <!--At this point, the context of the binding is the selected item. So, all the labels can just point to specific fields. 
-              But, I can't figure out a way to show items that are from different contexts. -->
-          <Label x:Name="NameLabel" Text="{Binding Name}"/>
-          <Label Text="{Binding ScientificName}" FontAttributes="Italic"/>
-          <Label Text="{Binding LowTemp, StringFormat='Minimum Low Temp =  {0}'}" /> 
-          <Label Text="{Binding SunRequirements, StringFormat='Sun Requirements = {0}'}" />
-          <Label x:Name="MoreInfoURLLabel" Text="More info..." TextColor="Blue" IsVisible="false">  <!--invisible by default so it doesn't show until there's a selection-->
-            <Label.GestureRecognizers>
-              <TapGestureRecognizer Tapped="OnMoreInfoTapped"/>
-            </Label.GestureRecognizers>
-          </Label>
+                   HorizontalOptions="Start" VerticalOptions="Start" Orientation="Vertical" Spacing="5">
+                <StackLayout.Resources>
+                    <ResourceDictionary>
+                        <Style TargetType="Label">
+                            <Setter Property="Font" Value="Micro" />
+                            <Setter Property="TextColor" Value="Black" />
+                        </Style>
+                    </ResourceDictionary>
+                </StackLayout.Resources>
 
-            <!-- If I can figure out how to do this as part of the viewmodel with binding, then instead of Clicked I would have 
-                 something like, Command="{Binding ToggleCartStatus}"  -->              
-            <Button x:Name="AddToCartButton" Text="{Binding InCart, Converter={StaticResource AddRemoveCartText}}" 
+                <!--At this point, the context of the binding is the selected item. So, all the labels can just point to specific fields.-->
+                <Label Text="{Binding Plant.Name}" FontSize="Medium"/>
+                <Label Text="{Binding Plant.ScientificName}" FontAttributes="Italic"/>
+                <Label Text="{Binding Plant.NotableVisuals}"/>
+                <Label Text="{Binding Plant.Notes}"/>
+                <Label Text="{Binding Plant.MinWinterTempF.Value, StringFormat='Minimum low temp: {0}'}" />
+                <Label Text="{Binding Plant.SunRequirements, StringFormat='Sun requirements: {0}'}" />
+                <Label Text="{Binding Plant.FloweringMonths, StringFormat='Flowering months: {0}'}" />
+                <Label x:Name="MoreInfoURLLabel" Text="More info..." TextColor="Blue" IsVisible="false">
+                    <!--invisible by default so it doesn't show until there's a selection-->
+                    `
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnMoreInfoTapped"/>
+                    </Label.GestureRecognizers>
+                </Label>
+
+                <!-- If I can figure out how to do this as part of the viewmodel with binding, then instead of Clicked I would have 
+                 something like, Command="{Binding ToggleCartStatus}"  -->
+                <Button x:Name="AddToCartButton" Text="{Binding InCart, Converter={StaticResource AddRemoveCartText}}" 
                     BorderWidth="1"     
                     Clicked="OnToggleCartButtonClicked"
                     IsVisible="false">
-            <Button.BackgroundColor>
-              <OnPlatform x:TypeArguments="Color" Android="#404040" />
-            </Button.BackgroundColor>
-            <Button.BorderColor>
-              <OnPlatform x:TypeArguments="Color" Android="White" WinPhone="Black" />
-            </Button.BorderColor>
-          </Button>
-        
-        </StackLayout>
-      </StackLayout>
+                    <Button.BackgroundColor>
+                        <OnPlatform x:TypeArguments="Color" Android="#404040" />
+                    </Button.BackgroundColor>
+                    <Button.BorderColor>
+                        <OnPlatform x:TypeArguments="Color" Android="White" WinPhone="Black" />
+                    </Button.BorderColor>
+                </Button>
+
+            </StackLayout>
+
+        </ScrollView>
 
     </Grid>
 

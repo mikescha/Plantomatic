@@ -50,7 +50,7 @@ namespace PlantomaticVM
         {
             //First, find the plant that matches the one passed in (this assumes each plant's name is spelled consistently, that
             //the name is unique, and that it exists exactly once). And then, toggle the status of that plant.
-            bool value = allPlants.Find(x => x.Name == p.Name).ToggleListStatus();
+            bool value = allPlants.Find(x => x.Plant.Name == p.Plant.Name).ToggleListStatus();
 
             //Now, regenerate the list so that it reflects the right set of plants and everybody knows it has changed
             RefreshShoppingListPlants();
@@ -192,7 +192,7 @@ namespace PlantomaticVM
                 {
                     i = 0;
                     //if it's all months, then add 1 to everything
-                    if (p.FloweringMonths.HasFlag(FloweringMonths.AllMonths))
+                    if (p.Plant.FloweringMonths.HasFlag(FloweringMonths.AllMonths))
                     {
                         for (i = 0; i < maxMonths; i++)
                         {
@@ -203,7 +203,7 @@ namespace PlantomaticVM
                     {
                         foreach (FloweringMonths f in floweringMonthDict.Values)
                         {
-                            if (p.FloweringMonths.HasFlag(f))
+                            if (p.Plant.FloweringMonths.HasFlag(f))
                                 monthCount[i]++;
                             i++;
                         }
@@ -235,7 +235,7 @@ namespace PlantomaticVM
                 {
                     i = 0;
                     // if it's all sun types, then add 1 to everything
-                    if (p.SunRequirements.HasFlag(SunRequirements.AllSunTypes))
+                    if (p.Plant.SunRequirements.HasFlag(SunRequirements.AllSunTypes))
                     {
                         for (i = 0; i < maxSun; i++)
                             sunCount[i]++;
@@ -244,7 +244,7 @@ namespace PlantomaticVM
                     {
                         foreach (SunRequirements s in sunTypeDict.Values)
                         {
-                            if (p.SunRequirements.HasFlag(s))
+                            if (p.Plant.SunRequirements.HasFlag(s))
                                 sunCount[i]++;
                             i++;
                         }

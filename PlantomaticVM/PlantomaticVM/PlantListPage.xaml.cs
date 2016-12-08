@@ -80,13 +80,13 @@ namespace PlantomaticVM
             AddToCartButton.IsVisible = true;
         }
 
+        // When the "More Info" link is tapped, then open a new pop-over window and load the URL of the selected plant into this
         async void OnMoreInfoTapped(object sender, EventArgs e)
         {
             MyPlant thePlant = (MyPlant) detailLayout.BindingContext;
-            if (thePlant.MoreInfoURL != null)
+            if (thePlant.Plant.URL != null)
             {
-                MoreInfoPage page = new MoreInfoPage(thePlant.MoreInfoURL);
-                
+                MoreInfoPage page = new MoreInfoPage(thePlant.Plant.URL);
                 await Navigation.PushAsync(page);
             }
             else

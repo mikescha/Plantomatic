@@ -6,7 +6,7 @@ namespace PlantomaticVM
 {
     public class MyCriteria
     {
-        decimal lowTemp;
+        Plant.AssignableDecimal minWinterTempF = new Plant.AssignableDecimal();
         FloweringMonths floweringMonths;
         SunRequirements sunRequirements;
         YesNoMaybe attractsBirds;
@@ -19,22 +19,22 @@ namespace PlantomaticVM
         // Constructor
         public MyCriteria()
         {
-            lowTemp = defaultLowTemp;
+            MinWinterTempF.Value = defaultLowTemp;
             FloweringMonths = defaultFloweringMonths;
             SunRequirements = defaultSunRequirements;
             AttractsBirds = defaultAttractsBirds;
         }
 
-        public decimal LowTemp
+        public Plant.AssignableDecimal MinWinterTempF
         {
             set
             {
-                if (lowTemp != value)
+                if (minWinterTempF != value)
                 {
-                    lowTemp = value;
+                    minWinterTempF = value;
                 }
             }
-            get { return lowTemp; }
+            get { return minWinterTempF; }
         }
 
         public FloweringMonths FloweringMonths

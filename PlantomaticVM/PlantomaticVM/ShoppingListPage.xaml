@@ -7,7 +7,11 @@
                Title="Shopping List"
                SizeChanged="OnPageSizeChanged"
                BindingContext="{Binding Source={x:Static Application.Current}, Path=AppData}">
-    
+
+    <ContentPage.Padding>
+        <OnPlatform x:TypeArguments="Thickness" iOS="0, 20, 0, 0" />
+    </ContentPage.Padding>
+
     <ContentPage.Resources>
       <ResourceDictionary>
         <tools:ListToBoolConverter   x:Key="listToBoolConverter" />
@@ -19,9 +23,7 @@
                                      FalseText="Show shopping list"/>
       </ResourceDictionary>
     </ContentPage.Resources>
-    
-    <!--TODO Put in the right padding to make this look good on all devices -->
-    
+        
     <!--Grid on this page has two rows and two columns-->
     <Grid x:Name="mainGrid">
       <Grid.RowDefinitions>
@@ -61,18 +63,12 @@
               <ViewCell>
                 <!--Context menu-->
                 <ViewCell.ContextActions>
-
-                  <MenuItem Text="{Binding InCart, Converter={StaticResource AddRemoveCartText}}"  Clicked="OnContextMenuClicked"/>
-
-                  <!-- old 
-                  <MenuItem Text="{Binding InCart, Converter={StaticResource AddRemoveCartText}}" Command="{Binding ToggleCartStatus}" /> 
-                  -->
-                  
+                    <MenuItem Text="{Binding InCart, Converter={StaticResource AddRemoveCartText}}"  Clicked="OnContextMenuClicked"/>
                 </ViewCell.ContextActions>
                 <StackLayout BackgroundColor="#eee"
                              Orientation="Vertical"
                              Padding="3">
-                    <Label Text="{Binding Name}"
+                    <Label Text="{Binding Plant.Name}"
                            TextColor="Green" />
                 </StackLayout>            
               </ViewCell>

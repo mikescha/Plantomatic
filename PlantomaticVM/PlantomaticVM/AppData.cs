@@ -29,7 +29,7 @@ namespace PlantomaticVM
 
                 foreach (MyPlant p in this.MasterViewModel.PlantList.ShoppingListPlants)
                 {
-                    shoppingList.Add(p.ScientificName);
+                    shoppingList.Add(p.Plant.ScientificName);
                 }
 
                 XmlSerializer serializer = new XmlSerializer(typeof(List<string>)); //debug changed string to list<string>
