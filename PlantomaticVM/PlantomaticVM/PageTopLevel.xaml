@@ -4,9 +4,10 @@
             xmlns:local="clr-namespace:PlantomaticVM" 
             x:Class="PlantomaticVM.TopLevelPage">
 
-  <local:FiltersPage />
-  <local:PlantListPage />
-  <local:ShoppingListPage />
-  <local:AboutPage />
+    <local:PlantGroupsPage />
+    <local:FiltersPage />
+    <local:PlantListPage />
+    <local:ShoppingListPage />
+    <local:AboutPage />
   
 </TabbedPage>

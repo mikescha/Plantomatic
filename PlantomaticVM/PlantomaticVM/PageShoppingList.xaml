@@ -59,7 +59,7 @@
        <!--List of plants from shopping list.  -->
        <ListView x:Name="shoppingListView" SeparatorVisibility="None"
                  ItemsSource="{Binding MasterViewModel.PlantList.ShoppingListPlants}"
-                 BackgroundColor="#eee">
+                 BackgroundColor="#f9f9f9">
            <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
@@ -68,17 +68,17 @@
                             <MenuItem Text="{Binding InCart, Converter={StaticResource AddRemoveCartText}}"  
                                       Clicked="OnContextMenuClicked"/>
                         </ViewCell.ContextActions>
-                            <StackLayout Orientation="Vertical"
-                                         Spacing="0"
-                                         Padding="0"
-                                         Margin="4">
-                                <Label Text="{Binding NameInCart}" 
-                                       TextColor="Green" />
-                                <Label Text="{Binding Plant.ScientificName}" 
-                                       TextColor="Gray"
-                                       FontAttributes="Italic"
-                                       FontSize="Micro"/>
-                            </StackLayout>
+                        <StackLayout Orientation="Vertical"
+                                     Spacing="0"
+                                     Padding="0"
+                                     Margin="4">
+                            <Label Text="{Binding NameInCart}" 
+                                    TextColor="Green" />
+                            <Label Text="{Binding Plant.ScientificName}" 
+                                    TextColor="Gray"
+                                    FontAttributes="Italic"
+                                    FontSize="Micro"/>
+                        </StackLayout>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>

@@ -36,36 +36,39 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="4 Shopping List.cs" />
-    <Compile Include="AboutPage.xaml.cs">
-      <DependentUpon>AboutPage.xaml</DependentUpon>
+    <Compile Include="PageAbout.xaml.cs">
+      <DependentUpon>PageAbout.xaml</DependentUpon>
     </Compile>
     <Compile Include="App.cs" />
     <Compile Include="AppData.cs" />
     <Compile Include="4 Criteria.cs" />
-    <Compile Include="MoreInfoPage.xaml.cs">
-      <DependentUpon>MoreInfoPage.xaml</DependentUpon>
+    <Compile Include="PageMoreInfo.xaml.cs">
+      <DependentUpon>PageMoreInfo.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ShoppingListPage.xaml.cs">
-      <DependentUpon>ShoppingListPage.xaml</DependentUpon>
+    <Compile Include="PagePlantGroups.xaml.cs">
+      <DependentUpon>PagePlantGroups.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PageShoppingList.xaml.cs">
+      <DependentUpon>PageShoppingList.xaml</DependentUpon>
     </Compile>
     <Compile Include="Toolkit.cs" />
-    <Compile Include="FiltersPage.xaml.cs">
-      <DependentUpon>FiltersPage.xaml</DependentUpon>
+    <Compile Include="PageFilters.xaml.cs">
+      <DependentUpon>PageFilters.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PlantListPage.xaml.cs">
-      <DependentUpon>PlantListPage.xaml</DependentUpon>
+    <Compile Include="PagePlantList.xaml.cs">
+      <DependentUpon>PagePlantList.xaml</DependentUpon>
     </Compile>
     <Compile Include="2 PlantListViewModel.cs" />
     <Compile Include="3 PlantViewModel.cs" />
     <Compile Include="1 StatePlantListViewModel.cs" />
-    <Compile Include="TopLevelPage.xaml.cs">
-      <DependentUpon>TopLevelPage.xaml</DependentUpon>
+    <Compile Include="PageTopLevel.xaml.cs">
+      <DependentUpon>PageTopLevel.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModelBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="PlantListPage.xaml">
+    <EmbeddedResource Include="PagePlantList.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -85,19 +88,19 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="FiltersPage.xaml">
+    <EmbeddedResource Include="PageFilters.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="AboutPage.xaml">
+    <EmbeddedResource Include="PageAbout.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="TopLevelPage.xaml">
+    <EmbeddedResource Include="PageTopLevel.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -120,13 +123,19 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="MoreInfoPage.xaml">
+    <EmbeddedResource Include="PageMoreInfo.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ShoppingListPage.xaml">
+    <EmbeddedResource Include="PageShoppingList.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="PagePlantGroups.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

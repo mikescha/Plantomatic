@@ -5,6 +5,9 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using PlantMan.Plant;
 using Importer.CSV2toPlantV4;
+using Xamarin.Forms;
+using System.Windows.Input;
+
 
 namespace PlantomaticVM
 {
@@ -30,7 +33,6 @@ namespace PlantomaticVM
 
             //Generate MyPlants
             FilterPlantList();
-
         }
 
         public PlantList PlantList
@@ -86,6 +88,28 @@ namespace PlantomaticVM
             //MyPlants is the field that stores the matching plants. Here, we take the list and convert it to an ObservableCollection for the UI 
             PlantList.MyPlants = new ObservableCollection<MyPlant>(list);
         }
+
+
+        //Command for restoring all defaults, called from Filters page
+        private Command _setWinterFlowers;
+        public ICommand SetWinterFlowers
+        {
+            get
+            {
+                if (_setWinterFlowers == null)
+                {
+                    _setWinterFlowers = new Command(() =>
+                    {
+                        //choose appropriate criteria for this set of plants
+                        PlantList.TargetPlant.FloweringMonths = FloweringMonths.Dec | FloweringMonths.Jan | FloweringMonths.Feb;
+                        OnPropertyChanged("TargetPlant");
+                        FilterPlantList();
+                    });
+                }
+                return _setWinterFlowers;
+            }
+        }
+
 
         public event PropertyChangedEventHandler PropertyChanged;
 

@@ -52,10 +52,15 @@
     </StackLayout>
     
     <StackLayout Grid.Row="2" Grid.Column="0">
-      <Label Text="No matching plants" IsVisible="{Binding Source={x:Reference listView}, Path=ItemsSource, Converter={StaticResource listToBoolConverter}}"/>
+      <Label Text="No matching plants" 
+             IsVisible="{Binding Source={x:Reference listView}, Path=ItemsSource, Converter={StaticResource listToBoolConverter}}"/>
       
       <!--The list of plants-->
-      <ListView x:Name="listView" Grid.Row="2" Grid.Column="0" ItemsSource="{Binding MasterViewModel.PlantList.MyPlants}" ItemTapped="OnPlantSelected" SeparatorVisibility="None">
+      <ListView x:Name="listView" 
+                ItemsSource="{Binding MasterViewModel.PlantList.MyPlants}" 
+                Grid.Row="2" Grid.Column="0"
+                ItemTapped="OnPlantSelected"
+                SeparatorVisibility="None">
          <ListView.ItemTemplate>
             <DataTemplate>
               <ViewCell>

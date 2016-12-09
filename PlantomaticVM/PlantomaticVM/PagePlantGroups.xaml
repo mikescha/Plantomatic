@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PlantomaticVM.PlantGroupsPage"
+             SizeChanged="OnPageSizeChanged"
+             Title="Plant Sets"
+             BindingContext="{Binding Source={x:Static Application.Current}, Path=AppData}">
+    
+    <ContentPage.Padding>
+        <OnPlatform x:TypeArguments="Thickness" iOS="0, 20, 0, 0" WinPhone="0,5,5,10"/>
+    </ContentPage.Padding>
+
+    <Grid x:Name="mainGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Label x:Name="labelTitle" 
+               Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
+               Text="{Binding MasterViewModel.PlantList.MyPlants.Count, StringFormat = 'Find plants for these conditions ({0} matches)'}"
+               VerticalTextAlignment="Center"
+               HorizontalTextAlignment="Center"
+               FontAttributes="Bold"
+               TextColor="Gray"/>
+
+        <Button x:Name="buttonWinterFlowers"
+                Text="Winter Flowers"
+                Command="{Binding MasterViewModel.SetWinterFlowers}"/>
+
+        <Button x:Name="buttonBirds" 
+                Text="Attracts Birds"/>
+
+        <Button x:Name="buttonShady"
+                Text="Shady and Drought Tolerant"/>
+    
+        <Button x:Name="buttonContainers"
+                Text="Containers and Hummingbirds"/>
+        
+    </Grid>
+</ContentPage>

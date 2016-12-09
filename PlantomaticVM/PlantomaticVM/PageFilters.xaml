@@ -5,7 +5,7 @@
                xmlns:tools="clr-namespace:PlantomaticVM"
                x:Class="PlantomaticVM.FiltersPage"
                SizeChanged="OnPageSizeChanged"
-               Title="Filters"
+               Title="Custom Search"
                BindingContext="{Binding Source={x:Static Application.Current}, Path=AppData}">
 
       <ContentPage.Padding>
