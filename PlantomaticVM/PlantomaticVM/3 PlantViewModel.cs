@@ -3,34 +3,58 @@ using System.Windows.Input;
 using Xamarin.Forms;
 using PlantMan.Plant;
 
-/* To add a property:
- * 1) Add a definition
- * 2) Add a constructor
- * 2.5) Add to the initializer in MyPlant
- * 3) Add to TargetPlant definition
- * 4) Add to filter query
- * 5) Add to filters page
-*/
 namespace PlantomaticVM
 {
     public class MyPlant : INotifyPropertyChanged
     {
         Plant plant;
-        bool inCart;       
+        bool inCart;
+        int count;
+        string nameInCart;     
                
         public MyPlant()
         {
-            plant = new Plant();
-            inCart = false;
+            Plant = new Plant();
+            InCart = false;
+            Count = 1;
+            NameInCart = "";
         }
 
         // Initialize a plant when one is passed in
         public MyPlant(Plant newPlant)
         {
             plant = newPlant;
-            inCart = false;
+            InCart = false;
+            Count = 0;
+            SetNameInCart();
         }
-        
+
+        public string NameInCart
+        {
+            set
+            {
+                if (nameInCart != value)
+                {
+                    nameInCart = value;
+                    OnPropertyChanged("NameInCart");
+                }
+            }
+            get
+            {
+                return nameInCart;
+            }
+        }
+
+        public string SetNameInCart()
+        {
+            if (Count > 0)
+                NameInCart = Plant.Name + " (" + Count.ToString() + ")";
+            else
+                NameInCart = Plant.Name;
+
+            return NameInCart;
+        }
+
         public Plant Plant
         {
             set {
@@ -53,15 +77,60 @@ namespace PlantomaticVM
                 if (inCart != value)
                 {
                     inCart = value;
+
+                    if (inCart)
+                    {
+                        //it just turned true, so it used to be false. Make sure there is at least 1 plant in the cart
+                        Count = 1;
+                    }
+                    else
+                    {
+                        //it is false, so it used to be true. Make sure the cart is empty.
+                        Count = 0;
+                    }
                     OnPropertyChanged("InCart");
                 }
             }
             get { return inCart; }
         }
 
-        public bool ToggleListStatus()
+        // The state of whether a plant is in the shopping cart or not
+        public int Count
         {
-            InCart = !InCart;
+            set
+            {
+                if (count != value)
+                {
+                    count = value;
+                    SetNameInCart();
+
+                    //ensure the count and the cart flag stay in sync
+                    if (count > 0)
+                        inCart = true;
+                    else
+                        inCart = false;
+
+                    OnPropertyChanged("Count");
+                    OnPropertyChanged("InCart");
+                    OnPropertyChanged("NameInCart");
+                }
+            }
+            get { return count; }
+        }
+
+        public bool TogglePlantCartStatus()
+        {
+            if (InCart)
+            {
+                InCart = false;
+                Count = 0;
+            }
+            else
+            {
+                InCart = true;
+                Count = 1;
+            }
+                
             return InCart;
         }
 
@@ -74,120 +143,5 @@ namespace PlantomaticVM
                 handler(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        /* Should be fully deprecated, leaving it in but moving to a comment, just in case.
-        private Command _toggleCartStatus;
-        public ICommand ToggleCartStatus
-        {
-            get
-            {
-                if (_toggleCartStatus == null)
-                {
-                    _toggleCartStatus = new Command(() => {
-                        InCart = !InCart;
-                    });
-                }
-                return _toggleCartStatus;
-            }
-        }
-
-        //don't remember why i had this
-        public PlantList PlantList { set; get; }
-
-        //Legacy getters/setters from when I had my own fields
-
-        public string Name
-        {
-            set
-            {
-                if (name != value)
-                {
-                    name = value;
-                    OnPropertyChanged("Name");
-                }
-            }
-            get { return name; }
-        }
-
-        public string ScientificName
-        {
-            set
-            {
-                if (scientificName != value)
-                {
-                    scientificName = value;
-                    OnPropertyChanged("ScientificName");
-                }
-            }
-            get { return scientificName; }
-        }
-
-        public decimal LowTemp
-        {
-            set
-            {
-                if (lowTemp != value)
-                {
-                    lowTemp = value;
-                    OnPropertyChanged("LowTemp");
-                }
-            }
-            get { return lowTemp; }
-        }
-
-        public FloweringMonths FloweringMonths
-        {
-            set
-            { 
-                if (floweringMonths != value)
-                {
-                    floweringMonths = value;
-                    OnPropertyChanged("FloweringMonths");
-                }
-            }
-            get { return floweringMonths; }
-        }
-
-        public SunRequirements SunRequirements
-        {
-            set
-            {
-                if (sunRequirements != value)
-                {
-                    sunRequirements = value;
-                    OnPropertyChanged("SunRequirements");
-                }
-            }
-            get { return sunRequirements; }
-        }
-
-        public string MoreInfoURL
-        {
-            set
-            {
-                if (moreInfoURL != value)
-                {
-                    moreInfoURL = value;
-                    OnPropertyChanged("MoreInfoURL");
-                }
-            }
-            get { return moreInfoURL; }
-        }
-
-        public YesNoMaybe AttractsBirds
-        {
-            set
-            {
-                if (attractsBirds != value)
-                {
-                    attractsBirds = value;
-                    OnPropertyChanged("AttractsBirds");
-                }
-            }
-            get { return attractsBirds; }
-        }
-
-
-
-        */
     }
 }

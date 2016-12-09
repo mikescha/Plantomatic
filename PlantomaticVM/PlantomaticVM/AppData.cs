@@ -25,14 +25,17 @@ namespace PlantomaticVM
                 // For each plant that is in the shopping list, add the scientific name to a smaller list. We'll use this to rehydrate later. 
                 // TODO I should probably add a GUID or something to each plant and save that instead. That will prevent the list from breaking if the 
                 // scientific names change later, which they could
-                List<string> shoppingList = new List<string>();
+                List<CartItem> shoppingList = new List<CartItem>();
 
                 foreach (MyPlant p in this.MasterViewModel.PlantList.ShoppingListPlants)
                 {
-                    shoppingList.Add(p.Plant.ScientificName);
+                    CartItem aPlant = new CartItem();
+                    aPlant.Count = p.Count;
+                    aPlant.Name = p.Plant.ScientificName;
+                    shoppingList.Add(aPlant);
                 }
 
-                XmlSerializer serializer = new XmlSerializer(typeof(List<string>)); //debug changed string to list<string>
+                XmlSerializer serializer = new XmlSerializer(typeof(List<CartItem>)); 
                 using (StringWriter stringWriter = new StringWriter())
                 {
                     serializer.Serialize(stringWriter, shoppingList);
@@ -48,14 +51,14 @@ namespace PlantomaticVM
 
         //need to check whether, at the point this gets called, we already have loaded the basic data. if so, then we can change this to just 
         //set the proper fields instead of returning a list of plants (which then the caller is going to have to loop through)
-        public static List<string> Deserialize(string strAppData)
+        public static List<CartItem> Deserialize(string strAppData)
         {
             if (strAppData != null)
             {
-                XmlSerializer serializer = new XmlSerializer(typeof(List<string>));
+                XmlSerializer serializer = new XmlSerializer(typeof(List<CartItem>));
                 using (StringReader stringReader = new StringReader(strAppData))
                 {
-                    List<string> shoppingList = (List<string>)serializer.Deserialize(stringReader);
+                    List<CartItem> shoppingList = (List<CartItem>)serializer.Deserialize(stringReader);
                     return shoppingList;
                 }
             }

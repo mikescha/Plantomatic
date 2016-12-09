@@ -72,9 +72,14 @@ namespace PlantomaticVM
                     (PlantList.TargetPlant.FloweringMonths == FloweringMonths.AllMonths))
                 .Where(p => (PlantList.TargetPlant.SunRequirements != SunRequirements.AllSunTypes && p.Plant.SunRequirements.HasFlag(PlantList.TargetPlant.SunRequirements)) ||
                     (PlantList.TargetPlant.SunRequirements == SunRequirements.AllSunTypes))
+                .Where(p => (PlantList.TargetPlant.PlantTypes != PlantTypes.AllPlantTypes && p.Plant.PlantTypes.HasFlag(PlantList.TargetPlant.PlantTypes)) ||
+                    (PlantList.TargetPlant.PlantTypes == PlantTypes.AllPlantTypes))
                 .Where(p => (p.Plant.MinWinterTempF.Value <= PlantList.TargetPlant.MinWinterTempF.Value))
+                .Where(p => (p.Plant.MaxHeight.Value <= PlantList.TargetPlant.MaxWidth.Value))
+                .Where(p => (p.Plant.MaxWidth.Value <= PlantList.TargetPlant.MaxHeight.Value))
                 .Where(p => (PlantList.TargetPlant.AttractsBirds == YesNoMaybe.Unassigned) ||
                     (p.Plant.AttractsBirds == PlantList.TargetPlant.AttractsBirds))
+
                 .OrderBy(p => p.Plant.ScientificName)
                 .ToList();
 

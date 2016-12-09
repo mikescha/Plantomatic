@@ -9,17 +9,18 @@
                SizeChanged="OnPageSizeChanged"
                BindingContext="{Binding Source={x:Static Application.Current}, Path=AppData}">
     
-  <ContentPage.Padding> <OnPlatform x:TypeArguments="Thickness" iOS="0, 20, 0, 0" />  </ContentPage.Padding>
+    <ContentPage.Padding>
+        <OnPlatform x:TypeArguments="Thickness" iOS="0, 20, 0, 0" WinPhone="0,5,5,10"/>
+    </ContentPage.Padding>
 
     <ContentPage.Resources>
       <ResourceDictionary>
         <tools:ListToBoolConverter   x:Key="listToBoolConverter" /> 
+        
         <tools:BoolToStringConverter x:Key="AddRemoveCartText" 
                                      TrueText="Remove from cart"
                                      FalseText="Add to cart"/>
-        <tools:BoolToStringConverter x:Key="ShowListText" 
-                                     TrueText="Show matching plants"
-                                     FalseText="Show shopping list"/>
+          
         <tools:BoolToStringConverter x:Key="ColorIfInList" 
                                      TrueText="Green"
                                      FalseText="Black"/>
@@ -58,13 +59,11 @@
          <ListView.ItemTemplate>
             <DataTemplate>
               <ViewCell>
-              
                 <ViewCell.ContextActions>
                   <MenuItem Text="{Binding InCart, Converter={StaticResource AddRemoveCartText}}" 
                             Clicked="OnToggleCartMenuClicked"/> 
                 </ViewCell.ContextActions>                                                        
-              
-                <StackLayout BackgroundColor="#eee"
+                <StackLayout BackgroundColor="#f9f9f9"
                              Orientation="Vertical"
                              Padding="3">
                     <!--TODO This changes label color if the plant is in the list. Decide if this is what we want-->
@@ -81,7 +80,7 @@
         <ScrollView x:Name="detailLayout" Grid.Row="3" Grid.Column="0" >
             <StackLayout Padding="5" 
                    BindingContext="{Binding Source={x:Reference listView}, Path=SelectedItem}" 
-                   HorizontalOptions="Start" VerticalOptions="Start" Orientation="Vertical" Spacing="5">
+                   HorizontalOptions="StartAndExpand" VerticalOptions="Start" Orientation="Vertical" Spacing="5">
                 <StackLayout.Resources>
                     <ResourceDictionary>
                         <Style TargetType="Label">
@@ -96,18 +95,34 @@
                 <Label Text="{Binding Plant.ScientificName}" FontAttributes="Italic"/>
                 <Label Text="{Binding Plant.NotableVisuals}"/>
                 <Label Text="{Binding Plant.Notes}"/>
+                <Label Text="{Binding Plant.PlantTypes}"/>
                 <Label Text="{Binding Plant.MinWinterTempF.Value, StringFormat='Minimum low temp: {0}'}" />
                 <Label Text="{Binding Plant.SunRequirements, StringFormat='Sun requirements: {0}'}" />
                 <Label Text="{Binding Plant.FloweringMonths, StringFormat='Flowering months: {0}'}" />
+                <Label Text="{Binding Plant.MaxWidth.Value, StringFormat='Maximum width: {0} ft'}"  />
+                <Label Text="{Binding Plant.MaxHeight.Value, StringFormat='Maximum height: {0} ft'}"  />
                 <Label x:Name="MoreInfoURLLabel" Text="More info..." TextColor="Blue" IsVisible="false">
                     <!--invisible by default so it doesn't show until there's a selection-->
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OnMoreInfoTapped"/>
                     </Label.GestureRecognizers>
                 </Label>
-
+                <StackLayout Orientation="Horizontal" 
+                             HorizontalOptions="StartAndExpand">
+                    <Label x:Name="EntryBoxLabel" Text="How many do you want?" IsVisible="False" />
+                    <Entry x:Name="EntryBox" Text="{Binding Count, Mode=TwoWay}"  Keyboard="Numeric" IsVisible="False" />    
+                </StackLayout>
+                
+                
                 <!-- If I can figure out how to do this as part of the viewmodel with binding, then instead of Clicked I would have 
-                 something like, Command="{Binding ToggleCartStatus}"  -->
+                 something like, Command="{Binding ToggleCartStatus}"  
+                
+                Do I need this any more?
+                
+                <tools:BoolToStringConverter x:Key="ShowListText" 
+                                     TrueText="Show matching plants"
+                                     FalseText="Show shopping list"/>
+
                 <Button x:Name="AddToCartButton" Text="{Binding InCart, Converter={StaticResource AddRemoveCartText}}" 
                     BorderWidth="1"     
                     Clicked="OnToggleCartButtonClicked"
@@ -119,7 +134,7 @@
                         <OnPlatform x:TypeArguments="Color" Android="White" WinPhone="Black" />
                     </Button.BorderColor>
                 </Button>
-
+-->
             </StackLayout>
 
         </ScrollView>

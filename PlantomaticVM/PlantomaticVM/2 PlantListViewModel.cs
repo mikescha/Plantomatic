@@ -114,7 +114,7 @@ namespace PlantomaticVM
         {
             //First, find the plant that matches the one passed in (this assumes each plant's name is spelled consistently, that
             //the name is unique, and that it exists exactly once). And then, toggle the status of that plant.
-            bool value = allPlants.Find(x => x.Plant.Name == p.Plant.Name).ToggleListStatus();
+            bool value = allPlants.Find(x => x.Plant.Name == p.Plant.Name).TogglePlantCartStatus();
 
             //Now, regenerate the list so that it reflects the right set of plants and everybody knows it has changed
             RefreshShoppingListPlants();
@@ -131,6 +131,7 @@ namespace PlantomaticVM
             OnPropertyChanged("SummaryMonths");
             OnPropertyChanged("SummarySun");
             OnPropertyChanged("SummaryTemp");
+            OnPropertyChanged("SummaryWidth");
         }
 
         #endregion KeyActions
@@ -154,6 +155,7 @@ namespace PlantomaticVM
                         foreach(MyPlant p in allPlants)
                         {
                             p.InCart = false;
+                            p.Count = 0;
                         }
                         RefreshShoppingListPlants();
                     });
@@ -289,6 +291,19 @@ namespace PlantomaticVM
             }
         }
 
+        public int SummaryWidth
+        {
+            get
+            {
+                int totalWidth = 0;
+
+                foreach (MyPlant p in shoppingListPlants)
+                {
+                    totalWidth += (int) (p.Plant.MaxWidth.Value * p.Plant.MaxWidth.Value * p.Count);
+                }
+                return totalWidth;
+            }
+        }
         #endregion AnalysisOperations
 
         #region INPC

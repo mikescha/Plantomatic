@@ -40,6 +40,23 @@ namespace PlantomaticVM
         }
     }
 
+
+    // TODO DO I NEED THIS?
+    public class IntToStringConverter : IValueConverter
+    {
+        public string TrueText { set; get; }
+        public string FalseText { set; get; }
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return (int)value > 0 ? TrueText : FalseText;
+        }
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return false;
+        }
+    }
+
+
     //Takes a list of objects, and returns the one at a specified position.
     //One use: In the Filters page XAML, if the user picks the 3rd string in the filter, then this gives back the 3rd object in the associated list
     [ContentProperty("Items")]

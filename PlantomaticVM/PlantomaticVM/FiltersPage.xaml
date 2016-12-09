@@ -142,6 +142,38 @@
                         </Binding>
                     </Picker.SelectedIndex>
                 </Picker>
+
+                <Picker x:Name="plantTypePicker"
+                        Title="Plant type"
+                        SelectedIndexChanged="OnPickerSelectedIndexChanged">
+                    <Picker.Items>
+                        <x:String>All</x:String>
+                        <x:String>Annual</x:String>
+                        <x:String>Perennial</x:String>
+                        <x:String>Bush</x:String>
+                        <x:String>Fern</x:String>
+                        <x:String>Grass</x:String>
+                        <x:String>Tree</x:String>
+                        <x:String>Vine</x:String>
+                    </Picker.Items>
+                    <Picker.SelectedIndex>
+                        <Binding Path="MasterViewModel.PlantList.TargetPlant.PlantTypes">
+                            <Binding.Converter>
+                                <tools:ObjectToIndexConverter x:TypeArguments="plants:PlantTypes">
+                                    <plants:PlantTypes>AllPlantTypes</plants:PlantTypes>
+                                    <plants:PlantTypes>Annual_herb</plants:PlantTypes>
+                                    <plants:PlantTypes>Perennial_herb</plants:PlantTypes>
+                                    <plants:PlantTypes>Bush</plants:PlantTypes>
+                                    <plants:PlantTypes>Fern</plants:PlantTypes>
+                                    <plants:PlantTypes>Grass</plants:PlantTypes>
+                                    <plants:PlantTypes>Tree</plants:PlantTypes>
+                                    <plants:PlantTypes>Vine</plants:PlantTypes>
+                                </tools:ObjectToIndexConverter>
+                            </Binding.Converter>
+                        </Binding>
+                    </Picker.SelectedIndex>
+                </Picker>
+
             </StackLayout>
 
             <StackLayout x:Name="filtersSet2">
@@ -183,6 +215,60 @@
                                     <plants:YesNoMaybe>Unassigned</plants:YesNoMaybe>
                                     <plants:YesNoMaybe>Yes</plants:YesNoMaybe>
                                     <plants:YesNoMaybe>No</plants:YesNoMaybe>
+                                </tools:ObjectToIndexConverter>
+                            </Binding.Converter>
+                        </Binding>
+                    </Picker.SelectedIndex>
+                </Picker>
+
+                <Picker x:Name="maxHeightPicker"
+                        Title="Maximum height"
+                        SelectedIndexChanged="OnPickerSelectedIndexChanged">
+                    <Picker.Items>
+                        <x:String>Any</x:String>
+                        <x:String>2 feet</x:String>
+                        <x:String>4 feet</x:String>
+                        <x:String>6 feet</x:String>
+                        <x:String>10 feet</x:String>
+                        <x:String>20 feet</x:String>
+                    </Picker.Items>
+                    <Picker.SelectedIndex>
+                        <Binding Path="MasterViewModel.PlantList.TargetPlant.MaxHeight.Value">
+                            <Binding.Converter>
+                                <tools:ObjectToIndexConverter x:TypeArguments="x:Decimal">
+                                    <x:Decimal>999</x:Decimal>
+                                    <x:Decimal>2</x:Decimal>
+                                    <x:Decimal>4</x:Decimal>
+                                    <x:Decimal>6</x:Decimal>
+                                    <x:Decimal>10</x:Decimal>
+                                    <x:Decimal>20</x:Decimal>
+                                </tools:ObjectToIndexConverter>
+                            </Binding.Converter>
+                        </Binding>
+                    </Picker.SelectedIndex>
+                </Picker>
+
+                <Picker x:Name="maxWidthPicker"
+                        Title="Maximum width"
+                        SelectedIndexChanged="OnPickerSelectedIndexChanged">
+                    <Picker.Items>
+                        <x:String>Any</x:String>
+                        <x:String>2 feet</x:String>
+                        <x:String>4 feet</x:String>
+                        <x:String>6 feet</x:String>
+                        <x:String>10 feet</x:String>
+                        <x:String>20 feet</x:String>
+                    </Picker.Items>
+                    <Picker.SelectedIndex>
+                        <Binding Path="MasterViewModel.PlantList.TargetPlant.MaxWidth.Value">
+                            <Binding.Converter>
+                                <tools:ObjectToIndexConverter x:TypeArguments="x:Decimal">
+                                    <x:Decimal>999</x:Decimal>
+                                    <x:Decimal>2</x:Decimal>
+                                    <x:Decimal>4</x:Decimal>
+                                    <x:Decimal>6</x:Decimal>
+                                    <x:Decimal>10</x:Decimal>
+                                    <x:Decimal>20</x:Decimal>
                                 </tools:ObjectToIndexConverter>
                             </Binding.Converter>
                         </Binding>

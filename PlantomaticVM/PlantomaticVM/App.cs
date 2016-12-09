@@ -28,19 +28,23 @@ namespace PlantomaticVM
             if (Properties.ContainsKey("appData"))
             {
                 //Load the list of the scientific names of the plants the user wants 
-                List<string> shoppingList = AppData.Deserialize((string)Properties["appData"]);
+                List<CartItem> shoppingList = AppData.Deserialize((string)Properties["appData"]);
 
                 if (shoppingList != null)
                 {
                     //rehydrate the list
-                    foreach (string sciName in shoppingList)
+                    foreach (CartItem aPlant in shoppingList)
                     {
                         //Check that the plant exists before adding it to the cart. Store this in a variable so we don't do the query twice. The query
                         //returns a reference to the actual object, not a copy of it, so this works as expected.
-                        MyPlant p = this.AppData.MasterViewModel.PlantList.AllPlants.Find(x => x.Plant.ScientificName == sciName);
+                        MyPlant p = this.AppData.MasterViewModel.PlantList.AllPlants.Find(x => x.Plant.ScientificName == aPlant.Name);
 
                         if (p != null)
+                        {
                             p.InCart = true;
+                            p.Count = aPlant.Count;
+                        }
+                            
                     }
                     this.AppData.MasterViewModel.PlantList.RefreshShoppingListPlants();
                 }

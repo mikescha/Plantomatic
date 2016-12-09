@@ -10,11 +10,17 @@ namespace PlantomaticVM
         FloweringMonths floweringMonths;
         SunRequirements sunRequirements;
         YesNoMaybe attractsBirds;
+        PlantTypes plantTypes;
+        Plant.AssignableDecimal maxHeight = new Plant.AssignableDecimal();
+        Plant.AssignableDecimal maxWidth = new Plant.AssignableDecimal();
 
         decimal defaultLowTemp = 32;
         FloweringMonths defaultFloweringMonths = FloweringMonths.AllMonths;
         SunRequirements defaultSunRequirements = SunRequirements.AllSunTypes;
         YesNoMaybe defaultAttractsBirds = YesNoMaybe.Unassigned;
+        PlantTypes defaultPlantType = PlantTypes.AllPlantTypes;
+        decimal defaultMaxHeight = 6;
+        decimal defaultMaxWidth = 6;
 
         // Constructor
         public MyCriteria()
@@ -23,6 +29,10 @@ namespace PlantomaticVM
             FloweringMonths = defaultFloweringMonths;
             SunRequirements = defaultSunRequirements;
             AttractsBirds = defaultAttractsBirds;
+            PlantTypes = defaultPlantType;
+
+            maxHeight.Value = defaultMaxHeight;
+            maxWidth.Value = defaultMaxWidth;
         }
 
         public Plant.AssignableDecimal MinWinterTempF
@@ -71,6 +81,44 @@ namespace PlantomaticVM
                 }
             }
             get { return attractsBirds; }
+        }
+
+        public PlantTypes PlantTypes
+        {
+            set
+            {
+                if (plantTypes != value)
+                {
+                    plantTypes = value;
+                }
+            }
+            get { return plantTypes; }
+        }
+
+        public Plant.AssignableDecimal MaxHeight
+        {
+            set
+            {
+                if (maxHeight != value)
+                {
+                    maxHeight = value;
+                }
+            }
+
+            get { return maxHeight; } 
+        }
+
+        public Plant.AssignableDecimal MaxWidth
+        {
+            set
+            {
+                if (maxWidth != value)
+                {
+                    maxWidth = value;
+                }
+            }
+
+            get { return maxWidth; }
         }
 
     }
