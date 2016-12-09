@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PlantomaticVM.PlantGroupsPage"
+             xmlns:tools="clr-namespace:PlantomaticVM"
              SizeChanged="OnPageSizeChanged"
              Title="Plant Sets"
              BindingContext="{Binding Source={x:Static Application.Current}, Path=AppData}">
@@ -9,6 +10,20 @@
     <ContentPage.Padding>
         <OnPlatform x:TypeArguments="Thickness" iOS="0, 20, 0, 0" WinPhone="0,5,5,10"/>
     </ContentPage.Padding>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <tools:ListToBoolConverter   x:Key="listToBoolConverter" />
+
+            <tools:BoolToStringConverter x:Key="AddRemoveCartText" 
+                                     TrueText="Remove from cart"
+                                     FalseText="Add to cart"/>
+
+            <tools:BoolToStringConverter x:Key="ButtonHighlight" 
+                                     TrueText="Green"
+                                     FalseText="White"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
     <Grid x:Name="mainGrid">
         <Grid.RowDefinitions>
@@ -33,16 +48,24 @@
 
         <Button x:Name="buttonWinterFlowers"
                 Text="Winter Flowers"
-                Command="{Binding MasterViewModel.SetWinterFlowers}"/>
+                Command="{Binding MasterViewModel.SetWinterFlowers}"
+                BackgroundColor="{Binding MasterViewModel.ShowingWinterFlowers, Converter={StaticResource ButtonHighlight}}"/>
 
         <Button x:Name="buttonBirds" 
-                Text="Attracts Birds"/>
-
+                Text="Attracts Birds"
+                Command="{Binding MasterViewModel.SetAttractsBirds}"
+                BackgroundColor="{Binding MasterViewModel.ShowingBirds, Converter={StaticResource ButtonHighlight}}"/>
+        
         <Button x:Name="buttonShady"
-                Text="Shady and Drought Tolerant"/>
+                Text="Shady and Drought Tolerant"
+                Command="{Binding MasterViewModel.SetShadeAndDrought}"
+                BackgroundColor="{Binding MasterViewModel.ShowingShadeAndDrought, Converter={StaticResource ButtonHighlight}}"/>
     
         <Button x:Name="buttonContainers"
-                Text="Containers and Hummingbirds"/>
-        
+                Text="Containers and Hummingbirds"
+                Command="{Binding MasterViewModel.SetContainersAndHummingbirds}"
+                BackgroundColor="{Binding MasterViewModel.ShowingHummingbirds, Converter={StaticResource ButtonHighlight}}"/>
+
+
     </Grid>
 </ContentPage>

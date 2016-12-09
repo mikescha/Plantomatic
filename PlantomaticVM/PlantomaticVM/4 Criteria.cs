@@ -10,6 +10,7 @@ namespace PlantomaticVM
         FloweringMonths floweringMonths;
         SunRequirements sunRequirements;
         YesNoMaybe attractsBirds;
+        YesNoMaybe attractsHummingbirds;
         PlantTypes plantTypes;
         Plant.AssignableDecimal maxHeight = new Plant.AssignableDecimal();
         Plant.AssignableDecimal maxWidth = new Plant.AssignableDecimal();
@@ -18,9 +19,10 @@ namespace PlantomaticVM
         FloweringMonths defaultFloweringMonths = FloweringMonths.AllMonths;
         SunRequirements defaultSunRequirements = SunRequirements.AllSunTypes;
         YesNoMaybe defaultAttractsBirds = YesNoMaybe.Unassigned;
+        YesNoMaybe defaultAttractsHummingbirds = YesNoMaybe.Unassigned;
         PlantTypes defaultPlantType = PlantTypes.AllPlantTypes;
-        decimal defaultMaxHeight = 6;
-        decimal defaultMaxWidth = 6;
+        decimal defaultMaxHeight = 300;
+        decimal defaultMaxWidth = 300;
 
         // Constructor
         public MyCriteria()
@@ -29,6 +31,7 @@ namespace PlantomaticVM
             FloweringMonths = defaultFloweringMonths;
             SunRequirements = defaultSunRequirements;
             AttractsBirds = defaultAttractsBirds;
+            AttractsHummingbirds = defaultAttractsHummingbirds;
             PlantTypes = defaultPlantType;
 
             maxHeight.Value = defaultMaxHeight;
@@ -81,6 +84,19 @@ namespace PlantomaticVM
                 }
             }
             get { return attractsBirds; }
+        }
+
+
+        public YesNoMaybe AttractsHummingbirds
+        {
+            set
+            {
+                if (attractsHummingbirds != value)
+                {
+                    attractsHummingbirds = value;
+                }
+            }
+            get { return attractsHummingbirds; }
         }
 
         public PlantTypes PlantTypes

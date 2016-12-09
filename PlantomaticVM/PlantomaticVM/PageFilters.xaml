@@ -236,7 +236,7 @@
                         <Binding Path="MasterViewModel.PlantList.TargetPlant.MaxHeight.Value">
                             <Binding.Converter>
                                 <tools:ObjectToIndexConverter x:TypeArguments="x:Decimal">
-                                    <x:Decimal>999</x:Decimal>
+                                    <x:Decimal>300</x:Decimal>
                                     <x:Decimal>2</x:Decimal>
                                     <x:Decimal>4</x:Decimal>
                                     <x:Decimal>6</x:Decimal>
@@ -263,7 +263,7 @@
                         <Binding Path="MasterViewModel.PlantList.TargetPlant.MaxWidth.Value">
                             <Binding.Converter>
                                 <tools:ObjectToIndexConverter x:TypeArguments="x:Decimal">
-                                    <x:Decimal>999</x:Decimal>
+                                    <x:Decimal>300</x:Decimal>
                                     <x:Decimal>2</x:Decimal>
                                     <x:Decimal>4</x:Decimal>
                                     <x:Decimal>6</x:Decimal>
