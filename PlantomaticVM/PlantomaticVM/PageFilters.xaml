@@ -5,7 +5,7 @@
                xmlns:tools="clr-namespace:PlantomaticVM"
                x:Class="PlantomaticVM.FiltersPage"
                SizeChanged="OnPageSizeChanged"
-               Title="Custom Search"
+               Title="Advanced"
                BindingContext="{Binding Source={x:Static Application.Current}, Path=AppData}">
 
       <ContentPage.Padding>
@@ -35,10 +35,10 @@
             
             <!--Heading Elements-->
             <Label  Grid.Row="0" Grid.Column="0" 
-                    Text="{Binding MasterViewModel.PlantList.MyPlants.Count, StringFormat = 'What are you looking for? ({0} matches)'}"
+                    Text="{Binding MasterViewModel.PlantList.MyPlants.Count, StringFormat = '{0} matches'}"
                     VerticalTextAlignment="Center"
                     FontAttributes="Bold"
-                    TextColor="Gray"/>
+                    TextColor="Black"/>
 
             <Button Grid.Row="0" Grid.Column="1" 
                     Text="Reset all" 

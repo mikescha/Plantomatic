@@ -55,8 +55,7 @@ namespace PlantomaticVM
                 mainGrid.ColumnDefinitions[0].Width = new GridLength(1, GridUnitType.Star);
                 mainGrid.ColumnDefinitions[1].Width = new GridLength(0);
                 mainGrid.RowDefinitions[2].Height = new GridLength(1, GridUnitType.Star);
-                mainGrid.RowDefinitions[3].Height = new GridLength(1, GridUnitType.Star);
-                Grid.SetRow(detailLayout, 3);
+                Grid.SetRow(detailLayout, 2);
                 Grid.SetColumn(detailLayout, 0);
             }
             // Landscape mode. 
@@ -64,9 +63,8 @@ namespace PlantomaticVM
             {
                 mainGrid.ColumnDefinitions[0].Width = new GridLength(1, GridUnitType.Star);
                 mainGrid.ColumnDefinitions[1].Width = new GridLength(1, GridUnitType.Star);
-                mainGrid.RowDefinitions[2].Height = new GridLength(1, GridUnitType.Star);
-                mainGrid.RowDefinitions[3].Height = new GridLength(0);
-                Grid.SetRow(detailLayout, 2);
+                mainGrid.RowDefinitions[2].Height = new GridLength(0);
+                Grid.SetRow(detailLayout, 1);
                 Grid.SetColumn(detailLayout, 1);
             }//end else
             

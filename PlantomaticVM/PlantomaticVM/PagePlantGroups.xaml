@@ -4,7 +4,7 @@
              x:Class="PlantomaticVM.PlantGroupsPage"
              xmlns:tools="clr-namespace:PlantomaticVM"
              SizeChanged="OnPageSizeChanged"
-             Title="Plant Sets"
+             Title="Criteria"
              BindingContext="{Binding Source={x:Static Application.Current}, Path=AppData}">
     
     <ContentPage.Padding>
@@ -32,6 +32,8 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -40,11 +42,11 @@
 
         <Label x:Name="labelTitle" 
                Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
-               Text="{Binding MasterViewModel.PlantList.MyPlants.Count, StringFormat = 'Find plants for these conditions ({0} matches)'}"
+               Text="{Binding MasterViewModel.PlantList.MyPlants.Count, StringFormat = 'What kinds of plants do you want? ({0} matches)'}"
                VerticalTextAlignment="Center"
-               HorizontalTextAlignment="Center"
+               HorizontalTextAlignment="Start"
                FontAttributes="Bold"
-               TextColor="Gray"/>
+               TextColor="Black"/>
         
         <Button x:Name="buttonWinterFlowers"
                 Text="Winter Flowers"
@@ -75,6 +77,7 @@
                 Text="Containers and Hummingbirds"
                 Command="{Binding MasterViewModel.SetContainersAndHummingbirds}"
                 BackgroundColor="{Binding MasterViewModel.ShowingHummingbirds, Converter={StaticResource ButtonHighlight}}"/>
+
 
     </Grid>
 </ContentPage>

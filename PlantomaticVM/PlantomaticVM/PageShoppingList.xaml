@@ -27,40 +27,49 @@
     <Grid x:Name="mainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="0" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />  <!--For the plants-->
-            <ColumnDefinition Width="*" />  <!--For the summary-->
+            <ColumnDefinition Width="*" />  
+            <ColumnDefinition Width="*" /> 
         </Grid.ColumnDefinitions>
 
-      <!--Heading and Clear button-->
-      <StackLayout Grid.Row="0" Grid.Column="0">
-            <StackLayout Orientation="Horizontal"
-                         HorizontalOptions="StartAndExpand">
-                <Label x:Name="countLabel"       
-                       Text="{Binding MasterViewModel.PlantList.ShoppingListPlants.Count, StringFormat = '{0} species in your list'}"
-                       FontAttributes="Bold" 
-                       TextColor="Gray"
-                       VerticalOptions="Center"/>
-                <Button Text="Clear list"  
-                        Command="{Binding MasterViewModel.PlantList.ClearCart}"
-                        BorderWidth="1"
-                        HorizontalOptions="End">
-                    <Button.BackgroundColor>
-                        <OnPlatform x:TypeArguments="Color" Android="#404040" />
-                    </Button.BackgroundColor>
-                    <Button.BorderColor>
-                        <OnPlatform x:TypeArguments="Color" Android="White" WinPhone="Black" />
-                    </Button.BorderColor>
-                </Button>
-            </StackLayout>
-
-       <!--List of plants from shopping list.  -->
-       <ListView x:Name="shoppingListView" SeparatorVisibility="None"
-                 ItemsSource="{Binding MasterViewModel.PlantList.ShoppingListPlants}"
-                 BackgroundColor="#f9f9f9">
-           <ListView.ItemTemplate>
+        <!--Heading-->        
+        <Grid x:Name="headingGrid"
+              Grid.Row="0" Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Label  Grid.Row="0" Grid.Column="0" 
+                    Text="{Binding MasterViewModel.PlantList.ShoppingListPlants.Count, StringFormat = '{0} species in your list'}"
+                    VerticalTextAlignment="Center"
+                    FontAttributes="Bold"
+                    TextColor="Black"/>
+            <Button Grid.Row="0" Grid.Column="1" 
+                    Text="Clear list" 
+                    HorizontalOptions="End"
+                    Command="{Binding MasterViewModel.PlantList.ClearCart}"
+                    BorderWidth="1">
+                <Button.BackgroundColor>
+                    <OnPlatform x:TypeArguments="Color" Android="#404040" />
+                </Button.BackgroundColor>
+                <Button.BorderColor>
+                    <OnPlatform x:TypeArguments="Color" Android="White" WinPhone="Black" />
+                </Button.BorderColor>
+            </Button>
+        </Grid>
+        
+        <!--List of plants from shopping list.  -->
+        <ListView x:Name="shoppingListView" SeparatorVisibility="None"
+                  ItemsSource="{Binding MasterViewModel.PlantList.ShoppingListPlants}"
+                  BackgroundColor="#f9f9f9"
+                  Grid.Row="1" Grid.Column="0">
+            <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
                         <!--Context menu-->
@@ -83,14 +92,10 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-          
-      </StackLayout>
 
-
-        
         <!-- Summary data -->
-      <ScrollView x:Name="summaryView" Grid.Row="0" Grid.Column="1" >
-          <StackLayout Orientation="Vertical" VerticalOptions="Start">
+        <ScrollView x:Name="summaryView" Grid.Row="1" Grid.Column="1" >
+            <StackLayout Orientation="Vertical" VerticalOptions="Start">
                 <Label Text="Months that you have flowers"
                        FontSize="Small" TextColor="Gray"/>
 
@@ -129,10 +134,10 @@
                     </ListView.ItemTemplate>
                 </ListView>
               
-              <Label Text="{Binding MasterViewModel.PlantList.SummaryTemp, StringFormat='Lowest temp for selected plants: {0}F'}"
+              <Label Text="{Binding MasterViewModel.PlantList.SummaryTemp, StringFormat='Lowest temp tolerated: {0}F'}"
                      FontSize="Small" TextColor="Gray"/>
 
-              <Label Text="{Binding MasterViewModel.PlantList.SummaryWidth, StringFormat='Total area required for selected plants: {0:N0} sq ft'}"
+              <Label Text="{Binding MasterViewModel.PlantList.SummaryWidth, StringFormat='Area required: {0:N0} sq ft'}"
                      FontSize="Small" TextColor="Gray"/>
 
             </StackLayout>    

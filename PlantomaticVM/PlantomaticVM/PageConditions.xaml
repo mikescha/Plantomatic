@@ -40,11 +40,11 @@
         
         <Label x:Name="labelTitle" 
                Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
-               Text="{Binding MasterViewModel.PlantList.MyPlants.Count, StringFormat = 'Find plants for these conditions ({0} matches)'}"
+               Text="{Binding MasterViewModel.PlantList.MyPlants.Count, StringFormat = 'Where are you planting? ({0} matches)'}"
                VerticalTextAlignment="Center"
-               HorizontalTextAlignment="Center"
+               HorizontalTextAlignment="Start"
                FontAttributes="Bold"
-               TextColor="Gray"/>
+               TextColor="Black"/>
         <!--Make two checkboxes, one for search by county and the other search by conditions-->
         <StackLayout Grid.Row="1" Grid.Column="0" x:Name="counties" HorizontalOptions="Center" VerticalOptions="CenterAndExpand">
             <StackLayout Orientation="Horizontal" HorizontalOptions="End">

@@ -5,7 +5,7 @@
                xmlns:tools="clr-namespace:PlantomaticVM"
                xmlns:theplantlist="clr-namespace:PlantomaticVM;assembly=PlantomaticVM"
                x:Class="PlantomaticVM.PlantListPage"
-               Title="Plants" 
+               Title="Matching Plants" 
                SizeChanged="OnPageSizeChanged"
                BindingContext="{Binding Source={x:Static Application.Current}, Path=AppData}">
     
@@ -29,36 +29,29 @@
     
     <Grid x:Name="mainGrid">
       <Grid.RowDefinitions>
-        <RowDefinition Height="0" /> <!--Hiding this for now-->
-        <RowDefinition Height="Auto" />
-        <RowDefinition Height="*" />
-        <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
       </Grid.RowDefinitions>
       <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="*" />
-        <ColumnDefinition Width="0" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="0" />
       </Grid.ColumnDefinitions>
-
-    <!--TODO Am I going to have a title here? if not, delete this and update the page layout code
-    <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding MasterViewModel.PlantList.State, StringFormat='Native Plants of {0}'}"
-               FontSize="Large"
-               HorizontalTextAlignment="Center" />
-    -->
-    
-    <StackLayout Grid.Row="1" Grid.Column="0">
-      <Label Text="{Binding MasterViewModel.PlantList.MyPlants.Count, StringFormat = '{0} plants matching your conditions'}"
+  
+    <StackLayout Grid.Row="0" Grid.Column="0">
+      <Label Text="{Binding MasterViewModel.PlantList.MyPlants.Count, StringFormat = '{0} matches'}"
              FontAttributes="Bold"
-             TextColor="Gray"/>
+             TextColor="Black"/>
     </StackLayout>
     
-    <StackLayout Grid.Row="2" Grid.Column="0">
+    <StackLayout Grid.Row="1" Grid.Column="0">
       <Label Text="No matching plants" 
              IsVisible="{Binding Source={x:Reference listView}, Path=ItemsSource, Converter={StaticResource listToBoolConverter}}"/>
       
       <!--The list of plants-->
       <ListView x:Name="listView" 
                 ItemsSource="{Binding MasterViewModel.PlantList.MyPlants}" 
-                Grid.Row="2" Grid.Column="0"
+                Grid.Row="1" Grid.Column="0"
                 ItemTapped="OnPlantSelected"
                 SeparatorVisibility="None">
          <ListView.ItemTemplate>
@@ -82,7 +75,7 @@
       </StackLayout>
       
       <!--The detail that shows when a plant is selected-->
-        <ScrollView x:Name="detailLayout" Grid.Row="3" Grid.Column="0" >
+        <ScrollView x:Name="detailLayout" Grid.Row="2" Grid.Column="0" >
             <StackLayout Padding="5" 
                    BindingContext="{Binding Source={x:Reference listView}, Path=SelectedItem}" 
                    HorizontalOptions="StartAndExpand" VerticalOptions="Start" Orientation="Vertical" Spacing="5">
