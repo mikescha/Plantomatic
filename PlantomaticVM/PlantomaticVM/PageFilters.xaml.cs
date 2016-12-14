@@ -21,7 +21,13 @@ namespace PlantomaticVM
             // Get AppData object (set to BindingContext in XAML file). 
             AppData appData = (AppData)BindingContext;
             appData.MasterViewModel.FilterPlantList();
+        }
 
+        void OnSwitchToggled(object sender, EventArgs args)
+        {
+            // Get AppData object (set to BindingContext in XAML file). 
+            AppData appData = (AppData)BindingContext;
+            appData.MasterViewModel.FilterPlantList();
         }
 
         void OnPageSizeChanged(object sender, EventArgs args)

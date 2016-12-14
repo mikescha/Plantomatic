@@ -13,15 +13,18 @@ namespace PlantomaticVM
 {
     public class PlantListViewModel : INotifyPropertyChanged
     {
-        PlantList plantList;
-        bool showingShoppingList = false;
-        bool showingWinterFlowers = false;
-        bool showingShadeAndDrought = false;
-        bool showingHummingbirds = false;
-        bool showingBirds = false;
+        PlantList plantList;      
 
         public PlantListViewModel()
         {
+            ShowingShoppingList = false;
+            ShowingWinterFlowers = false;
+            ShowingShadeAndDrought = false;
+            ShowingContainersAndHummingbirds = false;
+            ShowingBirds = false;
+            ShowingSmallYard = false;
+            ShowingPollenators = false;
+
             //Initialize the list with test data. When we're ready to use real data then need to change the "true" to false
             //and add some other stuff that Joe's test app uses.
             PlantImporter myPI = new PlantImporter(true);
@@ -52,81 +55,90 @@ namespace PlantomaticVM
             get { return plantList; }
         }
 
-        public bool ShowingShoppingList
-        {
-            set
-            {
-                if (showingShoppingList != value)
+        public bool ShowingShoppingList { get; set; }
+        public bool ShowingWinterFlowers { get; set; }
+        public bool ShowingShadeAndDrought { get; set; }
+        public bool ShowingContainersAndHummingbirds { get; set; }
+        public bool ShowingBirds { get; set; }
+        public bool ShowingSmallYard { get; set; }
+        public bool ShowingPollenators { get; set; }
+
+        /*
+                public bool ShowingShoppingList
                 {
-                    showingShoppingList = value;
-                    OnPropertyChanged("ShowingShoppingList");
+                    set
+                    {
+                        if (showingShoppingList != value)
+                        {
+                            showingShoppingList = value;
+                            OnPropertyChanged("ShowingShoppingList");
+                        }
+                    }
+
+                    get { return showingShoppingList; }
+
                 }
-            }
 
-            get { return showingShoppingList; }
-
-        }
-
-        public bool ShowingWinterFlowers
-        {
-            set
-            {
-                if (showingWinterFlowers != value)
+                public bool ShowingWinterFlowers
                 {
-                    showingWinterFlowers = value;
-                    OnPropertyChanged("ShowingWinterFlowers");
+                    set
+                    {
+                        if (showingWinterFlowers != value)
+                        {
+                            showingWinterFlowers = value;
+                            OnPropertyChanged("ShowingWinterFlowers");
+                        }
+                    }
+
+                    get { return showingWinterFlowers; }
+
                 }
-            }
 
-            get { return showingWinterFlowers; }
-
-        }
-
-        public bool ShowingShadeAndDrought
-        {
-            set
-            {
-                if (showingShadeAndDrought != value)
+                public bool ShowingShadeAndDrought
                 {
-                    showingShadeAndDrought = value;
-                    OnPropertyChanged("ShowingShadeAndDrought");
+                    set
+                    {
+                        if (showingShadeAndDrought != value)
+                        {
+                            showingShadeAndDrought = value;
+                            OnPropertyChanged("ShowingShadeAndDrought");
+                        }
+                    }
+
+                    get { return showingShadeAndDrought; }
+
                 }
-            }
 
-            get { return showingShadeAndDrought; }
-
-        }
-
-        public bool ShowingHummingbirds
-        {
-            set
-            {
-                if (showingHummingbirds != value)
+                public bool ShowingContainersAndHummingbirds
                 {
-                    showingHummingbirds = value;
-                    OnPropertyChanged("ShowingHummingbirds");
+                    set
+                    {
+                        if (showingHummingbirds != value)
+                        {
+                            showingHummingbirds = value;
+                            OnPropertyChanged("ShowingHummingbirds");
+                        }
+                    }
+
+                    get { return showingHummingbirds; }
+
                 }
-            }
 
-            get { return showingHummingbirds; }
-
-        }
-
-        public bool ShowingBirds
-        {
-            set
-            {
-                if (showingBirds != value)
+                public bool ShowingBirds
                 {
-                    showingBirds = value;
-                    OnPropertyChanged("ShowingBirds");
+                    set
+                    {
+                        if (showingBirds != value)
+                        {
+                            showingBirds = value;
+                            OnPropertyChanged("ShowingBirds");
+                        }
+                    }
+
+                    get { return showingBirds; }
+
                 }
-            }
-
-            get { return showingBirds; }
-
-        }
-
+                */
         //Filter the list to show only plants that match Target, which is an element of PlantList
         public void FilterPlantList()
         {
@@ -147,10 +159,8 @@ namespace PlantomaticVM
                 .Where(p => (p.Plant.MinWinterTempF.Value <= PlantList.TargetPlant.MinWinterTempF.Value))
                 .Where(p => (p.Plant.MaxHeight.Value <= PlantList.TargetPlant.MaxHeight.Value))
                 .Where(p => (p.Plant.MaxWidth.Value <= PlantList.TargetPlant.MaxWidth.Value))
-                .Where(p => (PlantList.TargetPlant.AttractsBirds == YesNoMaybe.Unassigned) ||
-                    (p.Plant.AttractsBirds == PlantList.TargetPlant.AttractsBirds))
-                .Where(p => (PlantList.TargetPlant.AttractsHummingbirds == YesNoMaybe.Unassigned) ||
-                    (p.Plant.AttractsHummingbirds == PlantList.TargetPlant.AttractsHummingbirds))
+                .Where(p => CrittersMatch(PlantList.TargetPlant, p.Plant))
+                .Where(p => CountiesMatch(PlantList.TargetPlant, p.Plant))
 
                 .OrderBy(p => p.Plant.ScientificName)
                 .ToList();
@@ -159,44 +169,87 @@ namespace PlantomaticVM
             PlantList.MyPlants = new ObservableCollection<MyPlant>(list);
         }
 
+        // Returns false if the user wants a particular critter and the plant DOES NOT have it.
+        // Returns true if the user wants a particular critter and the plant has it. We are treating all the critter flags as "OR"s, so that 
+        //     if the user says YES to both hummingbirds and bees, then they get plants that attract either instead of only getting plants that
+        //     attract both
+        // Returns true if the user didn't specify that they wanted a particular critter.
+        private bool CrittersMatch(MyCriteria target, Plant candidate)
+        {
+            bool result = false;
+
+            if ((target.AttractsBirds && candidate.AttractsBirds.HasFlag(YesNoMaybe.Yes)) ||
+                (target.AttractsHummingbirds && candidate.AttractsHummingbirds.HasFlag(YesNoMaybe.Yes)) ||
+                (target.AttractsButterflies && candidate.AttractsButterflies.HasFlag(YesNoMaybe.Yes)) ||
+                (target.AttractsNativeBees && candidate.AttractsNativeBees.HasFlag(YesNoMaybe.Yes)) ||
+                (!target.AttractsBirds && !target.AttractsButterflies && !target.AttractsHummingbirds && !target.AttractsNativeBees))
+            {
+                result = true;
+            }
+
+            return result;
+        }
+
         // Returns true if the any of the flowering months contained in Wanted matches any of the flowering months in Test
         // e.g. if Wanted = "Jan or Feb" and Test = "Feb or Mar" then true
         //      if Wanted = "Jan or Feb" and Test = "Mar or Apr" then false
         //      if Wanted = "Jan or Feb" and Test = "AllMonths" then true
-        private bool IncludesMonths(FloweringMonths wanted, FloweringMonths test)
+        private bool IncludesMonths(FloweringMonths wanted, FloweringMonths candidate)
         {
-            return (wanted.HasFlag(FloweringMonths.Jan) && test.HasFlag(FloweringMonths.Jan)) ||
-                   (wanted.HasFlag(FloweringMonths.Feb) && test.HasFlag(FloweringMonths.Feb)) ||
-                   (wanted.HasFlag(FloweringMonths.Mar) && test.HasFlag(FloweringMonths.Mar)) ||
-                   (wanted.HasFlag(FloweringMonths.Apr) && test.HasFlag(FloweringMonths.Apr)) ||
-                   (wanted.HasFlag(FloweringMonths.May) && test.HasFlag(FloweringMonths.May)) ||
-                   (wanted.HasFlag(FloweringMonths.Jun) && test.HasFlag(FloweringMonths.Jun)) ||
-                   (wanted.HasFlag(FloweringMonths.Jul) && test.HasFlag(FloweringMonths.Jul)) ||
-                   (wanted.HasFlag(FloweringMonths.Aug) && test.HasFlag(FloweringMonths.Aug)) ||
-                   (wanted.HasFlag(FloweringMonths.Sep) && test.HasFlag(FloweringMonths.Sep)) ||
-                   (wanted.HasFlag(FloweringMonths.Oct) && test.HasFlag(FloweringMonths.Oct)) ||
-                   (wanted.HasFlag(FloweringMonths.Nov) && test.HasFlag(FloweringMonths.Nov)) ||
-                   (wanted.HasFlag(FloweringMonths.Dec) && test.HasFlag(FloweringMonths.Dec)) ||
-                   (wanted.HasFlag(FloweringMonths.AllMonths));
+            
+            //TODO how to enumerate through the flags?
+            FloweringMonths[] target = {FloweringMonths.Jan, FloweringMonths.Feb, FloweringMonths.Mar, FloweringMonths.Apr,
+                                        FloweringMonths.May, FloweringMonths.Jun, FloweringMonths.Jul, FloweringMonths.Aug,
+                                        FloweringMonths.Sep, FloweringMonths.Oct, FloweringMonths.Nov, FloweringMonths.Dec};
+            bool result = false;
+
+            foreach (FloweringMonths f in target)
+            {
+                result = result || (candidate.HasFlag(f) && wanted.HasFlag(f));
+            }
+
+            return result || wanted.HasFlag(FloweringMonths.AllMonths);
         }
 
         // Returns true if the any of the sun types contained in Wanted matches any of the sun types in Test
         // e.g. if Wanted = "Full or Partial" and Test = "Partial" then true
         //      if Wanted = "Shade" and Test = "Full or Partial" then false
-        private bool IncludesSun(SunRequirements wanted, SunRequirements test)
+        private bool IncludesSun(SunRequirements wanted, SunRequirements candidate)
         {
-            return (wanted.HasFlag(SunRequirements.Full) && test.HasFlag(SunRequirements.Full)) ||
-                   (wanted.HasFlag(SunRequirements.Partial) && test.HasFlag(SunRequirements.Partial)) ||
-                   (wanted.HasFlag(SunRequirements.Shade) && test.HasFlag(SunRequirements.Shade)) ||
+            return (wanted.HasFlag(SunRequirements.Full) && candidate.HasFlag(SunRequirements.Full)) ||
+                   (wanted.HasFlag(SunRequirements.Partial) && candidate.HasFlag(SunRequirements.Partial)) ||
+                   (wanted.HasFlag(SunRequirements.Shade) && candidate.HasFlag(SunRequirements.Shade)) ||
                    (wanted.HasFlag(SunRequirements.AllSunTypes));
         }
 
+        //TODO is there a logic bug here? This will return FALSE if...
+        //   -- a plant is Unknown for Napa, and the user said they want plants that are Yes for Napa, then that plant
+        //   -- a plant is No for Napa, and the user said they want plants NOT in Napa
+        private bool CountiesMatch(MyCriteria target, Plant candidate)
+        {
+            bool result = false;
+
+            if (target.NativeTo_Alameda && candidate.NativeTo_Alameda.HasFlag(YesNoMaybe.Yes) ||
+                target.NativeTo_Contra_Costa && candidate.NativeTo_Contra_Costa.HasFlag(YesNoMaybe.Yes) ||
+                target.NativeTo_Marin && candidate.NativeTo_Marin.HasFlag(YesNoMaybe.Yes) ||
+                target.NativeTo_Napa && candidate.NativeTo_Napa.HasFlag(YesNoMaybe.Yes) ||
+                target.NativeTo_Santa_Clara && candidate.NativeTo_Santa_Clara.HasFlag(YesNoMaybe.Yes) ||
+                target.NativeTo_San_Francisco && candidate.NativeTo_San_Francisco.HasFlag(YesNoMaybe.Yes) ||
+                target.NativeTo_San_Mateo && candidate.NativeTo_San_Mateo.HasFlag(YesNoMaybe.Yes) ||
+                target.NativeTo_Solano && candidate.NativeTo_Solano.HasFlag(YesNoMaybe.Yes) ||
+                target.NativeTo_Sonoma && candidate.NativeTo_Sonoma.HasFlag(YesNoMaybe.Yes))
+            {
+                result = true;
+            }
+
+            return result;
+        }
 
         private void ClearButtons()
         {
             ShowingWinterFlowers = false;
             ShowingShadeAndDrought = false;
-            ShowingHummingbirds = false;
+            ShowingContainersAndHummingbirds = false;
             ShowingBirds = false;
         }
 
@@ -212,9 +265,11 @@ namespace PlantomaticVM
                     {
                         ClearButtons();
                         ShowingWinterFlowers = true;
-                        PlantList.TargetPlant = new MyCriteria();
+
+                        PlantList.TargetPlant.ResetCriteria();
                         PlantList.TargetPlant.FloweringMonths = FloweringMonths.Dec | FloweringMonths.Jan | FloweringMonths.Feb;
                         OnPropertyChanged("TargetPlant");
+
                         FilterPlantList();
                     });
                 }
@@ -234,9 +289,11 @@ namespace PlantomaticVM
                     {
                         ClearButtons();
                         ShowingShadeAndDrought = true;
-                        PlantList.TargetPlant = new MyCriteria();
+
+                        PlantList.TargetPlant.ResetCriteria();
                         PlantList.TargetPlant.SunRequirements = SunRequirements.Shade | SunRequirements.Partial;
                         OnPropertyChanged("TargetPlant");
+
                         FilterPlantList();
                     });
                 }
@@ -256,9 +313,11 @@ namespace PlantomaticVM
                     {
                         ClearButtons();
                         ShowingBirds = true;
-                        PlantList.TargetPlant = new MyCriteria();
-                        PlantList.TargetPlant.AttractsBirds = YesNoMaybe.Yes;
+
+                        PlantList.TargetPlant.ResetCriteria();
+                        PlantList.TargetPlant.AttractsBirds = true;
                         OnPropertyChanged("TargetPlant");
+
                         FilterPlantList();
                     });
                 }
@@ -277,11 +336,13 @@ namespace PlantomaticVM
                     _setContainersAndHummingbirds = new Command(() =>
                     {
                         ClearButtons();
-                        ShowingHummingbirds = true;
-                        PlantList.TargetPlant = new MyCriteria();
-                        PlantList.TargetPlant.MaxWidth.Value = 2;
-                        PlantList.TargetPlant.AttractsHummingbirds = YesNoMaybe.Yes;
+                        ShowingContainersAndHummingbirds = true;
+
+                        PlantList.TargetPlant.ResetCriteria();
+                        PlantList.TargetPlant.MaxWidth.Value = 3;
+                        PlantList.TargetPlant.AttractsHummingbirds = true;
                         OnPropertyChanged("TargetPlant");
+
                         FilterPlantList();
                     });
                 }
@@ -289,8 +350,56 @@ namespace PlantomaticVM
             }
         }
 
+        //Command for choosing subset of plants
+        private Command _setSmallYard;
+        public ICommand SetSmallYard
+        {
+            get
+            {
+                if (_setSmallYard == null)
+                {
+                    _setSmallYard = new Command(() =>
+                    {
+                        ClearButtons();
+                        ShowingSmallYard = true;
 
+                        PlantList.TargetPlant.ResetCriteria();
+                        PlantList.TargetPlant.MaxWidth.Value = 4;
+                        PlantList.TargetPlant.MaxHeight.Value = 4;
+                        OnPropertyChanged("TargetPlant");
 
+                        FilterPlantList();
+                    });
+                }
+                return _setSmallYard;
+            }
+        }
+
+        //Command for choosing subset of plants
+        private Command _setPollenators;
+        public ICommand SetPollenators
+        {
+            get
+            {
+                if (_setPollenators == null)
+                {
+                    _setPollenators = new Command(() =>
+                    {
+                        ClearButtons();
+                        ShowingPollenators = true;
+
+                        PlantList.TargetPlant.ResetCriteria();
+                        PlantList.TargetPlant.AttractsButterflies = true;
+                        PlantList.TargetPlant.AttractsHummingbirds = true;
+                        PlantList.TargetPlant.AttractsNativeBees = true;
+                        OnPropertyChanged("TargetPlant");
+
+                        FilterPlantList();
+                    });
+                }
+                return _setPollenators;
+            }
+        }
 
 
         public event PropertyChangedEventHandler PropertyChanged;

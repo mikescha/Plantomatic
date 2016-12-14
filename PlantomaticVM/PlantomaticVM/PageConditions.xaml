@@ -1,0 +1,139 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PlantomaticVM.PageConditions"
+             xmlns:tools="clr-namespace:PlantomaticVM"
+             SizeChanged="OnPageSizeChanged"
+             Title="Location"
+             BindingContext="{Binding Source={x:Static Application.Current}, Path=AppData}">
+
+    <ContentPage.Padding>
+        <OnPlatform x:TypeArguments="Thickness" iOS="0, 20, 0, 0" WinPhone="0,5,5,10"/>
+    </ContentPage.Padding>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <tools:ListToBoolConverter   x:Key="listToBoolConverter" />
+
+            <tools:BoolToStringConverter x:Key="AddRemoveCartText" 
+                                     TrueText="Remove from cart"
+                                     FalseText="Add to cart"/>
+
+            <tools:BoolToStringConverter x:Key="ButtonHighlight" 
+                                     TrueText="Green"
+                                     FalseText="White"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid x:Name="mainGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        
+        <Label x:Name="labelTitle" 
+               Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
+               Text="{Binding MasterViewModel.PlantList.MyPlants.Count, StringFormat = 'Find plants for these conditions ({0} matches)'}"
+               VerticalTextAlignment="Center"
+               HorizontalTextAlignment="Center"
+               FontAttributes="Bold"
+               TextColor="Gray"/>
+        <!--Make two checkboxes, one for search by county and the other search by conditions-->
+        <StackLayout Grid.Row="1" Grid.Column="0" x:Name="counties" HorizontalOptions="Center" VerticalOptions="CenterAndExpand">
+            <StackLayout Orientation="Horizontal" HorizontalOptions="End">
+                <Label Text="Alameda" 
+                       VerticalOptions="Center" />
+                <Switch Toggled="OnSwitchToggled" 
+                        IsToggled="{Binding MasterViewModel.PlantList.TargetPlant.NativeTo_Alameda}" 
+                        VerticalOptions="Center"/>
+            </StackLayout>
+            <StackLayout Orientation="Horizontal" HorizontalOptions="End">
+                <Label Text="Contra Costa"
+                       VerticalOptions="Center" />
+                <Switch Toggled="OnSwitchToggled" 
+                        IsToggled="{Binding MasterViewModel.PlantList.TargetPlant.NativeTo_Contra_Costa}"/>
+            </StackLayout>
+            <StackLayout Orientation="Horizontal" HorizontalOptions="End">
+                <Label Text="Marin"
+                       VerticalOptions="Center" />
+                <Switch Toggled="OnSwitchToggled" 
+                        IsToggled="{Binding MasterViewModel.PlantList.TargetPlant.NativeTo_Marin}"/>
+            </StackLayout>
+            <StackLayout  Orientation="Horizontal" HorizontalOptions="End">
+                <Label Text="Napa" 
+                       VerticalOptions="Center" />
+                <Switch Toggled="OnSwitchToggled" 
+                        IsToggled="{Binding MasterViewModel.PlantList.TargetPlant.NativeTo_Napa}"/>
+            </StackLayout>
+            <StackLayout  Orientation="Horizontal" HorizontalOptions="End">
+                <Label Text="San Francisco"
+                       VerticalOptions="Center" />
+                <Switch Toggled="OnSwitchToggled" 
+                        IsToggled="{Binding MasterViewModel.PlantList.TargetPlant.NativeTo_San_Francisco}"/>
+            </StackLayout>
+            <StackLayout  Orientation="Horizontal" HorizontalOptions="End">
+                <Label Text="San Mateo"
+                       VerticalOptions="Center" />
+                <Switch Toggled="OnSwitchToggled" 
+                        IsToggled="{Binding MasterViewModel.PlantList.TargetPlant.NativeTo_San_Mateo}"/>
+            </StackLayout>
+            <StackLayout  Orientation="Horizontal" HorizontalOptions="End">
+                <Label Text="Santa Clara" 
+                       VerticalOptions="Center" />
+                <Switch Toggled="OnSwitchToggled" 
+                        IsToggled="{Binding MasterViewModel.PlantList.TargetPlant.NativeTo_Santa_Clara}"/>
+            </StackLayout>
+            <StackLayout  Orientation="Horizontal" HorizontalOptions="End">
+                <Label Text="Solano"
+                       VerticalOptions="Center" />
+                <Switch Toggled="OnSwitchToggled" 
+                        IsToggled="{Binding MasterViewModel.PlantList.TargetPlant.NativeTo_Solano}"/>
+            </StackLayout>
+            <StackLayout Orientation="Horizontal" HorizontalOptions="End">
+                <Label Text="Sonoma"
+                       VerticalOptions="Center" />
+                <Switch Toggled="OnSwitchToggled" 
+                        IsToggled="{Binding MasterViewModel.PlantList.TargetPlant.NativeTo_Sonoma}"/>
+            </StackLayout>
+        </StackLayout>
+
+        <StackLayout Grid.Row="1" Grid.Column="1" x:Name="customConditions">
+            <Picker x:Name="lowTempPicker"
+                        Title="Coldest temperature"
+                        SelectedIndexChanged="OnPickerSelectedIndexChanged">
+                <Picker.Items>
+                    <x:String>Any</x:String>
+                    <x:String>0F</x:String>
+                    <x:String>10F</x:String>
+                    <x:String>20F</x:String>
+                    <x:String>25F</x:String>
+                    <x:String>32F</x:String>
+                    <x:String>40F</x:String>
+                </Picker.Items>
+                <Picker.SelectedIndex>
+                    <Binding Path="MasterViewModel.PlantList.TargetPlant.MinWinterTempF.Value">
+                        <Binding.Converter>
+                            <tools:ObjectToIndexConverter x:TypeArguments="x:Decimal">
+                                <x:Decimal>99</x:Decimal>
+                                <x:Decimal>0</x:Decimal>
+                                <x:Decimal>10</x:Decimal>
+                                <x:Decimal>20</x:Decimal>
+                                <x:Decimal>25</x:Decimal>
+                                <x:Decimal>32</x:Decimal>
+                                <x:Decimal>40</x:Decimal>
+                            </tools:ObjectToIndexConverter>
+                        </Binding.Converter>
+                    </Binding>
+                </Picker.SelectedIndex>
+            </Picker>
+        </StackLayout>
+
+    </Grid>
+</ContentPage>

@@ -9,34 +9,65 @@ namespace PlantomaticVM
         Plant.AssignableDecimal minWinterTempF = new Plant.AssignableDecimal();
         FloweringMonths floweringMonths;
         SunRequirements sunRequirements;
-        YesNoMaybe attractsBirds;
-        YesNoMaybe attractsHummingbirds;
         PlantTypes plantTypes;
         Plant.AssignableDecimal maxHeight = new Plant.AssignableDecimal();
         Plant.AssignableDecimal maxWidth = new Plant.AssignableDecimal();
 
-        decimal defaultLowTemp = 32;
+        decimal defaultLowTemp = 40;
         FloweringMonths defaultFloweringMonths = FloweringMonths.AllMonths;
         SunRequirements defaultSunRequirements = SunRequirements.AllSunTypes;
-        YesNoMaybe defaultAttractsBirds = YesNoMaybe.Unassigned;
-        YesNoMaybe defaultAttractsHummingbirds = YesNoMaybe.Unassigned;
+
+        // We are using FALSE for the attracts to mean, "I don't care" instead of No, so that we don't have to support a 3-state switch and because
+        // it seems unlikely that the user will want to choose plants that explicitly DO NOT attract wildlife. 
+        bool defaultAttracts = false;
+
         PlantTypes defaultPlantType = PlantTypes.AllPlantTypes;
         decimal defaultMaxHeight = 300;
         decimal defaultMaxWidth = 300;
-
+        bool defaultCounty = true;
+       
         // Constructor
         public MyCriteria()
         {
-            MinWinterTempF.Value = defaultLowTemp;
+            //desired values
             FloweringMonths = defaultFloweringMonths;
             SunRequirements = defaultSunRequirements;
-            AttractsBirds = defaultAttractsBirds;
-            AttractsHummingbirds = defaultAttractsHummingbirds;
             PlantTypes = defaultPlantType;
-
             maxHeight.Value = defaultMaxHeight;
             maxWidth.Value = defaultMaxWidth;
+
+            AttractsBirds = defaultAttracts;
+            AttractsHummingbirds = defaultAttracts;
+            AttractsNativeBees = defaultAttracts;
+            AttractsButterflies = defaultAttracts;
+
+            //local conditions
+            MinWinterTempF.Value = defaultLowTemp;
+            NativeTo_Alameda = defaultCounty;
+            NativeTo_Contra_Costa = defaultCounty;
+            NativeTo_Marin = defaultCounty;
+            NativeTo_Napa = defaultCounty;
+            NativeTo_San_Francisco = defaultCounty;
+            NativeTo_San_Mateo = defaultCounty;
+            NativeTo_Santa_Clara = defaultCounty;
+            NativeTo_Solano = defaultCounty;
+            NativeTo_Sonoma = defaultCounty;
         }
+    
+        //Resets everything but location and other environmental variables to the default values
+        public void ResetCriteria()
+        {
+            FloweringMonths = defaultFloweringMonths;
+            SunRequirements = defaultSunRequirements;
+            AttractsBirds = defaultAttracts;
+            AttractsHummingbirds = defaultAttracts;
+            AttractsNativeBees = defaultAttracts;
+            AttractsButterflies = defaultAttracts;
+
+            PlantTypes = defaultPlantType;
+            maxHeight.Value = defaultMaxHeight;
+            maxWidth.Value = defaultMaxWidth;
+        } 
 
         public Plant.AssignableDecimal MinWinterTempF
         {
@@ -74,31 +105,6 @@ namespace PlantomaticVM
             get { return sunRequirements; }
         }
 
-        public YesNoMaybe AttractsBirds
-        {
-            set
-            {
-                if (attractsBirds != value)
-                {
-                    attractsBirds = value;
-                }
-            }
-            get { return attractsBirds; }
-        }
-
-
-        public YesNoMaybe AttractsHummingbirds
-        {
-            set
-            {
-                if (attractsHummingbirds != value)
-                {
-                    attractsHummingbirds = value;
-                }
-            }
-            get { return attractsHummingbirds; }
-        }
-
         public PlantTypes PlantTypes
         {
             set
@@ -121,7 +127,7 @@ namespace PlantomaticVM
                 }
             }
 
-            get { return maxHeight; } 
+            get { return maxHeight; }
         }
 
         public Plant.AssignableDecimal MaxWidth
@@ -136,7 +142,22 @@ namespace PlantomaticVM
 
             get { return maxWidth; }
         }
+        
+        //TODO do I need to make this like the other properties, or should I make the other properties like this?
+        public bool NativeTo_Alameda { get; set; }
+        public bool NativeTo_Contra_Costa { get; set; }
+        public bool NativeTo_Marin { get; set; }
+        public bool NativeTo_Napa { get; set; }
+        public bool NativeTo_San_Francisco { get; set; }
+        public bool NativeTo_San_Mateo { get; set; }
+        public bool NativeTo_Santa_Clara  { get; set; }
+        public bool NativeTo_Solano { get; set; }
+        public bool NativeTo_Sonoma { get; set; }
 
+        public bool AttractsNativeBees { get; set; }
+        public bool AttractsButterflies { get; set; }
+        public bool AttractsHummingbirds { get; set; }
+        public bool AttractsBirds { get; set; }
     }
 }
 

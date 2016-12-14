@@ -45,7 +45,7 @@
                HorizontalTextAlignment="Center"
                FontAttributes="Bold"
                TextColor="Gray"/>
-
+        
         <Button x:Name="buttonWinterFlowers"
                 Text="Winter Flowers"
                 Command="{Binding MasterViewModel.SetWinterFlowers}"
@@ -55,7 +55,17 @@
                 Text="Attracts Birds"
                 Command="{Binding MasterViewModel.SetAttractsBirds}"
                 BackgroundColor="{Binding MasterViewModel.ShowingBirds, Converter={StaticResource ButtonHighlight}}"/>
-        
+
+        <Button x:Name="buttonPollenators" 
+                Text="Attracts Pollenators"
+                Command="{Binding MasterViewModel.SetPollenators}"
+                BackgroundColor="{Binding MasterViewModel.ShowingPollenators, Converter={StaticResource ButtonHighlight}}"/>
+
+        <Button x:Name="buttonSmallYard" 
+                Text="Small Yards"
+                Command="{Binding MasterViewModel.SetSmallYard}"
+                BackgroundColor="{Binding MasterViewModel.ShowingSmallYard, Converter={StaticResource ButtonHighlight}}"/>
+
         <Button x:Name="buttonShady"
                 Text="Shady and Drought Tolerant"
                 Command="{Binding MasterViewModel.SetShadeAndDrought}"
@@ -65,7 +75,6 @@
                 Text="Containers and Hummingbirds"
                 Command="{Binding MasterViewModel.SetContainersAndHummingbirds}"
                 BackgroundColor="{Binding MasterViewModel.ShowingHummingbirds, Converter={StaticResource ButtonHighlight}}"/>
-
 
     </Grid>
 </ContentPage>

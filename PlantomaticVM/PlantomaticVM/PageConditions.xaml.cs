@@ -8,9 +8,9 @@ using Xamarin.Forms;
 
 namespace PlantomaticVM
 {
-    public partial class PlantGroupsPage : ContentPage
+    public partial class PageConditions : ContentPage
     {
-        public PlantGroupsPage()
+        public PageConditions()
         {
             InitializeComponent();
         }
@@ -20,29 +20,26 @@ namespace PlantomaticVM
             //Portrait
             if (Width < Height)
             {
+                /*
                 mainGrid.ColumnDefinitions[0].Width = new GridLength(1, GridUnitType.Star);
                 mainGrid.ColumnDefinitions[1].Width = new GridLength(0);
-                
+
                 Grid.SetRow(buttonWinterFlowers, 1);
                 Grid.SetColumn(buttonWinterFlowers, 0);
 
                 Grid.SetRow(buttonBirds, 2);
                 Grid.SetColumn(buttonBirds, 0);
 
-                Grid.SetRow(buttonPollenators, 3);
-                Grid.SetColumn(buttonPollenators, 0);
-
-                Grid.SetRow(buttonShady, 4);
+                Grid.SetRow(buttonShady, 3);
                 Grid.SetColumn(buttonShady, 0);
 
-                Grid.SetRow(buttonContainers, 5);
+                Grid.SetRow(buttonContainers, 4);
                 Grid.SetColumn(buttonContainers, 0);
-
-                Grid.SetRow(buttonSmallYard, 6);
-                Grid.SetColumn(buttonSmallYard, 0);
+                */
             }
             else //Landscape
             {
+                /*
                 mainGrid.ColumnDefinitions[0].Width = new GridLength(1, GridUnitType.Star);
                 mainGrid.ColumnDefinitions[1].Width = new GridLength(1, GridUnitType.Star);
 
@@ -52,19 +49,28 @@ namespace PlantomaticVM
                 Grid.SetRow(buttonBirds, 2);
                 Grid.SetColumn(buttonBirds, 0);
 
-                Grid.SetRow(buttonPollenators, 3);
-                Grid.SetColumn(buttonPollenators, 0);
-
                 Grid.SetRow(buttonShady, 1);
                 Grid.SetColumn(buttonShady, 1);
 
                 Grid.SetRow(buttonContainers, 2);
                 Grid.SetColumn(buttonContainers, 1);
-
-                Grid.SetRow(buttonSmallYard, 3);
-                Grid.SetColumn(buttonSmallYard, 1);
+                */
             }
         } //end OnPageSizeChanged
+
+        void OnPickerSelectedIndexChanged(object sender, EventArgs args)
+        {
+            // Get AppData object (set to BindingContext in XAML file). 
+            AppData appData = (AppData)BindingContext;
+            appData.MasterViewModel.FilterPlantList();
+        }
+
+        void OnSwitchToggled(object sender, EventArgs args)
+        {
+            // Get AppData object (set to BindingContext in XAML file). 
+            AppData appData = (AppData)BindingContext;
+            appData.MasterViewModel.FilterPlantList();
+        }
 
     }
 }

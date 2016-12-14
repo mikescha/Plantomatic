@@ -35,7 +35,7 @@
             
             <!--Heading Elements-->
             <Label  Grid.Row="0" Grid.Column="0" 
-                    Text="{Binding MasterViewModel.PlantList.MyPlants.Count, StringFormat = 'Find plants for these conditions ({0} matches)'}"
+                    Text="{Binding MasterViewModel.PlantList.MyPlants.Count, StringFormat = 'What are you looking for? ({0} matches)'}"
                     VerticalTextAlignment="Center"
                     FontAttributes="Bold"
                     TextColor="Gray"/>
@@ -73,35 +73,7 @@
             -->
 
             <StackLayout x:Name="filtersSet1">
-                <Picker x:Name="lowTempPicker"
-                        Title="Coldest temperature"
-                        SelectedIndexChanged="OnPickerSelectedIndexChanged">
-                    <Picker.Items>
-                            <x:String>Any</x:String>
-                            <x:String>-50F</x:String>
-                            <x:String>-10F</x:String>
-                            <x:String>0F</x:String>
-                            <x:String>10F</x:String>
-                            <x:String>20F</x:String>
-                            <x:String>32F</x:String>
-                        </Picker.Items>
-                        <Picker.SelectedIndex>
-                        <Binding Path="MasterViewModel.PlantList.TargetPlant.MinWinterTempF.Value">
-                                <Binding.Converter>
-                                    <tools:ObjectToIndexConverter x:TypeArguments="x:Decimal">
-                                        <x:Decimal>99</x:Decimal>
-                                        <x:Decimal>-50</x:Decimal>
-                                        <x:Decimal>-10</x:Decimal>
-                                        <x:Decimal>0</x:Decimal>
-                                        <x:Decimal>10</x:Decimal>
-                                        <x:Decimal>20</x:Decimal>
-                                        <x:Decimal>32</x:Decimal>
-                                    </tools:ObjectToIndexConverter>
-                                </Binding.Converter>
-                            </Binding>
-                        </Picker.SelectedIndex>
-                    </Picker>
-
+                
                 <Picker x:Name="floweringMonthPicker"
                         Title="Flowering month"
                         SelectedIndexChanged="OnPickerSelectedIndexChanged">
@@ -174,10 +146,7 @@
                     </Picker.SelectedIndex>
                 </Picker>
 
-            </StackLayout>
-
-            <StackLayout x:Name="filtersSet2">
-                <Picker x:Name="sunMonthPicker"
+                <Picker x:Name="sunPicker"
                         Title="Sun requirements"
                         SelectedIndexChanged="OnPickerSelectedIndexChanged">
                     <Picker.Items>
@@ -194,27 +163,6 @@
                                     <plants:SunRequirements>Full</plants:SunRequirements>
                                     <plants:SunRequirements>Partial</plants:SunRequirements>
                                     <plants:SunRequirements>Shade</plants:SunRequirements>
-                                </tools:ObjectToIndexConverter>
-                            </Binding.Converter>
-                        </Binding>
-                    </Picker.SelectedIndex>
-                </Picker>
-
-                <Picker x:Name="birdPicker"
-                        Title="Attracts birds?"
-                        SelectedIndexChanged="OnPickerSelectedIndexChanged">
-                    <Picker.Items>
-                        <x:String>Doesn't matter</x:String>
-                        <x:String>Yes</x:String>
-                        <x:String>No</x:String>
-                    </Picker.Items>
-                    <Picker.SelectedIndex>
-                        <Binding Path="MasterViewModel.PlantList.TargetPlant.AttractsBirds">
-                            <Binding.Converter>
-                                <tools:ObjectToIndexConverter x:TypeArguments="plants:YesNoMaybe">
-                                    <plants:YesNoMaybe>Unassigned</plants:YesNoMaybe>
-                                    <plants:YesNoMaybe>Yes</plants:YesNoMaybe>
-                                    <plants:YesNoMaybe>No</plants:YesNoMaybe>
                                 </tools:ObjectToIndexConverter>
                             </Binding.Converter>
                         </Binding>
@@ -274,6 +222,61 @@
                         </Binding>
                     </Picker.SelectedIndex>
                 </Picker>
+            </StackLayout>
+
+            <StackLayout x:Name="filtersSet2" HorizontalOptions="Center" VerticalOptions="Start">
+                <StackLayout  Orientation="Horizontal" HorizontalOptions="End">
+                    <Label Text="Attracts hummingbirds?" 
+                       VerticalOptions="Center" />
+                    <Switch Toggled="OnSwitchToggled" 
+                        IsToggled="{Binding MasterViewModel.PlantList.TargetPlant.AttractsHummingbirds}"/>
+                </StackLayout>
+
+                <StackLayout  Orientation="Horizontal" HorizontalOptions="End">
+                    <Label Text="Attracts any birds?" 
+                       VerticalOptions="Center" />
+                    <Switch Toggled="OnSwitchToggled" 
+                        IsToggled="{Binding MasterViewModel.PlantList.TargetPlant.AttractsBirds}"/>
+                </StackLayout>
+
+                <StackLayout  Orientation="Horizontal" HorizontalOptions="End">
+                    <Label Text="Attracts bees?" 
+                       VerticalOptions="Center" />
+                    <Switch Toggled="OnSwitchToggled" 
+                        IsToggled="{Binding MasterViewModel.PlantList.TargetPlant.AttractsNativeBees}"/>
+                </StackLayout>
+
+                <StackLayout  Orientation="Horizontal" HorizontalOptions="End">
+                    <Label Text="Attracts butterflies?" 
+                       VerticalOptions="Center" />
+                    <Switch Toggled="OnSwitchToggled" 
+                        IsToggled="{Binding MasterViewModel.PlantList.TargetPlant.AttractsButterflies}"/>
+                </StackLayout>
+                
+
+<!-- Old code, but save it until we need it
+                <Picker x:Name="birdPicker"
+                        Title="Attracts birds?"
+                        SelectedIndexChanged="OnPickerSelectedIndexChanged">
+                    <Picker.Items>
+                        <x:String>Doesn't matter</x:String>
+                        <x:String>Yes</x:String>
+                        <x:String>No</x:String>
+                    </Picker.Items>
+                    <Picker.SelectedIndex>
+                        <Binding Path="MasterViewModel.PlantList.TargetPlant.AttractsBirds">
+                            <Binding.Converter>
+                                <tools:ObjectToIndexConverter x:TypeArguments="plants:YesNoMaybe">
+                                    <plants:YesNoMaybe>Unassigned</plants:YesNoMaybe>
+                                    <plants:YesNoMaybe>Yes</plants:YesNoMaybe>
+                                    <plants:YesNoMaybe>No</plants:YesNoMaybe>
+                                </tools:ObjectToIndexConverter>
+                            </Binding.Converter>
+                        </Binding>
+                    </Picker.SelectedIndex>
+                </Picker>
+-->
+                
             </StackLayout>
         </Grid>
       
