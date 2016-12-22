@@ -13,11 +13,17 @@ namespace PlantomaticVM
 {
     public class PlantListViewModel : INotifyPropertyChanged
     {
-        PlantList plantList;      
+        PlantList plantList;
+        public bool showingWinterFlowers;
+        public bool showingShadeAndDrought;
+        public bool showingContainersAndHummingbirds;
+        public bool showingBirds;
+        public bool showingSmallYard;
+        public bool showingPollenators;
+
 
         public PlantListViewModel()
         {
-            ShowingShoppingList = false;
             ShowingWinterFlowers = false;
             ShowingShadeAndDrought = false;
             ShowingContainersAndHummingbirds = false;
@@ -55,14 +61,7 @@ namespace PlantomaticVM
             get { return plantList; }
         }
 
-        public bool ShowingShoppingList { get; set; }
-        public bool ShowingWinterFlowers { get; set; }
-        public bool ShowingShadeAndDrought { get; set; }
-        public bool ShowingContainersAndHummingbirds { get; set; }
-        public bool ShowingBirds { get; set; }
-        public bool ShowingSmallYard { get; set; }
-        public bool ShowingPollenators { get; set; }
-
+        
         /*
                 public bool ShowingShoppingList
                 {
@@ -78,67 +77,8 @@ namespace PlantomaticVM
                     get { return showingShoppingList; }
 
                 }
-
-                public bool ShowingWinterFlowers
-                {
-                    set
-                    {
-                        if (showingWinterFlowers != value)
-                        {
-                            showingWinterFlowers = value;
-                            OnPropertyChanged("ShowingWinterFlowers");
-                        }
-                    }
-
-                    get { return showingWinterFlowers; }
-
-                }
-
-                public bool ShowingShadeAndDrought
-                {
-                    set
-                    {
-                        if (showingShadeAndDrought != value)
-                        {
-                            showingShadeAndDrought = value;
-                            OnPropertyChanged("ShowingShadeAndDrought");
-                        }
-                    }
-
-                    get { return showingShadeAndDrought; }
-
-                }
-
-                public bool ShowingContainersAndHummingbirds
-                {
-                    set
-                    {
-                        if (showingHummingbirds != value)
-                        {
-                            showingHummingbirds = value;
-                            OnPropertyChanged("ShowingHummingbirds");
-                        }
-                    }
-
-                    get { return showingHummingbirds; }
-
-                }
-
-                public bool ShowingBirds
-                {
-                    set
-                    {
-                        if (showingBirds != value)
-                        {
-                            showingBirds = value;
-                            OnPropertyChanged("ShowingBirds");
-                        }
-                    }
-
-                    get { return showingBirds; }
-
-                }
                 */
+
         //Filter the list to show only plants that match Target, which is an element of PlantList
         public void FilterPlantList()
         {
@@ -245,12 +185,104 @@ namespace PlantomaticVM
             return result;
         }
 
+        public bool ShowingWinterFlowers
+        {
+            set
+            {
+                if (showingWinterFlowers != value)
+                {
+                    showingWinterFlowers = value;
+                    OnPropertyChanged("ShowingWinterFlowers");
+                }
+            }
+
+            get { return showingWinterFlowers; }
+
+        }
+
+        public bool ShowingShadeAndDrought
+        {
+            set
+            {
+                if (showingShadeAndDrought != value)
+                {
+                    showingShadeAndDrought = value;
+                    OnPropertyChanged("ShowingShadeAndDrought");
+                }
+            }
+
+            get { return showingShadeAndDrought; }
+
+        }
+
+        public bool ShowingContainersAndHummingbirds
+        {
+            set
+            {
+                if (showingContainersAndHummingbirds != value)
+                {
+                    showingContainersAndHummingbirds = value;
+                    OnPropertyChanged("ShowingContainersAndHummingbirds");
+                }
+            }
+
+            get { return showingContainersAndHummingbirds; }
+
+        }
+
+        public bool ShowingBirds
+        {
+            set
+            {
+                if (showingBirds != value)
+                {
+                    showingBirds = value;
+                    OnPropertyChanged("ShowingBirds");
+                }
+            }
+
+            get { return showingBirds; }
+
+        }
+
+        public bool ShowingPollenators
+        {
+            set
+            {
+                if (showingPollenators != value)
+                {
+                    showingPollenators = value;
+                    OnPropertyChanged("ShowingPollenators");
+                }
+            }
+
+            get { return showingPollenators; }
+
+        }
+
+        public bool ShowingSmallYard
+        {
+            set
+            {
+                if (showingSmallYard != value)
+                {
+                    showingSmallYard = value;
+                    OnPropertyChanged("ShowingSmallYard");
+                }
+            }
+
+            get { return showingSmallYard; }
+
+        }
+
         private void ClearButtons()
         {
             ShowingWinterFlowers = false;
             ShowingShadeAndDrought = false;
             ShowingContainersAndHummingbirds = false;
             ShowingBirds = false;
+            ShowingPollenators = false;
+            ShowingSmallYard = false;
         }
 
         //Command for choosing subset of plants
@@ -313,7 +345,7 @@ namespace PlantomaticVM
                     {
                         ClearButtons();
                         ShowingBirds = true;
-
+                        
                         PlantList.TargetPlant.ResetCriteria();
                         PlantList.TargetPlant.AttractsBirds = true;
                         OnPropertyChanged("TargetPlant");
@@ -337,7 +369,7 @@ namespace PlantomaticVM
                     {
                         ClearButtons();
                         ShowingContainersAndHummingbirds = true;
-
+                        
                         PlantList.TargetPlant.ResetCriteria();
                         PlantList.TargetPlant.MaxWidth.Value = 3;
                         PlantList.TargetPlant.AttractsHummingbirds = true;

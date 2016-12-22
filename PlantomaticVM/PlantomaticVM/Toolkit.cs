@@ -6,6 +6,60 @@ using System.Collections;
 
 namespace PlantomaticVM
 {
+    // Takes an object, and if the object exists then it returns False. If the object is null, it returns True. 
+    // One use: If nothing is selected in the list of plants, then set the visible state of the "Select an plant to see detail" label to True.
+    public class ObjectToBoolConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value == null)
+                return true;
+
+            return false;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return value;
+        }
+    }
+
+    // Takes an object, and if the object exists then it returns True. If the object is null, it returns False. 
+    // One use: If nothing is selected in the list of plants, then set the visible state of the Show Detail panel to False.
+    public class ObjectToBoolConverterOpposite : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value == null)
+                return false;
+
+            return true;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return value;
+        }
+    }
+
+    // Takes a list, and if the list has at least one element then it returns TRUE. If the list is null or has zero elements, it returns True. 
+    // One use: If the list of plants is empty, then set the visible state of the Detail panel label to False.
+    public class ListToBoolConverterOpposite : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value == null)
+                return false;
+
+            return ((IList)value).Count > 0;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return value;
+        }
+    }
+
     // Takes a list, and if the list has at least one element then it returns False. If the list is null or has zero elements, it returns True. 
     // One use: If the list of plants is empty, then set the visible state of the "No matching plants" label to True.
     public class ListToBoolConverter : IValueConverter

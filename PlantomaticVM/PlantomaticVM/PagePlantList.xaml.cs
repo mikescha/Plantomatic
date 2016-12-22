@@ -74,10 +74,7 @@ namespace PlantomaticVM
         {
             //These controls are hidden by default so that they don't show when the page first loads and there is no selection. So, make sure 
             //they get shown as visible when an item is selected
-            MoreInfoURLLabel.IsVisible = true;
-            //AddToCartButton.IsVisible = true;
-            EntryBoxLabel.IsVisible = true;
-            EntryBox.IsVisible = true;
+            //nothingSelectedLabel.IsVisible = false;
         }
 
         // When the "More Info" link is tapped, then open a new pop-over window and load the URL of the selected plant into this
@@ -99,6 +96,7 @@ namespace PlantomaticVM
         protected override void OnAppearing()
         {
             base.OnAppearing();
+            listView.SelectedItem = null;
         }
 
         /* ********** Archive ********** 
