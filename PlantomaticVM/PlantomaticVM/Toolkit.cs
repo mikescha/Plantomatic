@@ -2,10 +2,48 @@
 using System.Collections.Generic;
 using System.Globalization;
 using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
 using System.Collections;
 
 namespace PlantomaticVM
 {
+    // Takes a number representing a count of plants and a max count of plants and returns a height. 
+    // Used on the shopping list page to make the boxes representing the number of plants proportionally taller if there are more plants with flowers in a given month
+    [ContentProperty("count")]
+    public class CalcBoxHeight : IMarkupExtension
+    {
+        public double count { set; get; }
+        public double maxCount { set; get; }
+        public object ProvideValue(IServiceProvider serviceProvider)
+        {
+            if (maxCount == 0)
+                return 0;
+            //Why times 64? Because that is the number of units we want the tallest box to be
+            return (double)((count / maxCount) * 64);
+        }
+
+    }
+
+    public class CountToHeightConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value == null)
+                return false;
+
+            return (double) value * 64;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value == null)
+                return false;
+
+            return (double) value / 64;
+        }
+
+    }
+
     // Takes an object, and if the object exists then it returns False. If the object is null, it returns True. 
     // One use: If nothing is selected in the list of plants, then set the visible state of the "Select an plant to see detail" label to True.
     public class ObjectToBoolConverter : IValueConverter

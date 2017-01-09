@@ -35,6 +35,7 @@ namespace PlantomaticVM
         ObservableCollection<MyPlant> shoppingListPlants = new ObservableCollection<MyPlant>(); // The subset of plants that are in the list
         MyCriteria targetPlant = new MyCriteria(); // The criteria that the user has selected so far
         #endregion Fields
+        double[] summaryMonthArray = new double[13]; //used for summarizing the flowering months. 0 is for max value, 1-12 are for each month
 
         #region Constructors
         public ObservableCollection<MyPlant> MyPlants
@@ -129,6 +130,7 @@ namespace PlantomaticVM
             //Generate notifications for everything that needs to know that the list has changed.
             OnPropertyChanged("ShoppingListPlants");
             OnPropertyChanged("SummaryMonths");
+            OnPropertyChanged("SummaryMonthArray");
             OnPropertyChanged("SummarySun");
             OnPropertyChanged("SummaryTemp");
             OnPropertyChanged("SummaryWidth");
@@ -192,6 +194,55 @@ namespace PlantomaticVM
          * 
          * To add a new summary, add the method below, and also add a PropertyChanged event to the RefreshShoppingListPlants method.
          */
+        public double[] SummaryMonthArray
+        {
+            get
+            {
+                //Get the count of plants that flower in each month
+                double[] monthCount = new double[13];
+                int i;
+
+                foreach (MyPlant p in shoppingListPlants)
+                {
+                    //if it's all months, then add 1 to everything
+                    if (p.Plant.FloweringMonths.HasFlag(FloweringMonths.AllMonths))
+                    {
+                        for (i = 1; i <= 12; i++)
+                        {
+                            monthCount[i]++;
+                        }
+                    }
+                    else //otherwise, go through all the months
+                    {
+                        i = 1;
+                        foreach (FloweringMonths f in floweringMonthDict.Values)
+                        {
+                            if (p.Plant.FloweringMonths.HasFlag(f))
+                                monthCount[i]++;
+                            i++;
+                        }
+                    }
+                }//foreach
+
+                //Find the max
+                double highCount = 0;
+                for (i=1; i<=12; i++)
+                {   
+                    if (monthCount[i] > highCount)
+                        highCount = monthCount[i];
+                }
+                //scale each value
+                for (i = 1; i <= 12; i++)
+                {
+                    summaryMonthArray[i] = (highCount > 0) ? (monthCount[i] / highCount) : 0 ;
+                }
+
+                return summaryMonthArray;
+            }
+
+        }
+    
+
         public List<string> SummaryMonths
         {
             get

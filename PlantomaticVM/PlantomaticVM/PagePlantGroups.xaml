@@ -20,7 +20,7 @@
                                      FalseText="Add to cart"/>
 
             <tools:BoolToStringConverter x:Key="ButtonHighlight" 
-                                     TrueText="Green"
+                                     TrueText="#94DC63"
                                      FalseText="White"/>
         </ResourceDictionary>
     </ContentPage.Resources>

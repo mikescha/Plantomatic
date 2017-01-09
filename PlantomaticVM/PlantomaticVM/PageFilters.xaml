@@ -16,48 +16,16 @@
         <!--Layout uses a nested grid to allow the Reset button to hang out on the right-->
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        
-        <!--Heading-->
-        <Grid x:Name="headingGrid"
-              Grid.Row="0"> <!--Force heading into mainGrid row 0-->
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-            
-            <!--Heading Elements-->
-            <Label  Grid.Row="0" Grid.Column="0" 
-                    Text="{Binding MasterViewModel.PlantList.MyPlants.Count, StringFormat = '{0} matches'}"
-                    VerticalTextAlignment="Center"
-                    FontAttributes="Bold"
-                    TextColor="Black"/>
 
-            <Button Grid.Row="0" Grid.Column="1" 
-                    Text="Reset all" 
-                    HorizontalOptions="End"
-                    Command="{Binding MasterViewModel.PlantList.ResetCriteria}"
-                    BorderWidth="1">
-                <Button.BackgroundColor>
-                    <OnPlatform x:TypeArguments="Color" Android="#404040" />
-                </Button.BackgroundColor>
-                <Button.BorderColor>
-                    <OnPlatform x:TypeArguments="Color" Android="White" WinPhone="Black" />
-                </Button.BorderColor>
-            </Button>
-        </Grid>
-
-        
         <!--Body of page, where the filters go-->
         <Grid x:Name="bodyGrid"
-              Grid.Row="1"> <!--Force heading into mainGrid row 1-->
+              Grid.Row="0"> <!--Force heading into mainGrid row 0-->
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -279,7 +247,40 @@
                 
             </StackLayout>
         </Grid>
-      
+        
+        <!--Footer-->
+        <Grid x:Name="headingGrid"
+              Grid.Row="2">
+            <!--Force footer into mainGrid row 2-->
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <!--Footer Elements-->
+            <Label  Grid.Row="0" Grid.Column="0" 
+                    Text="{Binding MasterViewModel.PlantList.MyPlants.Count, StringFormat = '{0} matches'}"
+                    VerticalTextAlignment="Center"
+                    FontAttributes="Bold"
+                    TextColor="Black"/>
+
+            <Button Grid.Row="0" Grid.Column="1" 
+                    Text="Reset all" 
+                    HorizontalOptions="End"
+                    Command="{Binding MasterViewModel.PlantList.ResetCriteria}"
+                    BorderWidth="1">
+                <Button.BackgroundColor>
+                    <OnPlatform x:TypeArguments="Color" Android="#404040" />
+                </Button.BackgroundColor>
+                <Button.BorderColor>
+                    <OnPlatform x:TypeArguments="Color" Android="White" WinPhone="Black" />
+                </Button.BorderColor>
+            </Button>
+        </Grid>
+
     </Grid>
   
   </ContentPage>

@@ -83,8 +83,7 @@
                     Grid.Row="2" Grid.Column="0" 
                     IsVisible="{Binding Source={x:Reference listView}, Path=ItemsSource, Converter={StaticResource listToBoolConverterOpposite}}" >
             <StackLayout>
-                <!--Defaults to true because nothing is selected by default. When something is selected then we hide this using code
-                    TODO Can this be expressed as a binding against the SelectedItem state of the listview? -->
+                <!--Defaults to true because nothing is selected by default. When something is selected then the binding changes to hide this-->
                 <Label x:Name="nothingSelectedLabel" 
                        Text="Select a plant to learn more about it." 
                        IsVisible="{Binding Source={x:Reference listView}, Path=SelectedItem, Converter={StaticResource objectToBoolConverter}}"/>

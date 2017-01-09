@@ -15,12 +15,11 @@
     <ContentPage.Resources>
       <ResourceDictionary>
         <tools:ListToBoolConverter   x:Key="listToBoolConverter" />
+        <tools:CountToHeightConverter x:Key="CalcHeight"/>
         <tools:BoolToStringConverter x:Key="AddRemoveCartText"
                                      TrueText="Remove from cart"
                                      FalseText="Add to cart"/>
-        <tools:BoolToStringConverter x:Key="ShowListText"
-                                     TrueText="Show matching plants"
-                                     FalseText="Show shopping list"/>
+        
       </ResourceDictionary>
     </ContentPage.Resources>
         
@@ -96,9 +95,116 @@
         <!-- Summary data -->
         <ScrollView x:Name="summaryView" Grid.Row="1" Grid.Column="1" >
             <StackLayout Orientation="Vertical" VerticalOptions="Start">
+                <StackLayout.Resources>
+                    <ResourceDictionary>
+                        <Style TargetType="BoxView">
+                            <Setter Property="WidthRequest" Value="100" />
+                            <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
+                            <Setter Property="VerticalOptions" Value="End" />
+                            <Setter Property="BackgroundColor" Value="#94DC63" />
+                        </Style>
+                        <Style TargetType="Label">
+                            <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
+                            <Setter Property="VerticalOptions" Value="End" />
+                        </Style>
+                    </ResourceDictionary>
+                </StackLayout.Resources>
                 <Label Text="Months that you have flowers"
                        FontSize="Small" TextColor="Gray"/>
 
+                <Grid x:Name="monthGrid">
+                    <Grid.RowDefinitions> 
+                        <RowDefinition Height="68" />
+                        <RowDefinition Height="68" />
+                        <RowDefinition Height="68" />
+                        <RowDefinition Height="68" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    
+                    <BoxView Grid.Row="0" Grid.Column="0" 
+                             HeightRequest="{Binding MasterViewModel.PlantList.SummaryMonthArray[1], 
+                                                     Converter={StaticResource CalcHeight}}" />
+                    <Label   Grid.Row="0" Grid.Column="0" 
+                             Text="Jan"/>
+                                        
+                    <BoxView Grid.Row="0" Grid.Column="1"
+                             HeightRequest="{Binding MasterViewModel.PlantList.SummaryMonthArray[2], 
+                                                     Converter={StaticResource CalcHeight}}" />
+                    <Label   Grid.Row="0" Grid.Column="1"
+                             Text="Feb" />
+                    
+                    <BoxView Grid.Row="0" Grid.Column="2" 
+                             HeightRequest="{Binding MasterViewModel.PlantList.SummaryMonthArray[3], 
+                                                     Converter={StaticResource CalcHeight}}" />
+                    <Label   Grid.Row="0" Grid.Column="2" 
+                             Text="Mar" />
+
+                    <BoxView Grid.Row="1" Grid.Column="0"
+                             HeightRequest="{Binding MasterViewModel.PlantList.SummaryMonthArray[4], 
+                                                     Converter={StaticResource CalcHeight}}" />
+                    <Label   Grid.Row="1" Grid.Column="0"
+                             Text="Apr" />
+                    
+                    <BoxView Grid.Row="1" Grid.Column="1"
+                             HeightRequest="{Binding MasterViewModel.PlantList.SummaryMonthArray[5], 
+                                                        Converter={StaticResource CalcHeight}}" />
+                    <Label   Grid.Row="1" Grid.Column="1"
+                             Text="May" />
+
+                    <BoxView Grid.Row="1" Grid.Column="2"
+                             HeightRequest="{Binding MasterViewModel.PlantList.SummaryMonthArray[6], 
+                                                         Converter={StaticResource CalcHeight}}" />
+                    <Label   Grid.Row="1" Grid.Column="2"
+                             Text="Jun" />
+
+                    <BoxView Grid.Row="2" Grid.Column="0"
+                             HeightRequest="{Binding MasterViewModel.PlantList.SummaryMonthArray[7], 
+                                                        Converter={StaticResource CalcHeight}}" />
+                    <Label   Grid.Row="2" Grid.Column="0"
+                             Text="Jul" />
+
+                    <BoxView Grid.Row="2" Grid.Column="1"
+                             HeightRequest="{Binding MasterViewModel.PlantList.SummaryMonthArray[8], 
+                                                        Converter={StaticResource CalcHeight}}" />
+                    <Label   Grid.Row="2" Grid.Column="1"
+                             Text="Aug" />
+                    
+                    <BoxView Grid.Row="2" Grid.Column="2"
+                             HeightRequest="{Binding MasterViewModel.PlantList.SummaryMonthArray[9], 
+                                                     Converter={StaticResource CalcHeight}}" />
+                    <Label   Grid.Row="2" Grid.Column="2"
+                             Text="Sep" />
+
+                    <BoxView Grid.Row="3" Grid.Column="0"
+                             HeightRequest="{Binding MasterViewModel.PlantList.SummaryMonthArray[10], 
+                                                        Converter={StaticResource CalcHeight}}" />
+                    <Label   Grid.Row="3" Grid.Column="0"
+                             Text="Oct" />
+
+                    <BoxView Grid.Row="3" Grid.Column="1" 
+                             HeightRequest="{Binding MasterViewModel.PlantList.SummaryMonthArray[11], 
+                                                        Converter={StaticResource CalcHeight}}" />
+                    <Label   Grid.Row="3" Grid.Column="1" 
+                             Text="Nov" />
+
+                    <BoxView Grid.Row="3" Grid.Column="2" 
+                             HeightRequest="{Binding MasterViewModel.PlantList.SummaryMonthArray[12], 
+                                                        Converter={StaticResource CalcHeight}}" />
+                    <Label   Grid.Row="3" Grid.Column="2" 
+                             Text="Dec" />
+
+                </Grid>
+                
+                <!--OLD UI... 
+                TODO Will I ever use the list of months and counts as a set of strings again?
+                
+                If Yes, then remove this code but keep the code in PlantListViewModel that calculates
+                If No, then remove this code AND that code
+                
                 <ListView x:Name="flowerMonthsView"
                           ItemsSource="{Binding MasterViewModel.PlantList.SummaryMonths}" 
                           VerticalOptions="FillAndExpand"
@@ -114,7 +220,7 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-
+-->
                 <Label Text="Plants by sun requirements"
                     FontSize="Small" TextColor="Gray"/>
                 
