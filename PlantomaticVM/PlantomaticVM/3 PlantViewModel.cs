@@ -2,6 +2,7 @@
 using System.Windows.Input;
 using Xamarin.Forms;
 using PlantMan.Plant;
+using System.Runtime.CompilerServices;
 
 namespace PlantomaticVM
 {
@@ -36,7 +37,7 @@ namespace PlantomaticVM
                 if (nameInCart != value)
                 {
                     nameInCart = value;
-                    OnPropertyChanged("NameInCart");
+                    OnPropertyChanged();
                 }
             }
             get
@@ -45,13 +46,13 @@ namespace PlantomaticVM
             }
         }
 
+        // Display names for plants have two versions. 
+        //    -- When count is greater then zero, display: "Sunflower (1)"
+        //    -- If count is zero, then don't display the parentheses: "Sunflower"
         public string SetNameInCart()
         {
-            if (Count > 0)
-                NameInCart = Plant.Name + " (" + Count.ToString() + ")";
-            else
-                NameInCart = Plant.Name;
-
+            NameInCart = Plant.Name + (Count > 0 ? (" (" + Count.ToString() + ")") : "");
+            
             return NameInCart;
         }
 
@@ -61,7 +62,7 @@ namespace PlantomaticVM
                 if (plant != value)
                 {
                     plant = value;
-                    OnPropertyChanged("Plant");
+                    OnPropertyChanged();
                 }
             }
             get {
@@ -69,7 +70,8 @@ namespace PlantomaticVM
             }
         }
 
-        // The state of whether a plant is in the shopping cart or not
+        // The state of whether a plant is in the shopping cart or not. This is independent of the count to 
+        // simplify data binding.
         public bool InCart
         {
             set
@@ -78,23 +80,17 @@ namespace PlantomaticVM
                 {
                     inCart = value;
 
-                    if (inCart)
-                    {
-                        //it just turned true, so it used to be false. Make sure there is at least 1 plant in the cart
-                        Count = 1;
-                    }
-                    else
-                    {
-                        //it is false, so it used to be true. Make sure the cart is empty.
-                        Count = 0;
-                    }
-                    OnPropertyChanged("InCart");
+                    //It just turned true, so it used to be false. Make sure there is at least 1 plant in the cart. 
+                    //Else zero it out
+                    Count = (inCart) ? 1 : 0;
+
+                    OnPropertyChanged();
                 }
             }
             get { return inCart; }
         }
 
-        // The state of whether a plant is in the shopping cart or not
+        // The count of how many plants the user wants in their shopping cart
         public int Count
         {
             set
@@ -102,17 +98,16 @@ namespace PlantomaticVM
                 if (count != value)
                 {
                     count = value;
+                    //Since the name reflects the count, we need to update the name
                     SetNameInCart();
 
-                    //ensure the count and the cart flag stay in sync
-                    if (count > 0)
-                        inCart = true;
-                    else
-                        inCart = false;
-
-                    OnPropertyChanged("Count");
-                    OnPropertyChanged("InCart");
-                    OnPropertyChanged("NameInCart");
+                    //Ensure the count and the cart flag stay in sync. Also, this lets the user set the
+                    //count for a plant to zero and have the plant be removed from the cart.
+                    inCart = (count > 0) ? true : false;
+                    
+                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(InCart));
+                    OnPropertyChanged(nameof(NameInCart));
                 }
             }
             get { return count; }
@@ -136,7 +131,9 @@ namespace PlantomaticVM
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        void OnPropertyChanged(string propertyName)
+        //the CallerMemberName thing means that if I don't pass in the name of the property, then the
+        //name of the calling function is used by default
+        void OnPropertyChanged([CallerMemberName] string propertyName="")
         {
             PropertyChangedEventHandler handler = PropertyChanged;
             if (handler != null)

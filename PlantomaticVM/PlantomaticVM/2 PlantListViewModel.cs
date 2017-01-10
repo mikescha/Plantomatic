@@ -6,6 +6,7 @@ using System.Linq;
 using System.Windows.Input;
 using Xamarin.Forms;
 using PlantMan.Plant;
+using System.Runtime.CompilerServices;
 
 namespace PlantomaticVM
 {
@@ -34,8 +35,8 @@ namespace PlantomaticVM
         ObservableCollection<MyPlant> myPlants = new ObservableCollection<MyPlant>(); // The subset of plants that match the current target
         ObservableCollection<MyPlant> shoppingListPlants = new ObservableCollection<MyPlant>(); // The subset of plants that are in the list
         MyCriteria targetPlant = new MyCriteria(); // The criteria that the user has selected so far
-        #endregion Fields
         double[] summaryMonthArray = new double[13]; //used for summarizing the flowering months. 0 is for max value, 1-12 are for each month
+        #endregion Fields
 
         #region Constructors
         public ObservableCollection<MyPlant> MyPlants
@@ -45,7 +46,7 @@ namespace PlantomaticVM
                 if (myPlants != value)
                 {
                     myPlants = value;
-                    OnPropertyChanged("MyPlants");
+                    OnPropertyChanged();
                 }
             }
             get { return myPlants; }
@@ -59,7 +60,7 @@ namespace PlantomaticVM
                 if (shoppingListPlants != value)
                 {
                     shoppingListPlants = value;
-                    OnPropertyChanged("ShoppingListPlants");
+                    OnPropertyChanged();
                 }
             }
             get
@@ -75,7 +76,7 @@ namespace PlantomaticVM
                 if (allPlants != value)
                 {
                     allPlants = value;
-                    OnPropertyChanged("AllPlants");
+                    OnPropertyChanged();
                 }
             }
             get { return allPlants; }
@@ -89,7 +90,7 @@ namespace PlantomaticVM
                 if (targetPlant != value)
                 {
                     targetPlant = value;
-                    OnPropertyChanged("TargetPlant");
+                    OnPropertyChanged();
                 }
             }
             get { return targetPlant; }
@@ -102,7 +103,7 @@ namespace PlantomaticVM
                 if (state != value)
                 {
                     state = value;
-                    OnPropertyChanged("State");
+                    OnPropertyChanged();
                 }
             }
             get { return state; }
@@ -128,12 +129,12 @@ namespace PlantomaticVM
             shoppingListPlants = new ObservableCollection<MyPlant>(allPlants.Where(i => i.InCart));
 
             //Generate notifications for everything that needs to know that the list has changed.
-            OnPropertyChanged("ShoppingListPlants");
-            OnPropertyChanged("SummaryMonths");
-            OnPropertyChanged("SummaryMonthArray");
-            OnPropertyChanged("SummarySun");
-            OnPropertyChanged("SummaryTemp");
-            OnPropertyChanged("SummaryWidth");
+            OnPropertyChanged(nameof(ShoppingListPlants));
+            OnPropertyChanged(nameof(SummaryMonths));
+            OnPropertyChanged(nameof(SummaryMonthArray));
+            OnPropertyChanged(nameof(SummarySun));
+            OnPropertyChanged(nameof(SummaryTemp));
+            OnPropertyChanged(nameof(SummaryWidth));
         }
 
         #endregion KeyActions
@@ -178,7 +179,7 @@ namespace PlantomaticVM
                     {
                         //set everything back to defaults
                         targetPlant = new MyCriteria();
-                        OnPropertyChanged("TargetPlant");
+                        OnPropertyChanged(nameof(TargetPlant));
                     });
                 }
                 return _resetCriteria;
@@ -242,7 +243,6 @@ namespace PlantomaticVM
 
         }
     
-
         public List<string> SummaryMonths
         {
             get
@@ -359,7 +359,7 @@ namespace PlantomaticVM
 
         #region INPC
         public event PropertyChangedEventHandler PropertyChanged;
-        void OnPropertyChanged(string propertyName)
+        void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChangedEventHandler handler = PropertyChanged;
             if (handler != null)

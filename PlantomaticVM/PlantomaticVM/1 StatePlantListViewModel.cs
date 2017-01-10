@@ -7,7 +7,7 @@ using PlantMan.Plant;
 using Importer.CSV2toPlantV4;
 using Xamarin.Forms;
 using System.Windows.Input;
-
+using System.Runtime.CompilerServices;
 
 namespace PlantomaticVM
 {
@@ -55,29 +55,11 @@ namespace PlantomaticVM
                 if (plantList != value)
                 {
                     plantList = value;
-                    OnPropertyChanged("PlantList");
+                    OnPropertyChanged();
                 }
             }
             get { return plantList; }
         }
-
-        
-        /*
-                public bool ShowingShoppingList
-                {
-                    set
-                    {
-                        if (showingShoppingList != value)
-                        {
-                            showingShoppingList = value;
-                            OnPropertyChanged("ShowingShoppingList");
-                        }
-                    }
-
-                    get { return showingShoppingList; }
-
-                }
-                */
 
         //Filter the list to show only plants that match Target, which is an element of PlantList
         public void FilterPlantList()
@@ -136,8 +118,6 @@ namespace PlantomaticVM
         //      if Wanted = "Jan or Feb" and Test = "AllMonths" then true
         private bool IncludesMonths(FloweringMonths wanted, FloweringMonths candidate)
         {
-            
-            //TODO how to enumerate through the flags?
             FloweringMonths[] target = {FloweringMonths.Jan, FloweringMonths.Feb, FloweringMonths.Mar, FloweringMonths.Apr,
                                         FloweringMonths.May, FloweringMonths.Jun, FloweringMonths.Jul, FloweringMonths.Aug,
                                         FloweringMonths.Sep, FloweringMonths.Oct, FloweringMonths.Nov, FloweringMonths.Dec};
@@ -192,7 +172,7 @@ namespace PlantomaticVM
                 if (showingWinterFlowers != value)
                 {
                     showingWinterFlowers = value;
-                    OnPropertyChanged("ShowingWinterFlowers");
+                    OnPropertyChanged();
                 }
             }
 
@@ -207,7 +187,7 @@ namespace PlantomaticVM
                 if (showingShadeAndDrought != value)
                 {
                     showingShadeAndDrought = value;
-                    OnPropertyChanged("ShowingShadeAndDrought");
+                    OnPropertyChanged();
                 }
             }
 
@@ -222,7 +202,7 @@ namespace PlantomaticVM
                 if (showingContainersAndHummingbirds != value)
                 {
                     showingContainersAndHummingbirds = value;
-                    OnPropertyChanged("ShowingContainersAndHummingbirds");
+                    OnPropertyChanged();
                 }
             }
 
@@ -237,7 +217,7 @@ namespace PlantomaticVM
                 if (showingBirds != value)
                 {
                     showingBirds = value;
-                    OnPropertyChanged("ShowingBirds");
+                    OnPropertyChanged();
                 }
             }
 
@@ -252,7 +232,7 @@ namespace PlantomaticVM
                 if (showingPollenators != value)
                 {
                     showingPollenators = value;
-                    OnPropertyChanged("ShowingPollenators");
+                    OnPropertyChanged();
                 }
             }
 
@@ -267,7 +247,7 @@ namespace PlantomaticVM
                 if (showingSmallYard != value)
                 {
                     showingSmallYard = value;
-                    OnPropertyChanged("ShowingSmallYard");
+                    OnPropertyChanged();
                 }
             }
 
@@ -300,7 +280,6 @@ namespace PlantomaticVM
 
                         PlantList.TargetPlant.ResetCriteria();
                         PlantList.TargetPlant.FloweringMonths = FloweringMonths.Dec | FloweringMonths.Jan | FloweringMonths.Feb;
-                        OnPropertyChanged("TargetPlant");
 
                         FilterPlantList();
                     });
@@ -324,7 +303,6 @@ namespace PlantomaticVM
 
                         PlantList.TargetPlant.ResetCriteria();
                         PlantList.TargetPlant.SunRequirements = SunRequirements.Shade | SunRequirements.Partial;
-                        OnPropertyChanged("TargetPlant");
 
                         FilterPlantList();
                     });
@@ -348,7 +326,6 @@ namespace PlantomaticVM
                         
                         PlantList.TargetPlant.ResetCriteria();
                         PlantList.TargetPlant.AttractsBirds = true;
-                        OnPropertyChanged("TargetPlant");
 
                         FilterPlantList();
                     });
@@ -373,7 +350,6 @@ namespace PlantomaticVM
                         PlantList.TargetPlant.ResetCriteria();
                         PlantList.TargetPlant.MaxWidth.Value = 3;
                         PlantList.TargetPlant.AttractsHummingbirds = true;
-                        OnPropertyChanged("TargetPlant");
 
                         FilterPlantList();
                     });
@@ -398,7 +374,6 @@ namespace PlantomaticVM
                         PlantList.TargetPlant.ResetCriteria();
                         PlantList.TargetPlant.MaxWidth.Value = 4;
                         PlantList.TargetPlant.MaxHeight.Value = 4;
-                        OnPropertyChanged("TargetPlant");
 
                         FilterPlantList();
                     });
@@ -424,7 +399,6 @@ namespace PlantomaticVM
                         PlantList.TargetPlant.AttractsButterflies = true;
                         PlantList.TargetPlant.AttractsHummingbirds = true;
                         PlantList.TargetPlant.AttractsNativeBees = true;
-                        OnPropertyChanged("TargetPlant");
 
                         FilterPlantList();
                     });
@@ -433,10 +407,9 @@ namespace PlantomaticVM
             }
         }
 
-
         public event PropertyChangedEventHandler PropertyChanged;
 
-        void OnPropertyChanged(string propertyName)
+        void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChangedEventHandler handler = PropertyChanged;
             if (handler != null)
