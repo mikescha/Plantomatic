@@ -1,5 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-  <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+<!--
+    
+**** ATTENTION PLEASE! **** 
+
+Ahem. 
+    
+This page has been deprecated. All the contents have moved into PageCriteria. No futher development
+will take place here. Do not edit this.
+
+This page will persist until we're convinced that Management wants to leave the UI this way. Those guys, 
+always changing their minds... 
+
+That is all.
+    
+ -->
+    <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
                xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                xmlns:plants="clr-namespace:PlantMan.Plant;assembly=Plant"
                xmlns:tools="clr-namespace:PlantomaticVM"

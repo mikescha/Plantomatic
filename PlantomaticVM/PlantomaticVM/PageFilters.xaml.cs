@@ -6,6 +6,20 @@ using System.Threading.Tasks;
 
 using Xamarin.Forms;
 
+/*
+**** ATTENTION PLEASE! ****
+
+Ahem.
+
+This page has been deprecated. All the contents have moved into PageCriteria.No futher development
+will take place here.Do not edit this.
+
+This page will persist until we're convinced that Management wants to leave the UI this way. Those guys, 
+always changing their minds... 
+
+That is all.
+*/
+
 namespace PlantomaticVM
 {
     public partial class FiltersPage : ContentPage

@@ -6,8 +6,7 @@
             x:Class="PlantomaticVM.TopLevelPage">
     
     <local:PageConditions />
-    <local:PlantGroupsPage />
-    <local:FiltersPage />
+    <local:PlantCriteriaPage />
     <local:PlantListPage />
     <local:ShoppingListPage />
     <local:AboutPage />

@@ -11,20 +11,6 @@
         <OnPlatform x:TypeArguments="Thickness" iOS="0, 20, 0, 0" WinPhone="0,5,5,10"/>
     </ContentPage.Padding>
 
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <tools:ListToBoolConverter   x:Key="listToBoolConverter" />
-
-            <tools:BoolToStringConverter x:Key="AddRemoveCartText" 
-                                     TrueText="Remove from cart"
-                                     FalseText="Add to cart"/>
-
-            <tools:BoolToStringConverter x:Key="ButtonHighlight" 
-                                     TrueText="Green"
-                                     FalseText="White"/>
-        </ResourceDictionary>
-    </ContentPage.Resources>
-
     <Grid x:Name="mainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />

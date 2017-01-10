@@ -72,9 +72,7 @@ namespace PlantomaticVM
 
         void OnPlantSelected(object sender, EventArgs args)
         {
-            //These controls are hidden by default so that they don't show when the page first loads and there is no selection. So, make sure 
-            //they get shown as visible when an item is selected
-            //nothingSelectedLabel.IsVisible = false;
+            //Anything to do here?
         }
 
         // When the "More Info" link is tapped, then open a new pop-over window and load the URL of the selected plant into this

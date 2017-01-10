@@ -48,8 +48,8 @@
     <Compile Include="PageMoreInfo.xaml.cs">
       <DependentUpon>PageMoreInfo.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PagePlantGroups.xaml.cs">
-      <DependentUpon>PagePlantGroups.xaml</DependentUpon>
+    <Compile Include="PageCriteria.xaml.cs">
+      <DependentUpon>PageCriteria.xaml</DependentUpon>
     </Compile>
     <Compile Include="PageShoppingList.xaml.cs">
       <DependentUpon>PageShoppingList.xaml</DependentUpon>
@@ -137,7 +137,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="PagePlantGroups.xaml">
+    <EmbeddedResource Include="PageCriteria.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
