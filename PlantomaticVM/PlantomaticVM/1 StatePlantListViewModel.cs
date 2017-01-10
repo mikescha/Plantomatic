@@ -20,7 +20,7 @@ namespace PlantomaticVM
         public bool showingBirds;
         public bool showingSmallYard;
         public bool showingPollenators;
-
+        public bool showingFlowerColors;
 
         public PlantListViewModel()
         {
@@ -30,6 +30,7 @@ namespace PlantomaticVM
             ShowingBirds = false;
             ShowingSmallYard = false;
             ShowingPollenators = false;
+            ShowingFlowerColors = false;
 
             //Initialize the list with test data. When we're ready to use real data then need to change the "true" to false
             //and add some other stuff that Joe's test app uses.
@@ -83,7 +84,7 @@ namespace PlantomaticVM
                 .Where(p => (p.Plant.MaxWidth.Value <= PlantList.TargetPlant.MaxWidth.Value))
                 .Where(p => CrittersMatch(PlantList.TargetPlant, p.Plant))
                 .Where(p => CountiesMatch(PlantList.TargetPlant, p.Plant))
-
+                .Where(p => ColorsMatch(PlantList.TargetPlant, p.Plant))
                 .OrderBy(p => p.Plant.ScientificName)
                 .ToList();
 
@@ -91,20 +92,48 @@ namespace PlantomaticVM
             PlantList.MyPlants = new ObservableCollection<MyPlant>(list);
         }
 
+        // Returns false if the user wants a particular color and the plant does not have it
+        // Returns true if either the user wants all colors, or the plant has their color in the description
+        private bool ColorsMatch(MyCriteria wanted, Plant candidate)
+        {
+            if (wanted.FlowerColors == MyCriteria.FlowerColor.Any)
+            {
+                return true;
+            }
+
+            if (wanted.FlowerColorDict.ContainsKey(wanted.FlowerColors))
+            {
+                string color = wanted.FlowerColorDict[wanted.FlowerColors].ToLower();
+                string plant = candidate.NotableVisuals.ToLower();
+
+                if (plant.Contains(color))
+                {
+                    return true;
+                }
+                //search through the description of the plant to see if it has a matching flower color
+
+            }
+            else
+            {
+                //value not in dictionary, need to fix that
+            }
+            return false;
+        }
+
         // Returns false if the user wants a particular critter and the plant DOES NOT have it.
         // Returns true if the user wants a particular critter and the plant has it. We are treating all the critter flags as "OR"s, so that 
         //     if the user says YES to both hummingbirds and bees, then they get plants that attract either instead of only getting plants that
         //     attract both
         // Returns true if the user didn't specify that they wanted a particular critter.
-        private bool CrittersMatch(MyCriteria target, Plant candidate)
+        private bool CrittersMatch(MyCriteria wanted, Plant candidate)
         {
             bool result = false;
 
-            if ((target.AttractsBirds && candidate.AttractsBirds.HasFlag(YesNoMaybe.Yes)) ||
-                (target.AttractsHummingbirds && candidate.AttractsHummingbirds.HasFlag(YesNoMaybe.Yes)) ||
-                (target.AttractsButterflies && candidate.AttractsButterflies.HasFlag(YesNoMaybe.Yes)) ||
-                (target.AttractsNativeBees && candidate.AttractsNativeBees.HasFlag(YesNoMaybe.Yes)) ||
-                (!target.AttractsBirds && !target.AttractsButterflies && !target.AttractsHummingbirds && !target.AttractsNativeBees))
+            if ((wanted.AttractsBirds && candidate.AttractsBirds.HasFlag(YesNoMaybe.Yes)) ||
+                (wanted.AttractsHummingbirds && candidate.AttractsHummingbirds.HasFlag(YesNoMaybe.Yes)) ||
+                (wanted.AttractsButterflies && candidate.AttractsButterflies.HasFlag(YesNoMaybe.Yes)) ||
+                (wanted.AttractsNativeBees && candidate.AttractsNativeBees.HasFlag(YesNoMaybe.Yes)) ||
+                (!wanted.AttractsBirds && !wanted.AttractsButterflies && !wanted.AttractsHummingbirds && !wanted.AttractsNativeBees))
             {
                 result = true;
             }
@@ -178,6 +207,18 @@ namespace PlantomaticVM
 
             get { return showingWinterFlowers; }
 
+        }
+
+        public bool ShowingFlowerColors
+        {
+            set
+            {
+                if (showingFlowerColors != value)
+                {
+                    showingFlowerColors = value;
+                    OnPropertyChanged();
+                }
+            }
         }
 
         public bool ShowingShadeAndDrought
@@ -263,6 +304,7 @@ namespace PlantomaticVM
             ShowingBirds = false;
             ShowingPollenators = false;
             ShowingSmallYard = false;
+            ShowingFlowerColors = false;
         }
 
         //Command for choosing subset of plants
@@ -406,6 +448,30 @@ namespace PlantomaticVM
                 return _setPollenators;
             }
         }
+
+        //Command for choosing subset of plants
+        private Command _setRedFlowers;
+        public ICommand SetRedFlowers
+        {
+            get
+            {
+                if (_setRedFlowers == null)
+                {
+                    _setRedFlowers = new Command(() =>
+                    {
+                        ClearButtons();
+                        ShowingFlowerColors = true;
+
+                        PlantList.TargetPlant.ResetCriteria();
+                        PlantList.TargetPlant.FlowerColors = MyCriteria.FlowerColor.Red;
+
+                        FilterPlantList();
+                    });
+                }
+                return _setRedFlowers;
+            }
+        }
+
 
         public event PropertyChangedEventHandler PropertyChanged;
 

@@ -42,6 +42,8 @@ namespace PlantomaticVM
                 Grid.SetRow(buttonSmallYard, 6);
                 Grid.SetColumn(buttonSmallYard, 0);
 
+                Grid.SetRow(buttonRedFlowers, 7);
+                Grid.SetColumn(buttonRedFlowers, 0);
 
                 //for the advanced controls
                 bodyGrid.ColumnDefinitions[0].Width = new GridLength(1, GridUnitType.Star);
@@ -63,6 +65,9 @@ namespace PlantomaticVM
                 Grid.SetRow(buttonPollenators, 3);
                 Grid.SetColumn(buttonPollenators, 0);
 
+                Grid.SetRow(buttonRedFlowers, 4);
+                Grid.SetColumn(buttonRedFlowers, 0);
+
                 Grid.SetRow(buttonShady, 1);
                 Grid.SetColumn(buttonShady, 1);
 
@@ -71,7 +76,6 @@ namespace PlantomaticVM
 
                 Grid.SetRow(buttonSmallYard, 3);
                 Grid.SetColumn(buttonSmallYard, 1);
-
 
                 //for the advanced controls
                 bodyGrid.ColumnDefinitions[0].Width = new GridLength(1, GridUnitType.Star);

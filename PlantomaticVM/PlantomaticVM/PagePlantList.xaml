@@ -56,7 +56,8 @@
                 ItemsSource="{Binding MasterViewModel.PlantList.MyPlants}" 
                 Grid.Row="1" Grid.Column="0"
                 ItemTapped="OnPlantSelected"
-                SeparatorVisibility="None">
+                SeparatorVisibility="None"
+                BackgroundColor="#f9f9f9">
          <ListView.ItemTemplate>
             <DataTemplate>
               <ViewCell>
@@ -64,9 +65,9 @@
                   <MenuItem Text="{Binding InCart, Converter={StaticResource AddRemoveCartText}}" 
                             Clicked="OnToggleCartMenuClicked"/> 
                 </ViewCell.ContextActions>                                                        
-                <StackLayout BackgroundColor="#f9f9f9"
-                             Orientation="Vertical"
-                             Padding="3">
+                <StackLayout Orientation="Vertical"
+                             Padding="0"
+                             Margin="2">
                     <!--TODO This changes label color if the plant is in the list. Decide if this is what we want-->
                     <Label Text="{Binding Plant.Name}"
                            TextColor="{Binding InCart, Converter={StaticResource ColorIfInList}}" /> 
@@ -89,9 +90,11 @@
                        IsVisible="{Binding Source={x:Reference listView}, Path=SelectedItem, Converter={StaticResource objectToBoolConverter}}"/>
 
                 <StackLayout x:Name="detailStack"
-                       BindingContext="{Binding Source={x:Reference listView}, Path=SelectedItem}" 
-                       HorizontalOptions="StartAndExpand" VerticalOptions="Start" Orientation="Vertical" Padding="5" Spacing="5"
-                       IsVisible="{Binding Source={x:Reference listView}, Path=SelectedItem, Converter={StaticResource objectToBoolConverterOpposite}}">
+                             BindingContext="{Binding Source={x:Reference listView}, Path=SelectedItem}" 
+                             HorizontalOptions="StartAndExpand" VerticalOptions="Start" 
+                             Orientation="Vertical" 
+                             Padding="5" Spacing="5"
+                             IsVisible="{Binding Source={x:Reference listView}, Path=SelectedItem, Converter={StaticResource objectToBoolConverterOpposite}}">
                     <StackLayout.Resources>
                         <ResourceDictionary>
                             <Style TargetType="Label">

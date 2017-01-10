@@ -1,4 +1,6 @@
 ﻿using PlantMan.Plant;
+using System;
+using System.Collections.Generic;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -12,20 +14,29 @@ namespace PlantomaticVM
         PlantTypes plantTypes;
         Plant.AssignableDecimal maxHeight = new Plant.AssignableDecimal();
         Plant.AssignableDecimal maxWidth = new Plant.AssignableDecimal();
+        FlowerColor flowerColors;
+        
+        public enum FlowerColor { Any, Red, White, Yellow};
+        public Dictionary<FlowerColor, string> FlowerColorDict = new Dictionary<FlowerColor, string>
+        {
+            {FlowerColor.Any, "" }, {FlowerColor.Red, "red" },{FlowerColor.White, "white" },
+            {FlowerColor.Yellow, "yellow" }
+        };
 
-        decimal defaultLowTemp = 40;
-        FloweringMonths defaultFloweringMonths = FloweringMonths.AllMonths;
-        SunRequirements defaultSunRequirements = SunRequirements.AllSunTypes;
+        
 
         // We are using FALSE for the attracts to mean, "I don't care" instead of No, so that we don't have to support a 3-state switch and because
         // it seems unlikely that the user will want to choose plants that explicitly DO NOT attract wildlife. 
         bool defaultAttracts = false;
-
+        decimal defaultLowTemp = 40;
+        FloweringMonths defaultFloweringMonths = FloweringMonths.AllMonths;
+        SunRequirements defaultSunRequirements = SunRequirements.AllSunTypes;
         PlantTypes defaultPlantType = PlantTypes.AllPlantTypes;
         decimal defaultMaxHeight = 300;
         decimal defaultMaxWidth = 300;
         bool defaultCounty = true;
-       
+        FlowerColor defaultFlowerColors = FlowerColor.Any;
+
         // Constructor
         public MyCriteria()
         {
@@ -35,11 +46,13 @@ namespace PlantomaticVM
             PlantTypes = defaultPlantType;
             maxHeight.Value = defaultMaxHeight;
             maxWidth.Value = defaultMaxWidth;
-
+                
             AttractsBirds = defaultAttracts;
             AttractsHummingbirds = defaultAttracts;
             AttractsNativeBees = defaultAttracts;
             AttractsButterflies = defaultAttracts;
+
+            FlowerColors = defaultFlowerColors;
 
             //local conditions
             MinWinterTempF.Value = defaultLowTemp;
@@ -67,7 +80,9 @@ namespace PlantomaticVM
             PlantTypes = defaultPlantType;
             maxHeight.Value = defaultMaxHeight;
             maxWidth.Value = defaultMaxWidth;
-        } 
+
+            FlowerColors = defaultFlowerColors;
+        }
 
         public Plant.AssignableDecimal MinWinterTempF
         {
@@ -142,7 +157,22 @@ namespace PlantomaticVM
 
             get { return maxWidth; }
         }
-        
+
+        public FlowerColor FlowerColors
+        {
+            set
+            {
+                if (flowerColors != value)
+                {
+                    flowerColors = value;
+                }
+            }
+
+            get { return flowerColors; }
+        }
+
+
+
         //TODO do I need to make this like the other properties, or should I make the other properties like this?
         public bool NativeTo_Alameda { get; set; }
         public bool NativeTo_Contra_Costa { get; set; }

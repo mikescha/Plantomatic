@@ -76,6 +76,7 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
@@ -119,7 +120,13 @@
                         Text="Containers and Hummingbirds"
                         Command="{Binding MasterViewModel.SetContainersAndHummingbirds}"
                         BackgroundColor="{Binding MasterViewModel.ShowingContainersAndHummingbirds, Converter={StaticResource ButtonHighlight}}"/>
+                
+                <Button x:Name="buttonRedFlowers"
+                        Text="Red Flowers"
+                        Command="{Binding MasterViewModel.SetRedFlowers}"
+                        BackgroundColor="{Binding MasterViewModel.ShowingFlowerColors, Converter={StaticResource ButtonHighlight}}"/>
 
+                
             </Grid> <!--Simple Controls -->
             
             <!--Advanced controls. Note this is hidden by default, the user must click a button to show it -->

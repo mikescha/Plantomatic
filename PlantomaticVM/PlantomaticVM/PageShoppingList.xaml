@@ -44,12 +44,14 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <Label  Grid.Row="0" Grid.Column="0" 
+            <Label  x:Name="labelTitle" 
+                    Grid.Row="0" Grid.Column="0" 
                     Text="{Binding MasterViewModel.PlantList.ShoppingListPlants.Count, StringFormat = '{0} species in your list'}"
                     VerticalTextAlignment="Center"
                     FontAttributes="Bold"
                     TextColor="Black"/>
-            <Button Grid.Row="0" Grid.Column="1" 
+            <Button x:Name="buttonClearCart" 
+                    Grid.Row="0" Grid.Column="1" 
                     Text="Clear list" 
                     HorizontalOptions="End"
                     Command="{Binding MasterViewModel.PlantList.ClearCart}"
@@ -61,37 +63,82 @@
                     <OnPlatform x:TypeArguments="Color" Android="White" WinPhone="Black" />
                 </Button.BorderColor>
             </Button>
+            <Button x:Name="buttonCloseDetail"
+                    Text="Close"
+                    HorizontalOptions="End"
+                    Clicked="buttonCloseDetail_Clicked"
+                    BorderWidth="1"
+                    IsVisible="False">
+                <Button.BackgroundColor>
+                    <OnPlatform x:TypeArguments="Color" Android="#404040" />
+                </Button.BackgroundColor>
+                <Button.BorderColor>
+                    <OnPlatform x:TypeArguments="Color" Android="White" WinPhone="Black" />
+                </Button.BorderColor>
+            </Button>
         </Grid>
         
         <!--List of plants from shopping list.  -->
-        <ListView x:Name="shoppingListView" SeparatorVisibility="None"
+        <StackLayout Grid.Row="1" Grid.Column="0">
+            <ListView x:Name="shoppingListView"
                   ItemsSource="{Binding MasterViewModel.PlantList.ShoppingListPlants}"
-                  BackgroundColor="#f9f9f9"
-                  Grid.Row="1" Grid.Column="0">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell>
-                        <!--Context menu-->
-                        <ViewCell.ContextActions>
-                            <MenuItem Text="{Binding InCart, Converter={StaticResource AddRemoveCartText}}"  
+                  ItemTapped="shoppingListView_ItemTapped"
+                  HorizontalOptions="StartAndExpand" VerticalOptions="Start" 
+                  SeparatorVisibility="None"
+                  BackgroundColor="#f9f9f9">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <!--Context menu-->
+                            <ViewCell.ContextActions>
+                                <MenuItem Text="{Binding InCart, Converter={StaticResource AddRemoveCartText}}"  
                                       Clicked="OnContextMenuClicked"/>
-                        </ViewCell.ContextActions>
-                        <StackLayout Orientation="Vertical"
-                                     Spacing="0"
+                            </ViewCell.ContextActions>
+                            <StackLayout Orientation="Vertical"
                                      Padding="0"
-                                     Margin="4">
-                            <Label Text="{Binding NameInCart}" 
+                                     Spacing="0"
+                                     Margin="2">
+                                <Label Text="{Binding NameInCart}" 
                                     TextColor="Green" />
-                            <Label Text="{Binding Plant.ScientificName}" 
+                                <Label Text="{Binding Plant.ScientificName}" 
                                     TextColor="Gray"
                                     FontAttributes="Italic"
                                     FontSize="Micro"/>
-                        </StackLayout>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <ScrollView x:Name="detailView"
+                        IsVisible="False"
+                        HorizontalOptions="StartAndExpand" VerticalOptions="Start" 
+                        Orientation="Vertical" 
+                        BindingContext="{Binding Source={x:Reference shoppingListView}, Path=SelectedItem}">
+                <StackLayout> <!--Have to wrap all the text in a StackLayout else it doesn't show-->
+                    <Label Text="{Binding Plant.Name}" FontSize="Medium"/>
+                    <Label Text="{Binding Plant.ScientificName}" FontAttributes="Italic"/>
+                    <Label Text="{Binding Plant.NotableVisuals}"/>
+                    <Label Text="{Binding Plant.Notes}"/>
+                    <Label Text="{Binding Plant.PlantTypes}"/>
+                    <Label Text="{Binding Plant.MinWinterTempF.Value, StringFormat='Minimum low temp: {0}'}" />
+                    <Label Text="{Binding Plant.SunRequirements, StringFormat='Sun requirements: {0}'}" />
+                    <Label Text="{Binding Plant.FloweringMonths, StringFormat='Flowering months: {0}'}" />
+                    <Label Text="{Binding Plant.MaxWidth.Value, StringFormat='Maximum width: {0} ft'}"  />
+                    <Label Text="{Binding Plant.MaxHeight.Value, StringFormat='Maximum height: {0} ft'}"  />
+                    <Label x:Name="MoreInfoURLLabel" Text="More info..." TextColor="Blue" >
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnMoreInfoTapped"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <StackLayout Orientation="Horizontal" 
+                                 HorizontalOptions="StartAndExpand">
+                        <Label Text="How many do you want?" />
+                        <Entry Text="{Binding Count, Mode=TwoWay}"  Keyboard="Numeric"/>
+                    </StackLayout>
+                </StackLayout>
+            </ScrollView>
+        </StackLayout>
+     
         <!-- Summary data -->
         <ScrollView x:Name="summaryView" Grid.Row="1" Grid.Column="1" >
             <StackLayout Orientation="Vertical" VerticalOptions="Start">

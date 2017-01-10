@@ -46,13 +46,49 @@ namespace PlantomaticVM
             }
         }
 
-        //TODO The "Update list" call is because I can't figure out how to get it to update from the Plant List page without
+        //TODO The "Refresh list" call is because I can't figure out how to get it to update from the Plant List page without
         //having a button that the user explicitly has to click. 
         protected override void OnAppearing()
         {
             base.OnAppearing();
             AppData appData = (AppData)BindingContext;
             appData.MasterViewModel.PlantList.RefreshShoppingListPlants();
+        }
+
+        private void shoppingListView_ItemTapped(object sender, ItemTappedEventArgs e)
+        {
+            detailView.IsVisible = true;
+            shoppingListView.IsVisible = false;
+            labelTitle.IsVisible = false;
+            buttonClearCart.IsVisible = false;
+            buttonCloseDetail.IsVisible = true;
+        }
+
+        private void buttonCloseDetail_Clicked(object sender, EventArgs e)
+        {
+            detailView.IsVisible = false;
+            shoppingListView.IsVisible = true;
+            labelTitle.IsVisible = true;
+            buttonClearCart.IsVisible = true;
+            buttonCloseDetail.IsVisible = false;
+
+            //refresh the list so that it shows the proper plants, in case the user removed one
+            AppData appData = (AppData)BindingContext;
+            appData.MasterViewModel.PlantList.RefreshShoppingListPlants();
+        }
+
+        private void OnMoreInfoTapped(object sender, EventArgs e)
+        {
+            Label label = (Label)sender;
+            MyPlant thePlant = (MyPlant)label.BindingContext;
+            if (thePlant.Plant.URL != null)
+            {
+                Navigation.PushAsync(new MoreInfoPage(thePlant.Plant.URL));
+            }
+            else
+            {
+                //TODO: what to do if there is no URL for the plant
+            }
         }
     }
 }
