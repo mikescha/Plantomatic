@@ -38,18 +38,23 @@
         <!--Buttons for controlling which UI the user sees-->
         <StackLayout Grid.Row="0"
                      Orientation="Horizontal"
-                     HorizontalOptions="Center">
+                     HorizontalOptions="Center"
+                     Spacing="0">
             <Button x:Name="buttonSimple"
-                    BorderColor="Black"
-                    BorderWidth="0.5"
+                    BorderColor="#94DC63"
+                    BorderWidth="1"
                     HorizontalOptions="Start"
                     Text="Simple"
+                    BindingContext="{x:Reference simpleGrid}"
+                    BackgroundColor="{Binding Path=IsVisible, Converter={StaticResource ButtonHighlight}}"
                     Clicked="buttonSimple_Clicked" />
             <Button x:Name="buttonAdvanced"
-                    BorderColor="Black"
-                    BorderWidth="0.5"
+                    BorderColor="#94DC63"
+                    BorderWidth="1"
                     HorizontalOptions="End"
                     Text="Advanced"
+                    BindingContext="{x:Reference advancedGrid}"
+                    BackgroundColor="{Binding Path=IsVisible, Converter={StaticResource ButtonHighlight}}"
                     Clicked="buttonAdvanced_Clicked" />
         </StackLayout>
 
@@ -113,7 +118,7 @@
                 <Button x:Name="buttonContainers"
                         Text="Containers and Hummingbirds"
                         Command="{Binding MasterViewModel.SetContainersAndHummingbirds}"
-                        BackgroundColor="{Binding MasterViewModel.ShowingHummingbirds, Converter={StaticResource ButtonHighlight}}"/>
+                        BackgroundColor="{Binding MasterViewModel.ShowingContainersAndHummingbirds, Converter={StaticResource ButtonHighlight}}"/>
 
             </Grid> <!--Simple Controls -->
             

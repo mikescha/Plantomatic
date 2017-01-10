@@ -8,7 +8,7 @@ using Xamarin.Forms;
 namespace PlantomaticVM
 {
     public partial class PlantCriteriaPage : ContentPage
-    {
+    {        
         public PlantCriteriaPage()
         {
             InitializeComponent();
