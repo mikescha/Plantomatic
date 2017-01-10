@@ -7,17 +7,30 @@ using System.Collections;
 
 namespace PlantomaticVM
 {
+    [ContentProperty("Source")]
+    public class GetImageResource : IMarkupExtension
+    {
+        public string Source { get; set; }
+        public object ProvideValue(IServiceProvider serviceProvider)
+        {
+            if (Source == null) return null;
+            return ImageSource.FromResource(Source);
+        }
+    }
+
+    // TODO THIS METHOD IS NOT CURRENTLY USED. KEEPING IT HERE NOW JUST IN CASE I EVER NEED IT
     // Takes a number representing a count of plants and a max count of plants and returns a height. 
-    // Used on the shopping list page to make the boxes representing the number of plants proportionally taller if there are more plants with flowers in a given month
-    [ContentProperty("count")]
+    // Used on the shopping list page to make the boxes representing the number of plants proportionally 
+    // taller if there are more plants with flowers in a given month
     public class CalcBoxHeight : IMarkupExtension
     {
         public double count { set; get; }
         public double maxCount { set; get; }
         public object ProvideValue(IServiceProvider serviceProvider)
         {
-            if (maxCount == 0)
-                return 0;
+            if (maxCount == 0 || count == 0)
+                return (double) 1; //so that empty months get some kind of indicator
+
             //Why times 64? Because that is the number of units we want the tallest box to be
             return (double)((count / maxCount) * 64);
         }
@@ -31,7 +44,7 @@ namespace PlantomaticVM
             if (value == null)
                 return false;
 
-            return (double) value * 64;
+            return (double) value * 64 + 1; //+1 so that even empty months show something
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

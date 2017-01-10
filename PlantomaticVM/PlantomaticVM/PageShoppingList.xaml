@@ -109,6 +109,9 @@
                             <Setter Property="FontSize" Value="Micro" />
                             <Setter Property="TextColor" Value="Gray" />
                         </Style>
+                        <Style TargetType="Image">
+                            <Setter Property="HorizontalOptions" Value="Center" />
+                        </Style>
                     </ResourceDictionary>
                 </StackLayout.Resources>
                 <Label Text="Months that you have flowers"
@@ -116,7 +119,8 @@
 
                 <Grid x:Name="monthGrid"
                       RowSpacing="2"
-                      ColumnSpacing="2">
+                      ColumnSpacing="2"
+                      HorizontalOptions="Center">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="64" />
                         <RowDefinition Height="Auto" />
@@ -210,7 +214,56 @@
 
                 </Grid>
                 
-                <!--OLD UI... 
+                <Label Text="Plants by sun requirements"
+                               FontSize="Small" 
+                               TextColor="Black"/>
+
+                <Grid x:Name="sunGrid"
+                      RowSpacing="2"
+                      ColumnSpacing="2"
+                      HorizontalOptions="Center">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="64" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="100" />
+                    </Grid.ColumnDefinitions>
+
+                    <Image Grid.Row="0" Grid.Column="0"
+                           Source="{tools:GetImageResource PlantomaticVM.Images.icon-sun.png}"/>
+
+                    <Image Grid.Row="0" Grid.Column="1"
+                             Source="{tools:GetImageResource PlantomaticVM.Images.icon-partial.png}"/>
+
+                    <Image Grid.Row="0" Grid.Column="2"
+                             Source="{tools:GetImageResource PlantomaticVM.Images.icon-shade.png}"/>
+
+                    <Label Grid.Row="1" Grid.Column="0"
+                           Text="{Binding MasterViewModel.PlantList.SummarySun[0]}"/>
+                    
+                    <Label Grid.Row="1" Grid.Column="1"
+                           Text="{Binding MasterViewModel.PlantList.SummarySun[1]}"/>
+
+                    <Label Grid.Row="1" Grid.Column="2"
+                           Text="{Binding MasterViewModel.PlantList.SummarySun[2]}"/>
+                </Grid>
+                                
+              <Label Text="{Binding MasterViewModel.PlantList.SummaryTemp, StringFormat='Lowest temp tolerated: {0}F'}"
+                     FontSize="Small" TextColor="Black"/>
+
+              <Label Text="{Binding MasterViewModel.PlantList.SummaryWidth, StringFormat='Area required: {0:N0} sq ft'}"
+                     FontSize="Small" TextColor="Black"/>
+
+            </StackLayout>    
+      </ScrollView>
+    </Grid>
+  
+  </ContentPage>
+
+<!--OLD UI... 
                 TODO Will I ever use the list of months and counts as a set of strings again?
                 
                 If Yes, then remove this code but keep the code in PlantListViewModel that calculates
@@ -231,10 +284,7 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
--->
-                <Label Text="Plants by sun requirements"
-                    FontSize="Small" TextColor="Black"/>
-                
+    
                 <ListView x:Name="sunRequirementsView" 
                           ItemsSource="{Binding MasterViewModel.PlantList.SummarySun}" 
                           VerticalOptions="FillAndExpand"
@@ -251,14 +301,5 @@
                     </ListView.ItemTemplate>
                 </ListView>
               
-              <Label Text="{Binding MasterViewModel.PlantList.SummaryTemp, StringFormat='Lowest temp tolerated: {0}F'}"
-                     FontSize="Small" TextColor="Black"/>
 
-              <Label Text="{Binding MasterViewModel.PlantList.SummaryWidth, StringFormat='Area required: {0:N0} sq ft'}"
-                     FontSize="Small" TextColor="Black"/>
-
-            </StackLayout>    
-      </ScrollView>
-    </Grid>
-  
-  </ContentPage>
+-->
