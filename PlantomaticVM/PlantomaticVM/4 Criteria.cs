@@ -15,15 +15,12 @@ namespace PlantomaticVM
         Plant.AssignableDecimal maxHeight = new Plant.AssignableDecimal();
         Plant.AssignableDecimal maxWidth = new Plant.AssignableDecimal();
         FlowerColor flowerColors;
-        
-        public enum FlowerColor { Any, Red, White, Yellow};
+
         public Dictionary<FlowerColor, string> FlowerColorDict = new Dictionary<FlowerColor, string>
         {
-            {FlowerColor.Any, "" }, {FlowerColor.Red, "red" },{FlowerColor.White, "white" },
-            {FlowerColor.Yellow, "yellow" }
+            {FlowerColor.Any, "" }, {FlowerColor.Red, "Red" },{FlowerColor.White, "White" },
+            {FlowerColor.Yellow, "Yellow" }
         };
-
-        
 
         // We are using FALSE for the attracts to mean, "I don't care" instead of No, so that we don't have to support a 3-state switch and because
         // it seems unlikely that the user will want to choose plants that explicitly DO NOT attract wildlife. 

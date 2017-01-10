@@ -96,7 +96,7 @@ namespace PlantomaticVM
         // Returns true if either the user wants all colors, or the plant has their color in the description
         private bool ColorsMatch(MyCriteria wanted, Plant candidate)
         {
-            if (wanted.FlowerColors == MyCriteria.FlowerColor.Any)
+            if (wanted.FlowerColors == FlowerColor.Any)
             {
                 return true;
             }
@@ -463,7 +463,7 @@ namespace PlantomaticVM
                         ShowingFlowerColors = true;
 
                         PlantList.TargetPlant.ResetCriteria();
-                        PlantList.TargetPlant.FlowerColors = MyCriteria.FlowerColor.Red;
+                        PlantList.TargetPlant.FlowerColors = FlowerColor.Red;
 
                         FilterPlantList();
                     });
