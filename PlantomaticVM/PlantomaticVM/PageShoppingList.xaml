@@ -98,7 +98,7 @@
                 <StackLayout.Resources>
                     <ResourceDictionary>
                         <Style TargetType="BoxView">
-                            <Setter Property="WidthRequest" Value="100" />
+                            <Setter Property="WidthRequest" Value="25" />
                             <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
                             <Setter Property="VerticalOptions" Value="End" />
                             <Setter Property="BackgroundColor" Value="#94DC63" />
@@ -106,23 +106,31 @@
                         <Style TargetType="Label">
                             <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
                             <Setter Property="VerticalOptions" Value="End" />
+                            <Setter Property="FontSize" Value="Micro" />
+                            <Setter Property="TextColor" Value="Gray" />
                         </Style>
                     </ResourceDictionary>
                 </StackLayout.Resources>
                 <Label Text="Months that you have flowers"
-                       FontSize="Small" TextColor="Gray"/>
+                       FontSize="Small" TextColor="Black"/>
 
                 <Grid x:Name="monthGrid">
-                    <Grid.RowDefinitions> 
-                        <RowDefinition Height="68" />
-                        <RowDefinition Height="68" />
-                        <RowDefinition Height="68" />
+                    <Grid.RowDefinitions>
                         <RowDefinition Height="68" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     
                     <BoxView Grid.Row="0" Grid.Column="0" 
@@ -143,58 +151,58 @@
                     <Label   Grid.Row="0" Grid.Column="2" 
                              Text="Mar" />
 
-                    <BoxView Grid.Row="1" Grid.Column="0"
+                    <BoxView Grid.Row="0" Grid.Column="3"
                              HeightRequest="{Binding MasterViewModel.PlantList.SummaryMonthArray[4], 
                                                      Converter={StaticResource CalcHeight}}" />
-                    <Label   Grid.Row="1" Grid.Column="0"
+                    <Label   Grid.Row="0" Grid.Column="3"
                              Text="Apr" />
                     
-                    <BoxView Grid.Row="1" Grid.Column="1"
+                    <BoxView Grid.Row="0" Grid.Column="4"
                              HeightRequest="{Binding MasterViewModel.PlantList.SummaryMonthArray[5], 
                                                         Converter={StaticResource CalcHeight}}" />
-                    <Label   Grid.Row="1" Grid.Column="1"
+                    <Label   Grid.Row="0" Grid.Column="4"
                              Text="May" />
 
-                    <BoxView Grid.Row="1" Grid.Column="2"
+                    <BoxView Grid.Row="0" Grid.Column="5"
                              HeightRequest="{Binding MasterViewModel.PlantList.SummaryMonthArray[6], 
                                                          Converter={StaticResource CalcHeight}}" />
-                    <Label   Grid.Row="1" Grid.Column="2"
+                    <Label   Grid.Row="0" Grid.Column="5"
                              Text="Jun" />
 
-                    <BoxView Grid.Row="2" Grid.Column="0"
+                    <BoxView Grid.Row="0" Grid.Column="6"
                              HeightRequest="{Binding MasterViewModel.PlantList.SummaryMonthArray[7], 
                                                         Converter={StaticResource CalcHeight}}" />
-                    <Label   Grid.Row="2" Grid.Column="0"
+                    <Label   Grid.Row="0" Grid.Column="6"
                              Text="Jul" />
 
-                    <BoxView Grid.Row="2" Grid.Column="1"
+                    <BoxView Grid.Row="0" Grid.Column="7"
                              HeightRequest="{Binding MasterViewModel.PlantList.SummaryMonthArray[8], 
                                                         Converter={StaticResource CalcHeight}}" />
-                    <Label   Grid.Row="2" Grid.Column="1"
+                    <Label   Grid.Row="0" Grid.Column="7"
                              Text="Aug" />
                     
-                    <BoxView Grid.Row="2" Grid.Column="2"
+                    <BoxView Grid.Row="0" Grid.Column="8"
                              HeightRequest="{Binding MasterViewModel.PlantList.SummaryMonthArray[9], 
                                                      Converter={StaticResource CalcHeight}}" />
-                    <Label   Grid.Row="2" Grid.Column="2"
+                    <Label   Grid.Row="0" Grid.Column="8"
                              Text="Sep" />
 
-                    <BoxView Grid.Row="3" Grid.Column="0"
+                    <BoxView Grid.Row="0" Grid.Column="9"
                              HeightRequest="{Binding MasterViewModel.PlantList.SummaryMonthArray[10], 
                                                         Converter={StaticResource CalcHeight}}" />
-                    <Label   Grid.Row="3" Grid.Column="0"
+                    <Label   Grid.Row="0" Grid.Column="9"
                              Text="Oct" />
 
-                    <BoxView Grid.Row="3" Grid.Column="1" 
+                    <BoxView Grid.Row="0" Grid.Column="10" 
                              HeightRequest="{Binding MasterViewModel.PlantList.SummaryMonthArray[11], 
                                                         Converter={StaticResource CalcHeight}}" />
-                    <Label   Grid.Row="3" Grid.Column="1" 
+                    <Label   Grid.Row="0" Grid.Column="10" 
                              Text="Nov" />
 
-                    <BoxView Grid.Row="3" Grid.Column="2" 
+                    <BoxView Grid.Row="0" Grid.Column="11" 
                              HeightRequest="{Binding MasterViewModel.PlantList.SummaryMonthArray[12], 
                                                         Converter={StaticResource CalcHeight}}" />
-                    <Label   Grid.Row="3" Grid.Column="2" 
+                    <Label   Grid.Row="0" Grid.Column="11" 
                              Text="Dec" />
 
                 </Grid>
