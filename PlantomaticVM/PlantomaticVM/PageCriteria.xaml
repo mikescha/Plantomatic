@@ -312,6 +312,29 @@
                     </StackLayout>
 
                     <StackLayout x:Name="filtersSet2" HorizontalOptions="Center" VerticalOptions="Start">
+                        <Picker x:Name="flowerColor"
+                            Title="Flower Color"
+                            SelectedIndexChanged="OnPickerSelectedIndexChanged">
+                            <Picker.Items>
+                                <x:String>Any</x:String>
+                                <x:String>Red</x:String>
+                                <x:String>Yellow</x:String>
+                                <x:String>White</x:String>
+                            </Picker.Items>
+                            <Picker.SelectedIndex>
+                                <Binding Path="MasterViewModel.PlantList.TargetPlant.FlowerColors">
+                                    <Binding.Converter>
+                                        <tools:ObjectToIndexConverter x:TypeArguments="plants:FlowerColor">
+                                            <plants:FlowerColor>Any</plants:FlowerColor>
+                                            <plants:FlowerColor>Red</plants:FlowerColor>
+                                            <plants:FlowerColor>Yellow</plants:FlowerColor>
+                                            <plants:FlowerColor>White</plants:FlowerColor>
+                                        </tools:ObjectToIndexConverter>
+                                    </Binding.Converter>
+                                </Binding>
+                            </Picker.SelectedIndex>
+                        </Picker>
+                        
                         <StackLayout  Orientation="Horizontal" HorizontalOptions="End">
                             <Label Text="Attracts hummingbirds?" 
                            VerticalOptions="Center" />
