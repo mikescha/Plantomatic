@@ -18,8 +18,9 @@ namespace PlantomaticVM
 
         public Dictionary<FlowerColor, string> FlowerColorDict = new Dictionary<FlowerColor, string>
         {
-            {FlowerColor.Any, "" }, {FlowerColor.Red, "Red" },{FlowerColor.White, "White" },
-            {FlowerColor.Yellow, "Yellow" }
+            {FlowerColor.Any, "" }, {FlowerColor.Red, "Red" },{FlowerColor.Orange, "Orange" },
+            {FlowerColor.Yellow, "Yellow" }, {FlowerColor.Green, "Green" }, {FlowerColor.Blue, "Blue" },
+            {FlowerColor.Purple, "Purple" }, {FlowerColor.White, "White" }, {FlowerColor.Brown, "Brown" }
         };
 
         // We are using FALSE for the attracts to mean, "I don't care" instead of No, so that we don't have to support a 3-state switch and because

@@ -318,8 +318,13 @@
                             <Picker.Items>
                                 <x:String>Any</x:String>
                                 <x:String>Red</x:String>
+                                <x:String>Orange</x:String>
                                 <x:String>Yellow</x:String>
+                                <x:String>Green</x:String>
+                                <x:String>Blue</x:String>
+                                <x:String>Purple</x:String>
                                 <x:String>White</x:String>
+                                <x:String>Brown</x:String>
                             </Picker.Items>
                             <Picker.SelectedIndex>
                                 <Binding Path="MasterViewModel.PlantList.TargetPlant.FlowerColors">
@@ -327,13 +332,19 @@
                                         <tools:ObjectToIndexConverter x:TypeArguments="plants:FlowerColor">
                                             <plants:FlowerColor>Any</plants:FlowerColor>
                                             <plants:FlowerColor>Red</plants:FlowerColor>
+                                            <plants:FlowerColor>Orange</plants:FlowerColor>
                                             <plants:FlowerColor>Yellow</plants:FlowerColor>
+                                            <plants:FlowerColor>Green</plants:FlowerColor>
+                                            <plants:FlowerColor>Blue</plants:FlowerColor>
+                                            <plants:FlowerColor>Purple</plants:FlowerColor>
                                             <plants:FlowerColor>White</plants:FlowerColor>
+                                            <plants:FlowerColor>Brown</plants:FlowerColor>
                                         </tools:ObjectToIndexConverter>
                                     </Binding.Converter>
                                 </Binding>
                             </Picker.SelectedIndex>
                         </Picker>
+                        
                         
                         <StackLayout  Orientation="Horizontal" HorizontalOptions="End">
                             <Label Text="Attracts hummingbirds?" 
