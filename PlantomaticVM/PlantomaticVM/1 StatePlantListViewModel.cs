@@ -96,27 +96,46 @@ namespace PlantomaticVM
         // Returns true if either the user wants all colors, or the plant has their color in the description
         private bool ColorsMatch(MyCriteria wanted, Plant candidate)
         {
-            if (wanted.FlowerColors == FlowerColor.Any)
+            if (wanted.FlowerColors == FlowerColor.AnyColor)
             {
                 return true;
             }
 
+            foreach (KeyValuePair<FlowerColor, string> entry in wanted.FlowerColorDict)
+            {
+                // do something with entry.Value or entry.Key
+                if (wanted.FlowerColors.HasFlag(entry.Key))
+                {
+                    //Get the strings we're going to be searching, and make both lower case to make searching work better
+                    string color = entry.Value.ToLower();
+                    string plant = candidate.NotableVisuals.ToLower();
+
+                    //Search through the description of the plant to see if it has a matching flower color
+                    if (plant.Contains(color))
+                    {
+                        //break out with a positive result as soon as we find at least one match
+                        return true;
+                    }
+                }
+            }
+            /* OLD CODE
             if (wanted.FlowerColorDict.ContainsKey(wanted.FlowerColors))
             {
+                //Get the strings we're going to be searching, and make both lower case to make searching work better
                 string color = wanted.FlowerColorDict[wanted.FlowerColors].ToLower();
                 string plant = candidate.NotableVisuals.ToLower();
-
+                
+                //search through the description of the plant to see if it has a matching flower color
                 if (plant.Contains(color))
                 {
                     return true;
                 }
-                //search through the description of the plant to see if it has a matching flower color
-
             }
             else
             {
                 //value not in dictionary, need to fix that
             }
+            */
             return false;
         }
 
@@ -174,19 +193,19 @@ namespace PlantomaticVM
         //TODO is there a logic bug here? This will return FALSE if...
         //   -- a plant is Unknown for Napa, and the user said they want plants that are Yes for Napa, then that plant
         //   -- a plant is No for Napa, and the user said they want plants NOT in Napa
-        private bool CountiesMatch(MyCriteria target, Plant candidate)
+        private bool CountiesMatch(MyCriteria wanted, Plant candidate)
         {
             bool result = false;
 
-            if (target.NativeTo_Alameda && candidate.NativeTo_Alameda.HasFlag(YesNoMaybe.Yes) ||
-                target.NativeTo_Contra_Costa && candidate.NativeTo_Contra_Costa.HasFlag(YesNoMaybe.Yes) ||
-                target.NativeTo_Marin && candidate.NativeTo_Marin.HasFlag(YesNoMaybe.Yes) ||
-                target.NativeTo_Napa && candidate.NativeTo_Napa.HasFlag(YesNoMaybe.Yes) ||
-                target.NativeTo_Santa_Clara && candidate.NativeTo_Santa_Clara.HasFlag(YesNoMaybe.Yes) ||
-                target.NativeTo_San_Francisco && candidate.NativeTo_San_Francisco.HasFlag(YesNoMaybe.Yes) ||
-                target.NativeTo_San_Mateo && candidate.NativeTo_San_Mateo.HasFlag(YesNoMaybe.Yes) ||
-                target.NativeTo_Solano && candidate.NativeTo_Solano.HasFlag(YesNoMaybe.Yes) ||
-                target.NativeTo_Sonoma && candidate.NativeTo_Sonoma.HasFlag(YesNoMaybe.Yes))
+            if (wanted.NativeTo_Alameda && candidate.NativeTo_Alameda.HasFlag(YesNoMaybe.Yes) ||
+                wanted.NativeTo_Contra_Costa && candidate.NativeTo_Contra_Costa.HasFlag(YesNoMaybe.Yes) ||
+                wanted.NativeTo_Marin && candidate.NativeTo_Marin.HasFlag(YesNoMaybe.Yes) ||
+                wanted.NativeTo_Napa && candidate.NativeTo_Napa.HasFlag(YesNoMaybe.Yes) ||
+                wanted.NativeTo_Santa_Clara && candidate.NativeTo_Santa_Clara.HasFlag(YesNoMaybe.Yes) ||
+                wanted.NativeTo_San_Francisco && candidate.NativeTo_San_Francisco.HasFlag(YesNoMaybe.Yes) ||
+                wanted.NativeTo_San_Mateo && candidate.NativeTo_San_Mateo.HasFlag(YesNoMaybe.Yes) ||
+                wanted.NativeTo_Solano && candidate.NativeTo_Solano.HasFlag(YesNoMaybe.Yes) ||
+                wanted.NativeTo_Sonoma && candidate.NativeTo_Sonoma.HasFlag(YesNoMaybe.Yes))
             {
                 result = true;
             }
@@ -450,25 +469,25 @@ namespace PlantomaticVM
         }
 
         //Command for choosing subset of plants
-        private Command _setRedFlowers;
-        public ICommand SetRedFlowers
+        private Command _setWarmColorFlowers;
+        public ICommand SetWarmColorFlowers
         {
             get
             {
-                if (_setRedFlowers == null)
+                if (_setWarmColorFlowers == null)
                 {
-                    _setRedFlowers = new Command(() =>
+                    _setWarmColorFlowers = new Command(() =>
                     {
                         ClearButtons();
                         ShowingFlowerColors = true;
 
                         PlantList.TargetPlant.ResetCriteria();
-                        PlantList.TargetPlant.FlowerColors = FlowerColor.Red;
+                        PlantList.TargetPlant.FlowerColors = FlowerColor.Red | FlowerColor.Orange | FlowerColor.Yellow;
 
                         FilterPlantList();
                     });
                 }
-                return _setRedFlowers;
+                return _setWarmColorFlowers;
             }
         }
 

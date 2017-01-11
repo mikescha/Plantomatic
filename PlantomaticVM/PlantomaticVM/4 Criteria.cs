@@ -18,7 +18,7 @@ namespace PlantomaticVM
 
         public Dictionary<FlowerColor, string> FlowerColorDict = new Dictionary<FlowerColor, string>
         {
-            {FlowerColor.Any, "" }, {FlowerColor.Red, "Red" },{FlowerColor.Orange, "Orange" },
+            {FlowerColor.AnyColor, "" }, {FlowerColor.Red, "Red" },{FlowerColor.Orange, "Orange" },
             {FlowerColor.Yellow, "Yellow" }, {FlowerColor.Green, "Green" }, {FlowerColor.Blue, "Blue" },
             {FlowerColor.Purple, "Purple" }, {FlowerColor.White, "White" }, {FlowerColor.Brown, "Brown" }
         };
@@ -33,7 +33,7 @@ namespace PlantomaticVM
         decimal defaultMaxHeight = 300;
         decimal defaultMaxWidth = 300;
         bool defaultCounty = true;
-        FlowerColor defaultFlowerColors = FlowerColor.Any;
+        FlowerColor defaultFlowerColors = FlowerColor.AnyColor;
 
         // Constructor
         public MyCriteria()
