@@ -134,6 +134,16 @@
                                  HorizontalOptions="StartAndExpand">
                         <Label Text="How many do you want?" />
                         <Entry Text="{Binding Count, Mode=TwoWay}"  Keyboard="Numeric"/>
+                        <Button Text="Clear"
+                                BorderWidth="1"
+                                Command="{Binding RemoveItem}">
+                            <Button.BackgroundColor>
+                                <OnPlatform x:TypeArguments="Color" Android="#404040" />
+                            </Button.BackgroundColor>
+                            <Button.BorderColor>
+                                <OnPlatform x:TypeArguments="Color" Android="White" WinPhone="Black" />
+                            </Button.BorderColor>
+                        </Button>
                     </StackLayout>
                 </StackLayout>
             </ScrollView>
@@ -261,6 +271,9 @@
 
                 </Grid>
                 
+                <!--For spacing purposes; TODO use padding or something to make this instead-->
+                <Label Text=" "/>
+                
                 <Label Text="Plants by sun requirements"
                                FontSize="Small" 
                                TextColor="Black"/>
@@ -290,19 +303,67 @@
 
                     <Label Grid.Row="1" Grid.Column="0"
                            Text="{Binding MasterViewModel.PlantList.SummarySun[0]}"/>
-                    
+
                     <Label Grid.Row="1" Grid.Column="1"
                            Text="{Binding MasterViewModel.PlantList.SummarySun[1]}"/>
 
                     <Label Grid.Row="1" Grid.Column="2"
                            Text="{Binding MasterViewModel.PlantList.SummarySun[2]}"/>
                 </Grid>
-                                
-              <Label Text="{Binding MasterViewModel.PlantList.SummaryTemp, StringFormat='Lowest temp tolerated: {0}F'}"
-                     FontSize="Small" TextColor="Black"/>
 
-              <Label Text="{Binding MasterViewModel.PlantList.SummaryWidth, StringFormat='Area required: {0:N0} sq ft'}"
-                     FontSize="Small" TextColor="Black"/>
+                <!--For spacing purposes; TODO use padding or something to make this instead-->
+                <Label Text=" "/>
+
+                <Label Text="Minimum temperature tolerated"
+                               FontSize="Small" 
+                               TextColor="Black"/>
+                <Grid x:Name="tempGrid"
+                      RowSpacing="2"
+                      ColumnSpacing="2"
+                      HorizontalOptions="Center"
+                      VerticalOptions="Center">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="100" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <Image Grid.Row="0" Grid.Column="0"
+                           Source="{tools:GetImageResource PlantomaticVM.Images.thermometer.png}"/>
+
+                    <Label Grid.Row="0" Grid.Column="1" 
+                           VerticalOptions="Center"
+                           Text="{Binding MasterViewModel.PlantList.SummaryTemp, StringFormat='{0}F'}"/>
+                </Grid>
+
+                <!--For spacing purposes; TODO use padding or something to make this instead-->
+                <Label Text=" "/>
+
+                <Label Text="Planting area required"
+                               FontSize="Small" 
+                               TextColor="Black"/>
+                <Grid x:Name="areaGrid"
+                      RowSpacing="2"
+                      ColumnSpacing="2"
+                      HorizontalOptions="Center"
+                      VerticalOptions="Center">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="100" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <Image Grid.Row="0" Grid.Column="0"
+                           Source="{tools:GetImageResource PlantomaticVM.Images.area.png}"/>
+
+                    <Label Grid.Row="0" Grid.Column="1" 
+                           VerticalOptions="Center"
+                           Text="{Binding MasterViewModel.PlantList.SummaryWidth, StringFormat='{0:N0} sq ft'}"/>
+                </Grid>
 
             </StackLayout>    
       </ScrollView>

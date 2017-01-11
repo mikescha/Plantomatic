@@ -129,6 +129,24 @@ namespace PlantomaticVM
             return InCart;
         }
 
+        //Command for clearing item from cart
+        private Command _removeItem;
+        public ICommand RemoveItem
+        {
+            get
+            {
+                if (_removeItem == null)
+                {
+                    _removeItem = new Command(() =>
+                    {
+                        TogglePlantCartStatus();
+                    });
+                }
+                return _removeItem;
+            }
+        }
+
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         //the CallerMemberName thing means that if I don't pass in the name of the property, then the

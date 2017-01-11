@@ -123,7 +123,17 @@
                     <StackLayout Orientation="Horizontal" 
                                  HorizontalOptions="StartAndExpand">
                         <Label Text="How many do you want?" />
-                        <Entry Text="{Binding Count, Mode=TwoWay}"  Keyboard="Numeric"/>    
+                        <Entry Text="{Binding Count, Mode=TwoWay}"  Keyboard="Numeric"/>
+                        <Button Text="Clear"
+                                BorderWidth="1"
+                                Command="{Binding RemoveItem}">
+                            <Button.BackgroundColor>
+                                <OnPlatform x:TypeArguments="Color" Android="#404040" />
+                            </Button.BackgroundColor>
+                            <Button.BorderColor>
+                                <OnPlatform x:TypeArguments="Color" Android="White" WinPhone="Black" />
+                            </Button.BorderColor>
+                        </Button>
                     </StackLayout>
                 
                 
