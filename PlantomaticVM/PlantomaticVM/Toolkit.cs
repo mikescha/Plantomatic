@@ -4,6 +4,10 @@ using System.Globalization;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using System.Collections;
+using System.IO;
+using System.Net;
+using System.Threading;
+
 
 namespace PlantomaticVM
 {
@@ -190,6 +194,49 @@ namespace PlantomaticVM
                 return null;
 
             return Items[index];
+        }
+    }
+}
+
+
+/*
+ * This is here because apparently Xamarin.Forms doesn't provide support for all of .NET, so the 
+ * synchronous web request function isn't available. 
+ * 
+ * To properly work as an extension, this needed to be in a separate namespace and also be static.
+ * 
+ * See this for more info: http://stackoverflow.com/questions/17187347/webheadercollection-httpwebrequest-on-xamarin
+ * 
+ */
+
+namespace WebUtility
+{
+    public static class WebUtility
+    {
+        public static WebResponse GetResponse(this WebRequest request)
+        {
+            ManualResetEvent evt = new ManualResetEvent(false);
+            WebResponse response = null;
+            request.BeginGetResponse((IAsyncResult ar) =>
+            {
+                response = request.EndGetResponse(ar);
+                evt.Set();
+            }, null);
+            evt.WaitOne();
+            return response as WebResponse;
+        }
+
+        public static Stream GetRequestStream(this WebRequest request)
+        {
+            ManualResetEvent evt = new ManualResetEvent(false);
+            Stream requestStream = null;
+            request.BeginGetRequestStream((IAsyncResult ar) =>
+            {
+                requestStream = request.EndGetRequestStream(ar);
+                evt.Set();
+            }, null);
+            evt.WaitOne();
+            return requestStream;
         }
     }
 }

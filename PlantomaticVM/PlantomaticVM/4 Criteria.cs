@@ -63,6 +63,10 @@ namespace PlantomaticVM
             NativeTo_Santa_Clara = defaultCounty;
             NativeTo_Solano = defaultCounty;
             NativeTo_Sonoma = defaultCounty;
+
+            Lat = 38.25;
+            Lng = -122.28;
+
         }
     
         //Resets everything but location and other environmental variables to the default values
@@ -186,6 +190,9 @@ namespace PlantomaticVM
         public bool AttractsButterflies { get; set; }
         public bool AttractsHummingbirds { get; set; }
         public bool AttractsBirds { get; set; }
+
+        public double Lat { get; set; }
+        public double Lng { get; set; }
     }
 }
 

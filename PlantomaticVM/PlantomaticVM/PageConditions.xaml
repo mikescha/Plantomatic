@@ -119,6 +119,19 @@
                     </Binding>
                 </Picker.SelectedIndex>
             </Picker>
+
+            <StackLayout>
+                <Label Text="Lat"/>
+                <Entry Text="{Binding MasterViewModel.PlantList.TargetPlant.Lat, Mode=TwoWay}"/>
+                <Label Text="Lng"/>
+                <Entry Text="{Binding MasterViewModel.PlantList.TargetPlant.Lng, Mode=TwoWay}"/>
+                <Button Text="Fetch" Clicked="Button_Clicked"></Button>
+
+                <Label x:Name="LabelCity"/>
+                <Label x:Name="LabelState"/>
+                <Label x:Name="LabelCounty"/>
+
+            </StackLayout>
         </StackLayout>
 
     </Grid>
