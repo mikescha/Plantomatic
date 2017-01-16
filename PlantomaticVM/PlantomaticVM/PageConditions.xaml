@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps"
              x:Class="PlantomaticVM.PageConditions"
              xmlns:tools="clr-namespace:PlantomaticVM"
              SizeChanged="OnPageSizeChanged"
@@ -88,9 +89,9 @@
                 <Switch Toggled="OnSwitchToggled" 
                         IsToggled="{Binding MasterViewModel.PlantList.TargetPlant.NativeTo_Sonoma}"/>
             </StackLayout>
-        </StackLayout>
 
-        <StackLayout Grid.Row="1" Grid.Column="1" x:Name="customConditions">
+            <Label Text="Customize:"/>
+
             <Picker x:Name="lowTempPicker"
                         Title="Coldest temperature"
                         SelectedIndexChanged="OnPickerSelectedIndexChanged">
@@ -119,19 +120,32 @@
                     </Binding>
                 </Picker.SelectedIndex>
             </Picker>
+        </StackLayout>
+
+        <StackLayout Grid.Row="1" Grid.Column="1" x:Name="customConditions">
+            
+            <StackLayout x:Name="MapStack">
+                <Label x:Name="LabelStatus"
+                       Text="Looking for your location..."/>
+            </StackLayout>
+
 
             <StackLayout>
+                
                 <Label Text="Lat"/>
-                <Entry Text="{Binding MasterViewModel.PlantList.TargetPlant.Lat, Mode=TwoWay}"/>
+                <Entry x:Name="EntryLat" 
+                       Text="{Binding MasterViewModel.PlantList.TargetPlant.Lat, Mode=TwoWay}"/>
                 <Label Text="Lng"/>
-                <Entry Text="{Binding MasterViewModel.PlantList.TargetPlant.Lng, Mode=TwoWay}"/>
+                <Entry x:Name="EntryLng" 
+                       Text="{Binding MasterViewModel.PlantList.TargetPlant.Lng, Mode=TwoWay}"/>
                 <Button Text="Fetch" Clicked="Button_Clicked"></Button>
 
                 <Label x:Name="LabelCity"/>
                 <Label x:Name="LabelState"/>
                 <Label x:Name="LabelCounty"/>
-
             </StackLayout>
+
+
         </StackLayout>
 
     </Grid>

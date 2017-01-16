@@ -9,6 +9,7 @@ using WebUtility;
 using Xamarin.Forms;
 using System.Xml;
 using System.Xml.Linq;
+using Plugin.Geolocator; // From https://github.com/jamesmontemagno/GeolocatorPlugin/blob/master/README.md
 
 namespace PlantomaticVM
 {
@@ -17,6 +18,8 @@ namespace PlantomaticVM
         public PageConditions()
         {
             InitializeComponent();
+
+            GetLocation();
         }
 
         void OnPageSizeChanged(object sender, EventArgs args)
@@ -42,6 +45,20 @@ namespace PlantomaticVM
             // Get AppData object (set to BindingContext in XAML file). 
             AppData appData = (AppData)BindingContext;
             appData.MasterViewModel.FilterPlantList();
+        }
+
+        async void GetLocation()
+        {
+            var locator = CrossGeolocator.Current;
+            locator.DesiredAccuracy = 50;
+
+            var position = await locator.GetPositionAsync(10000);
+
+            LabelStatus.Text = "Is this your location?";
+            
+            EntryLat.Text = position.Latitude.ToString();
+            EntryLng.Text = position.Longitude.ToString();
+
         }
 
         private class AddressElement
@@ -85,11 +102,13 @@ namespace PlantomaticVM
                             //State is type=="administrative_area_level_1"
                             //For some reason there are duplicate results in the response, so select just the first one
                             IEnumerable<AddressElement> element = result.Where(p => p.type == "political");
-                            LabelCity.Text = element.First().long_name;
+                            LabelCity.Text = element.Any() ? element.First().long_name : "";
+                            
                             element = result.Where(p => p.type == "administrative_area_level_1");
-                            LabelState.Text = element.First().long_name;
+                            LabelState.Text = element.Any() ? element.First().long_name : "";
+
                             element = result.Where(p => p.type == "administrative_area_level_2");
-                            LabelCounty.Text = element.First().long_name;
+                            LabelCounty.Text = element.Any() ? element.First().long_name : "";
                         }
                         else
                         {
