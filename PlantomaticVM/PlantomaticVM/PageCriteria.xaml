@@ -20,425 +20,429 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <Grid x:Name="pageGrid">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
+    <ScrollView>
 
-        <!--Buttons for controlling which UI the user sees-->
-        <StackLayout Grid.Row="0"
-                     Orientation="Horizontal"
-                     HorizontalOptions="Center"
-                     Spacing="0">
-            <Button x:Name="buttonSimple"
-                    BorderColor="#94DC63"
-                    BorderWidth="1"
-                    HorizontalOptions="Start"
-                    Text="Simple"
-                    BindingContext="{x:Reference simpleGrid}"
-                    BackgroundColor="{Binding Path=IsVisible, Converter={StaticResource ButtonHighlight}}"
-                    Clicked="buttonSimple_Clicked" />
-            <Button x:Name="buttonAdvanced"
-                    BorderColor="#94DC63"
-                    BorderWidth="1"
-                    HorizontalOptions="End"
-                    Text="Advanced"
-                    BindingContext="{x:Reference advancedGrid}"
-                    BackgroundColor="{Binding Path=IsVisible, Converter={StaticResource ButtonHighlight}}"
-                    Clicked="buttonAdvanced_Clicked" />
-        </StackLayout>
+        <Grid x:Name="pageGrid">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
 
-        <!--
-        We have two sets of controls, "simple" where the user can just pick from predefined sets of 
-        plants, and "advanced", where the user can control all the settings. There are two buttons at
-        the top of the page that are used to toggle between these. The idea is that by keeping them in 
-        separate grids, all that is required to switch between modes is just set one grid to visible, 
-        and the other to invisible.
-        -->
-        <StackLayout Grid.Row="1">
-            <Grid x:Name="simpleGrid">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-
-                <Label x:Name="labelTitle" 
-                       Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
-                       Text="{Binding MasterViewModel.PlantList.MyPlants.Count, StringFormat = 'What kinds of plants do you want? ({0} matches)'}"
-                       VerticalTextAlignment="Center"
-                       HorizontalTextAlignment="Start"
-                       FontAttributes="Bold"
-                       TextColor="Black"/>
-        
-                <Button x:Name="buttonWinterFlowers"
-                        Text="Winter Flowers"
-                        Command="{Binding MasterViewModel.SetWinterFlowers}"
-                        BackgroundColor="{Binding MasterViewModel.ShowingWinterFlowers, Converter={StaticResource ButtonHighlight}}"/>
-
-                <Button x:Name="buttonBirds" 
-                        Text="Attracts Birds"
-                        Command="{Binding MasterViewModel.SetAttractsBirds}"
-                        BackgroundColor="{Binding MasterViewModel.ShowingBirds, Converter={StaticResource ButtonHighlight}}"/>
-
-                <Button x:Name="buttonPollenators" 
-                        Text="Attracts Pollenators"
-                        Command="{Binding MasterViewModel.SetPollenators}"
-                        BackgroundColor="{Binding MasterViewModel.ShowingPollenators, Converter={StaticResource ButtonHighlight}}"/>
-
-                <Button x:Name="buttonSmallYard" 
-                        Text="Small Yards"
-                        Command="{Binding MasterViewModel.SetSmallYard}"
-                        BackgroundColor="{Binding MasterViewModel.ShowingSmallYard, Converter={StaticResource ButtonHighlight}}"/>
-
-                <Button x:Name="buttonShady"
-                        Text="Shady and Drought Tolerant"
-                        Command="{Binding MasterViewModel.SetShadeAndDrought}"
-                        BackgroundColor="{Binding MasterViewModel.ShowingShadeAndDrought, Converter={StaticResource ButtonHighlight}}"/>
-    
-                <Button x:Name="buttonContainers"
-                        Text="Containers and Hummingbirds"
-                        Command="{Binding MasterViewModel.SetContainersAndHummingbirds}"
-                        BackgroundColor="{Binding MasterViewModel.ShowingContainersAndHummingbirds, Converter={StaticResource ButtonHighlight}}"/>
-
-                <Button x:Name="buttonRedFlowers"
-                        Text="Red, Yellow, or Orange Flowers"
-                        Command="{Binding MasterViewModel.SetWarmColorFlowers}"
-                        BackgroundColor="{Binding MasterViewModel.ShowingFlowerColors, Converter={StaticResource ButtonHighlight}}"/>
-
-            </Grid> <!--Simple Controls -->
-            
-            <!--Advanced controls. Note this is hidden by default, the user must click a button to show it -->
-            <Grid x:Name="advancedGrid"
-                  IsVisible="False">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-
-                <!--Body of page, where the filters go-->
-                <Grid x:Name="bodyGrid"
-                  Grid.Row="0">
-                    <!--Force heading into mainGrid row 0-->
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <!--After the heading, the contents are divided into two stack layouts. The first one is for the first column of layout, 
-                    the second is for the second. When in portrait mode, those are stacked into one column. When it landscape, they are
-                    side by side. This is done by the page layout code, which gets called at launch to do the iniital setting, so I don't
-                    set them here.
-                -->
-
-                    <StackLayout x:Name="filtersSet1">
-
-                        <Picker x:Name="floweringMonthPicker"
-                            Title="Flowering month"
-                            SelectedIndexChanged="OnPickerSelectedIndexChanged">
-                            <Picker.Items>
-                                <x:String>All</x:String>
-                                <x:String>January</x:String>
-                                <x:String>February</x:String>
-                                <x:String>March</x:String>
-                                <x:String>April</x:String>
-                                <x:String>May</x:String>
-                                <x:String>June</x:String>
-                                <x:String>July</x:String>
-                                <x:String>August</x:String>
-                                <x:String>September</x:String>
-                                <x:String>October</x:String>
-                                <x:String>November</x:String>
-                                <x:String>December</x:String>
-                            </Picker.Items>
-                            <Picker.SelectedIndex>
-                                <Binding Path="MasterViewModel.PlantList.TargetPlant.FloweringMonths">
-                                    <Binding.Converter>
-                                        <tools:ObjectToIndexConverter x:TypeArguments="plants:FloweringMonths">
-                                            <plants:FloweringMonths>AllMonths</plants:FloweringMonths>
-                                            <plants:FloweringMonths>Jan</plants:FloweringMonths>
-                                            <plants:FloweringMonths>Feb</plants:FloweringMonths>
-                                            <plants:FloweringMonths>Mar</plants:FloweringMonths>
-                                            <plants:FloweringMonths>Apr</plants:FloweringMonths>
-                                            <plants:FloweringMonths>May</plants:FloweringMonths>
-                                            <plants:FloweringMonths>Jun</plants:FloweringMonths>
-                                            <plants:FloweringMonths>Jul</plants:FloweringMonths>
-                                            <plants:FloweringMonths>Aug</plants:FloweringMonths>
-                                            <plants:FloweringMonths>Sep</plants:FloweringMonths>
-                                            <plants:FloweringMonths>Oct</plants:FloweringMonths>
-                                            <plants:FloweringMonths>Nov</plants:FloweringMonths>
-                                            <plants:FloweringMonths>Dec</plants:FloweringMonths>
-                                        </tools:ObjectToIndexConverter>
-                                    </Binding.Converter>
-                                </Binding>
-                            </Picker.SelectedIndex>
-                        </Picker>
-
-                        <Picker x:Name="plantTypePicker"
-                            Title="Plant type"
-                            SelectedIndexChanged="OnPickerSelectedIndexChanged">
-                            <Picker.Items>
-                                <x:String>All</x:String>
-                                <x:String>Annual</x:String>
-                                <x:String>Perennial</x:String>
-                                <x:String>Bush</x:String>
-                                <x:String>Fern</x:String>
-                                <x:String>Grass</x:String>
-                                <x:String>Tree</x:String>
-                                <x:String>Vine</x:String>
-                            </Picker.Items>
-                            <Picker.SelectedIndex>
-                                <Binding Path="MasterViewModel.PlantList.TargetPlant.PlantTypes">
-                                    <Binding.Converter>
-                                        <tools:ObjectToIndexConverter x:TypeArguments="plants:PlantTypes">
-                                            <plants:PlantTypes>AllPlantTypes</plants:PlantTypes>
-                                            <plants:PlantTypes>Annual_herb</plants:PlantTypes>
-                                            <plants:PlantTypes>Perennial_herb</plants:PlantTypes>
-                                            <plants:PlantTypes>Bush</plants:PlantTypes>
-                                            <plants:PlantTypes>Fern</plants:PlantTypes>
-                                            <plants:PlantTypes>Grass</plants:PlantTypes>
-                                            <plants:PlantTypes>Tree</plants:PlantTypes>
-                                            <plants:PlantTypes>Vine</plants:PlantTypes>
-                                        </tools:ObjectToIndexConverter>
-                                    </Binding.Converter>
-                                </Binding>
-                            </Picker.SelectedIndex>
-                        </Picker>
-
-                        <Picker x:Name="sunPicker"
-                            Title="Sun requirements"
-                            SelectedIndexChanged="OnPickerSelectedIndexChanged">
-                            <Picker.Items>
-                                <x:String>All</x:String>
-                                <x:String>Full sun</x:String>
-                                <x:String>Partial sun</x:String>
-                                <x:String>Shade</x:String>
-                            </Picker.Items>
-                            <Picker.SelectedIndex>
-                                <Binding Path="MasterViewModel.PlantList.TargetPlant.SunRequirements">
-                                    <Binding.Converter>
-                                        <tools:ObjectToIndexConverter x:TypeArguments="plants:SunRequirements">
-                                            <plants:SunRequirements>AllSunTypes</plants:SunRequirements>
-                                            <plants:SunRequirements>Full</plants:SunRequirements>
-                                            <plants:SunRequirements>Partial</plants:SunRequirements>
-                                            <plants:SunRequirements>Shade</plants:SunRequirements>
-                                        </tools:ObjectToIndexConverter>
-                                    </Binding.Converter>
-                                </Binding>
-                            </Picker.SelectedIndex>
-                        </Picker>
-
-                        <Picker x:Name="maxHeightPicker"
-                            Title="Maximum height"
-                            SelectedIndexChanged="OnPickerSelectedIndexChanged">
-                            <Picker.Items>
-                                <x:String>Any</x:String>
-                                <x:String>2 feet</x:String>
-                                <x:String>4 feet</x:String>
-                                <x:String>6 feet</x:String>
-                                <x:String>10 feet</x:String>
-                                <x:String>20 feet</x:String>
-                            </Picker.Items>
-                            <Picker.SelectedIndex>
-                                <Binding Path="MasterViewModel.PlantList.TargetPlant.MaxHeight.Value">
-                                    <Binding.Converter>
-                                        <tools:ObjectToIndexConverter x:TypeArguments="x:Decimal">
-                                            <x:Decimal>300</x:Decimal>
-                                            <x:Decimal>2</x:Decimal>
-                                            <x:Decimal>4</x:Decimal>
-                                            <x:Decimal>6</x:Decimal>
-                                            <x:Decimal>10</x:Decimal>
-                                            <x:Decimal>20</x:Decimal>
-                                        </tools:ObjectToIndexConverter>
-                                    </Binding.Converter>
-                                </Binding>
-                            </Picker.SelectedIndex>
-                        </Picker>
-
-                        <Picker x:Name="maxWidthPicker"
-                            Title="Maximum width"
-                            SelectedIndexChanged="OnPickerSelectedIndexChanged">
-                            <Picker.Items>
-                                <x:String>Any</x:String>
-                                <x:String>2 feet</x:String>
-                                <x:String>4 feet</x:String>
-                                <x:String>6 feet</x:String>
-                                <x:String>10 feet</x:String>
-                                <x:String>20 feet</x:String>
-                            </Picker.Items>
-                            <Picker.SelectedIndex>
-                                <Binding Path="MasterViewModel.PlantList.TargetPlant.MaxWidth.Value">
-                                    <Binding.Converter>
-                                        <tools:ObjectToIndexConverter x:TypeArguments="x:Decimal">
-                                            <x:Decimal>300</x:Decimal>
-                                            <x:Decimal>2</x:Decimal>
-                                            <x:Decimal>4</x:Decimal>
-                                            <x:Decimal>6</x:Decimal>
-                                            <x:Decimal>10</x:Decimal>
-                                            <x:Decimal>20</x:Decimal>
-                                        </tools:ObjectToIndexConverter>
-                                    </Binding.Converter>
-                                </Binding>
-                            </Picker.SelectedIndex>
-                        </Picker>
-                    </StackLayout>
-
-                    <StackLayout x:Name="filtersSet2" HorizontalOptions="Center" VerticalOptions="Start">
-                        <!-- NOT READY YET
-                        <StackLayout x:Name="ColorPickers"
-                                     Spacing="0"
-                                     HorizontalOptions="Center">
-                            <StackLayout.Resources>
-                                <ResourceDictionary>
-                                    <Style TargetType="Button">
-                                        <Setter Property="WidthRequest" Value="16" />
-                                        <Setter Property="WidthRequest" Value="16" />
-                                    </Style>
-                                </ResourceDictionary>
-                            </StackLayout.Resources>
-                            <Grid x:Name="colorGrid">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-
-                                <Button Grid.Row="0" Grid.Column="0"
-                                        Text="Any"
-                                        BackgroundColor="White"/>
-                                <Button Grid.Row="0" Grid.Column="1"
-                                        BackgroundColor="Red"/>
-                                <Button Grid.Row="0" Grid.Column="2"
-                                        BackgroundColor="Orange"/>
-                            </Grid>
-                        </StackLayout>
-                        -->
-                        <Picker x:Name="flowerColor"
-                            Title="Flower Color"
-                            SelectedIndexChanged="OnPickerSelectedIndexChanged">
-                            <Picker.Items>
-                                <x:String>Any</x:String>
-                                <x:String>Red</x:String>
-                                <x:String>Orange</x:String>
-                                <x:String>Yellow</x:String>
-                                <x:String>Green</x:String>
-                                <x:String>Blue</x:String>
-                                <x:String>Purple</x:String>
-                                <x:String>White</x:String>
-                                <x:String>Brown</x:String>
-                            </Picker.Items>
-                            <Picker.SelectedIndex>
-                                <Binding Path="MasterViewModel.PlantList.TargetPlant.FlowerColors">
-                                    <Binding.Converter>
-                                        <tools:ObjectToIndexConverter x:TypeArguments="plants:FlowerColor">
-                                            <plants:FlowerColor>AnyColor</plants:FlowerColor>
-                                            <plants:FlowerColor>Red</plants:FlowerColor>
-                                            <plants:FlowerColor>Orange</plants:FlowerColor>
-                                            <plants:FlowerColor>Yellow</plants:FlowerColor>
-                                            <plants:FlowerColor>Green</plants:FlowerColor>
-                                            <plants:FlowerColor>Blue</plants:FlowerColor>
-                                            <plants:FlowerColor>Purple</plants:FlowerColor>
-                                            <plants:FlowerColor>White</plants:FlowerColor>
-                                            <plants:FlowerColor>Brown</plants:FlowerColor>
-                                        </tools:ObjectToIndexConverter>
-                                    </Binding.Converter>
-                                </Binding>
-                            </Picker.SelectedIndex>
-                        </Picker>
-                        
-                        
-                        <StackLayout  Orientation="Horizontal" HorizontalOptions="End">
-                            <Label Text="Attracts hummingbirds?" 
-                           VerticalOptions="Center" />
-                            <Switch Toggled="OnSwitchToggled" 
-                            IsToggled="{Binding MasterViewModel.PlantList.TargetPlant.AttractsHummingbirds}"/>
-                        </StackLayout>
-
-                        <StackLayout  Orientation="Horizontal" HorizontalOptions="End">
-                            <Label Text="Attracts any birds?" 
-                           VerticalOptions="Center" />
-                            <Switch Toggled="OnSwitchToggled" 
-                            IsToggled="{Binding MasterViewModel.PlantList.TargetPlant.AttractsBirds}"/>
-                        </StackLayout>
-
-                        <StackLayout  Orientation="Horizontal" HorizontalOptions="End">
-                            <Label Text="Attracts bees?" 
-                           VerticalOptions="Center" />
-                            <Switch Toggled="OnSwitchToggled" 
-                            IsToggled="{Binding MasterViewModel.PlantList.TargetPlant.AttractsNativeBees}"/>
-                        </StackLayout>
-
-                        <StackLayout  Orientation="Horizontal" HorizontalOptions="End">
-                            <Label Text="Attracts butterflies?" 
-                           VerticalOptions="Center" />
-                            <Switch Toggled="OnSwitchToggled" 
-                            IsToggled="{Binding MasterViewModel.PlantList.TargetPlant.AttractsButterflies}"/>
-                        </StackLayout>
-                    </StackLayout>
-                </Grid>
-
-                <!--Footer-->
-                <!--Layout uses a nested grid stuffed into row 3 to allow the Reset button to hang out on the right-->
-                <Grid x:Name="headingGrid"
-                  Grid.Row="2">
-                    <!--Force footer into mainGrid row 2-->
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-
-                    <!--Footer Elements-->
-                    <Label  Grid.Row="0" Grid.Column="0" 
-                        Text="{Binding MasterViewModel.PlantList.MyPlants.Count, StringFormat = '{0} matches'}"
-                        VerticalTextAlignment="Center"
-                        FontAttributes="Bold"
-                        TextColor="Black"/>
-
-                    <Button Grid.Row="0" Grid.Column="1" 
-                        Text="Reset all" 
+            <!--Buttons for controlling which UI the user sees-->
+            <StackLayout Grid.Row="0"
+                         Orientation="Horizontal"
+                         HorizontalOptions="Center"
+                         Spacing="0">
+                <Button x:Name="buttonSimple"
+                        BorderColor="#94DC63"
+                        BorderWidth="1"
+                        HorizontalOptions="Start"
+                        Text="Simple"
+                        BindingContext="{x:Reference simpleGrid}"
+                        BackgroundColor="{Binding Path=IsVisible, Converter={StaticResource ButtonHighlight}}"
+                        Clicked="buttonSimple_Clicked" />
+                <Button x:Name="buttonAdvanced"
+                        BorderColor="#94DC63"
+                        BorderWidth="1"
                         HorizontalOptions="End"
-                        Command="{Binding MasterViewModel.PlantList.ResetCriteria}"
-                        BorderWidth="1">
-                        <Button.BackgroundColor>
-                            <OnPlatform x:TypeArguments="Color" Android="#404040" />
-                        </Button.BackgroundColor>
-                        <Button.BorderColor>
-                            <OnPlatform x:TypeArguments="Color" Android="White" WinPhone="Black" />
-                        </Button.BorderColor>
-                    </Button>
-                </Grid>
+                        Text="Advanced"
+                        BindingContext="{x:Reference advancedGrid}"
+                        BackgroundColor="{Binding Path=IsVisible, Converter={StaticResource ButtonHighlight}}"
+                        Clicked="buttonAdvanced_Clicked" />
+            </StackLayout>
 
-            </Grid> <!--Advanced-->
-        </StackLayout>
-    </Grid>
+            <!--
+            We have two sets of controls, "simple" where the user can just pick from predefined sets of 
+            plants, and "advanced", where the user can control all the settings. There are two buttons at
+            the top of the page that are used to toggle between these. The idea is that by keeping them in 
+            separate grids, all that is required to switch between modes is just set one grid to visible, 
+            and the other to invisible.
+            -->
+            <StackLayout Grid.Row="1">
+                <Grid x:Name="simpleGrid">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
 
+                    <Label x:Name="labelTitle" 
+                           Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
+                           Text="{Binding MasterViewModel.PlantList.MyPlants.Count, StringFormat = 'What kinds of plants do you want? ({0} matches)'}"
+                           VerticalTextAlignment="Center"
+                           HorizontalTextAlignment="Start"
+                           FontAttributes="Bold"
+                           TextColor="Black"/>
+        
+                    <Button x:Name="buttonWinterFlowers"
+                            Text="Winter Flowers"
+                            Command="{Binding MasterViewModel.SetWinterFlowers}"
+                            BackgroundColor="{Binding MasterViewModel.ShowingWinterFlowers, Converter={StaticResource ButtonHighlight}}"/>
+
+                    <Button x:Name="buttonBirds" 
+                            Text="Attracts Birds"
+                            Command="{Binding MasterViewModel.SetAttractsBirds}"
+                            BackgroundColor="{Binding MasterViewModel.ShowingBirds, Converter={StaticResource ButtonHighlight}}"/>
+
+                    <Button x:Name="buttonPollenators" 
+                            Text="Attracts Pollenators"
+                            Command="{Binding MasterViewModel.SetPollenators}"
+                            BackgroundColor="{Binding MasterViewModel.ShowingPollenators, Converter={StaticResource ButtonHighlight}}"/>
+
+                    <Button x:Name="buttonSmallYard" 
+                            Text="Small Yards"
+                            Command="{Binding MasterViewModel.SetSmallYard}"
+                            BackgroundColor="{Binding MasterViewModel.ShowingSmallYard, Converter={StaticResource ButtonHighlight}}"/>
+
+                    <Button x:Name="buttonShady"
+                            Text="Shady and Drought Tolerant"
+                            Command="{Binding MasterViewModel.SetShadeAndDrought}"
+                            BackgroundColor="{Binding MasterViewModel.ShowingShadeAndDrought, Converter={StaticResource ButtonHighlight}}"/>
+    
+                    <Button x:Name="buttonContainers"
+                            Text="Containers and Hummingbirds"
+                            Command="{Binding MasterViewModel.SetContainersAndHummingbirds}"
+                            BackgroundColor="{Binding MasterViewModel.ShowingContainersAndHummingbirds, Converter={StaticResource ButtonHighlight}}"/>
+
+                    <Button x:Name="buttonRedFlowers"
+                            Text="Red, Yellow, or Orange Flowers"
+                            Command="{Binding MasterViewModel.SetWarmColorFlowers}"
+                            BackgroundColor="{Binding MasterViewModel.ShowingFlowerColors, Converter={StaticResource ButtonHighlight}}"/>
+
+                </Grid> <!--Simple Controls -->
+            
+                <!--Advanced controls. Note this is hidden by default, the user must click a button to show it -->
+                <Grid x:Name="advancedGrid"
+                      IsVisible="False">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <!--Body of page, where the filters go-->
+                    <Grid x:Name="bodyGrid"
+                      Grid.Row="0">
+                        <!--Force heading into mainGrid row 0-->
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <!--After the heading, the contents are divided into two stack layouts. The first one is for the first column of layout, 
+                        the second is for the second. When in portrait mode, those are stacked into one column. When it landscape, they are
+                        side by side. This is done by the page layout code, which gets called at launch to do the iniital setting, so I don't
+                        set them here.
+                    -->
+
+                        <StackLayout x:Name="filtersSet1">
+
+                            <Picker x:Name="floweringMonthPicker"
+                                Title="Flowering month"
+                                SelectedIndexChanged="OnPickerSelectedIndexChanged">
+                                <Picker.Items>
+                                    <x:String>All</x:String>
+                                    <x:String>January</x:String>
+                                    <x:String>February</x:String>
+                                    <x:String>March</x:String>
+                                    <x:String>April</x:String>
+                                    <x:String>May</x:String>
+                                    <x:String>June</x:String>
+                                    <x:String>July</x:String>
+                                    <x:String>August</x:String>
+                                    <x:String>September</x:String>
+                                    <x:String>October</x:String>
+                                    <x:String>November</x:String>
+                                    <x:String>December</x:String>
+                                </Picker.Items>
+                                <Picker.SelectedIndex>
+                                    <Binding Path="MasterViewModel.PlantList.TargetPlant.FloweringMonths">
+                                        <Binding.Converter>
+                                            <tools:ObjectToIndexConverter x:TypeArguments="plants:FloweringMonths">
+                                                <plants:FloweringMonths>AllMonths</plants:FloweringMonths>
+                                                <plants:FloweringMonths>Jan</plants:FloweringMonths>
+                                                <plants:FloweringMonths>Feb</plants:FloweringMonths>
+                                                <plants:FloweringMonths>Mar</plants:FloweringMonths>
+                                                <plants:FloweringMonths>Apr</plants:FloweringMonths>
+                                                <plants:FloweringMonths>May</plants:FloweringMonths>
+                                                <plants:FloweringMonths>Jun</plants:FloweringMonths>
+                                                <plants:FloweringMonths>Jul</plants:FloweringMonths>
+                                                <plants:FloweringMonths>Aug</plants:FloweringMonths>
+                                                <plants:FloweringMonths>Sep</plants:FloweringMonths>
+                                                <plants:FloweringMonths>Oct</plants:FloweringMonths>
+                                                <plants:FloweringMonths>Nov</plants:FloweringMonths>
+                                                <plants:FloweringMonths>Dec</plants:FloweringMonths>
+                                            </tools:ObjectToIndexConverter>
+                                        </Binding.Converter>
+                                    </Binding>
+                                </Picker.SelectedIndex>
+                            </Picker>
+
+                            <Picker x:Name="plantTypePicker"
+                                Title="Plant type"
+                                SelectedIndexChanged="OnPickerSelectedIndexChanged">
+                                <Picker.Items>
+                                    <x:String>All</x:String>
+                                    <x:String>Annual</x:String>
+                                    <x:String>Perennial</x:String>
+                                    <x:String>Bush</x:String>
+                                    <x:String>Fern</x:String>
+                                    <x:String>Grass</x:String>
+                                    <x:String>Tree</x:String>
+                                    <x:String>Vine</x:String>
+                                </Picker.Items>
+                                <Picker.SelectedIndex>
+                                    <Binding Path="MasterViewModel.PlantList.TargetPlant.PlantTypes">
+                                        <Binding.Converter>
+                                            <tools:ObjectToIndexConverter x:TypeArguments="plants:PlantTypes">
+                                                <plants:PlantTypes>AllPlantTypes</plants:PlantTypes>
+                                                <plants:PlantTypes>Annual_herb</plants:PlantTypes>
+                                                <plants:PlantTypes>Perennial_herb</plants:PlantTypes>
+                                                <plants:PlantTypes>Bush</plants:PlantTypes>
+                                                <plants:PlantTypes>Fern</plants:PlantTypes>
+                                                <plants:PlantTypes>Grass</plants:PlantTypes>
+                                                <plants:PlantTypes>Tree</plants:PlantTypes>
+                                                <plants:PlantTypes>Vine</plants:PlantTypes>
+                                            </tools:ObjectToIndexConverter>
+                                        </Binding.Converter>
+                                    </Binding>
+                                </Picker.SelectedIndex>
+                            </Picker>
+
+                            <Picker x:Name="sunPicker"
+                                Title="Sun requirements"
+                                SelectedIndexChanged="OnPickerSelectedIndexChanged">
+                                <Picker.Items>
+                                    <x:String>All</x:String>
+                                    <x:String>Full sun</x:String>
+                                    <x:String>Partial sun</x:String>
+                                    <x:String>Shade</x:String>
+                                </Picker.Items>
+                                <Picker.SelectedIndex>
+                                    <Binding Path="MasterViewModel.PlantList.TargetPlant.SunRequirements">
+                                        <Binding.Converter>
+                                            <tools:ObjectToIndexConverter x:TypeArguments="plants:SunRequirements">
+                                                <plants:SunRequirements>AllSunTypes</plants:SunRequirements>
+                                                <plants:SunRequirements>Full</plants:SunRequirements>
+                                                <plants:SunRequirements>Partial</plants:SunRequirements>
+                                                <plants:SunRequirements>Shade</plants:SunRequirements>
+                                            </tools:ObjectToIndexConverter>
+                                        </Binding.Converter>
+                                    </Binding>
+                                </Picker.SelectedIndex>
+                            </Picker>
+
+                            <Picker x:Name="maxHeightPicker"
+                                Title="Maximum height"
+                                SelectedIndexChanged="OnPickerSelectedIndexChanged">
+                                <Picker.Items>
+                                    <x:String>Any</x:String>
+                                    <x:String>2 feet</x:String>
+                                    <x:String>4 feet</x:String>
+                                    <x:String>6 feet</x:String>
+                                    <x:String>10 feet</x:String>
+                                    <x:String>20 feet</x:String>
+                                </Picker.Items>
+                                <Picker.SelectedIndex>
+                                    <Binding Path="MasterViewModel.PlantList.TargetPlant.MaxHeight.Value">
+                                        <Binding.Converter>
+                                            <tools:ObjectToIndexConverter x:TypeArguments="x:Decimal">
+                                                <x:Decimal>300</x:Decimal>
+                                                <x:Decimal>2</x:Decimal>
+                                                <x:Decimal>4</x:Decimal>
+                                                <x:Decimal>6</x:Decimal>
+                                                <x:Decimal>10</x:Decimal>
+                                                <x:Decimal>20</x:Decimal>
+                                            </tools:ObjectToIndexConverter>
+                                        </Binding.Converter>
+                                    </Binding>
+                                </Picker.SelectedIndex>
+                            </Picker>
+
+                            <Picker x:Name="maxWidthPicker"
+                                Title="Maximum width"
+                                SelectedIndexChanged="OnPickerSelectedIndexChanged">
+                                <Picker.Items>
+                                    <x:String>Any</x:String>
+                                    <x:String>2 feet</x:String>
+                                    <x:String>4 feet</x:String>
+                                    <x:String>6 feet</x:String>
+                                    <x:String>10 feet</x:String>
+                                    <x:String>20 feet</x:String>
+                                </Picker.Items>
+                                <Picker.SelectedIndex>
+                                    <Binding Path="MasterViewModel.PlantList.TargetPlant.MaxWidth.Value">
+                                        <Binding.Converter>
+                                            <tools:ObjectToIndexConverter x:TypeArguments="x:Decimal">
+                                                <x:Decimal>300</x:Decimal>
+                                                <x:Decimal>2</x:Decimal>
+                                                <x:Decimal>4</x:Decimal>
+                                                <x:Decimal>6</x:Decimal>
+                                                <x:Decimal>10</x:Decimal>
+                                                <x:Decimal>20</x:Decimal>
+                                            </tools:ObjectToIndexConverter>
+                                        </Binding.Converter>
+                                    </Binding>
+                                </Picker.SelectedIndex>
+                            </Picker>
+                        </StackLayout>
+
+                        <StackLayout x:Name="filtersSet2">
+                            <!-- NOT READY YET
+                            <StackLayout x:Name="ColorPickers"
+                                         Spacing="0"
+                                         HorizontalOptions="Center">
+                                <StackLayout.Resources>
+                                    <ResourceDictionary>
+                                        <Style TargetType="Button">
+                                            <Setter Property="WidthRequest" Value="16" />
+                                            <Setter Property="WidthRequest" Value="16" />
+                                        </Style>
+                                    </ResourceDictionary>
+                                </StackLayout.Resources>
+                                <Grid x:Name="colorGrid">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <Button Grid.Row="0" Grid.Column="0"
+                                            Text="Any"
+                                            BackgroundColor="White"/>
+                                    <Button Grid.Row="0" Grid.Column="1"
+                                            BackgroundColor="Red"/>
+                                    <Button Grid.Row="0" Grid.Column="2"
+                                            BackgroundColor="Orange"/>
+                                </Grid>
+                            </StackLayout>
+                            -->
+                            <Picker x:Name="flowerColor"
+                                Title="Flower Color"
+                                SelectedIndexChanged="OnPickerSelectedIndexChanged">
+                                <Picker.Items>
+                                    <x:String>Any</x:String>
+                                    <x:String>Red</x:String>
+                                    <x:String>Orange</x:String>
+                                    <x:String>Yellow</x:String>
+                                    <x:String>Green</x:String>
+                                    <x:String>Blue</x:String>
+                                    <x:String>Purple</x:String>
+                                    <x:String>White</x:String>
+                                    <x:String>Brown</x:String>
+                                </Picker.Items>
+                                <Picker.SelectedIndex>
+                                    <Binding Path="MasterViewModel.PlantList.TargetPlant.FlowerColors">
+                                        <Binding.Converter>
+                                            <tools:ObjectToIndexConverter x:TypeArguments="plants:FlowerColor">
+                                                <plants:FlowerColor>AnyColor</plants:FlowerColor>
+                                                <plants:FlowerColor>Red</plants:FlowerColor>
+                                                <plants:FlowerColor>Orange</plants:FlowerColor>
+                                                <plants:FlowerColor>Yellow</plants:FlowerColor>
+                                                <plants:FlowerColor>Green</plants:FlowerColor>
+                                                <plants:FlowerColor>Blue</plants:FlowerColor>
+                                                <plants:FlowerColor>Purple</plants:FlowerColor>
+                                                <plants:FlowerColor>White</plants:FlowerColor>
+                                                <plants:FlowerColor>Brown</plants:FlowerColor>
+                                            </tools:ObjectToIndexConverter>
+                                        </Binding.Converter>
+                                    </Binding>
+                                </Picker.SelectedIndex>
+                            </Picker>
+
+                            <StackLayout HorizontalOptions="CenterAndExpand"
+                                         VerticalOptions="Start">
+                                <StackLayout  Orientation="Horizontal" HorizontalOptions="End">
+                                    <Label Text="Attracts hummingbirds?" 
+                                   VerticalOptions="Center" />
+                                    <Switch Toggled="OnSwitchToggled" 
+                                    IsToggled="{Binding MasterViewModel.PlantList.TargetPlant.AttractsHummingbirds}"/>
+                                </StackLayout>
+
+                                <StackLayout  Orientation="Horizontal" HorizontalOptions="End">
+                                    <Label Text="Attracts any birds?" 
+                                   VerticalOptions="Center" />
+                                    <Switch Toggled="OnSwitchToggled" 
+                                    IsToggled="{Binding MasterViewModel.PlantList.TargetPlant.AttractsBirds}"/>
+                                </StackLayout>
+
+                                <StackLayout  Orientation="Horizontal" HorizontalOptions="End">
+                                    <Label Text="Attracts bees?" 
+                                   VerticalOptions="Center" />
+                                    <Switch Toggled="OnSwitchToggled" 
+                                    IsToggled="{Binding MasterViewModel.PlantList.TargetPlant.AttractsNativeBees}"/>
+                                </StackLayout>
+
+                                <StackLayout  Orientation="Horizontal" HorizontalOptions="End">
+                                    <Label Text="Attracts butterflies?" 
+                                   VerticalOptions="Center" />
+                                    <Switch Toggled="OnSwitchToggled" 
+                                    IsToggled="{Binding MasterViewModel.PlantList.TargetPlant.AttractsButterflies}"/>
+                                </StackLayout>
+                            </StackLayout>
+                        </StackLayout>
+                    </Grid>
+
+                    <!--Footer-->
+                    <!--Layout uses a nested grid stuffed into row 3 to allow the Reset button to hang out on the right-->
+                    <Grid x:Name="headingGrid"
+                      Grid.Row="2">
+                        <!--Force footer into mainGrid row 2-->
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <!--Footer Elements-->
+                        <Label  Grid.Row="0" Grid.Column="0" 
+                            Text="{Binding MasterViewModel.PlantList.MyPlants.Count, StringFormat = '{0} matches'}"
+                            VerticalTextAlignment="Center"
+                            FontAttributes="Bold"
+                            TextColor="Black"/>
+
+                        <Button Grid.Row="0" Grid.Column="1" 
+                            Text="Reset all" 
+                            HorizontalOptions="End"
+                            Command="{Binding MasterViewModel.PlantList.ResetCriteria}"
+                            BorderWidth="1">
+                            <Button.BackgroundColor>
+                                <OnPlatform x:TypeArguments="Color" Android="#404040" />
+                            </Button.BackgroundColor>
+                            <Button.BorderColor>
+                                <OnPlatform x:TypeArguments="Color" Android="White" WinPhone="Black" />
+                            </Button.BorderColor>
+                        </Button>
+                    </Grid>
+
+                </Grid> <!--Advanced-->
+            </StackLayout>
+        </Grid>
+    </ScrollView>
 </ContentPage>

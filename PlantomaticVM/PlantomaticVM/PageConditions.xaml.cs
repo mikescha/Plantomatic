@@ -27,9 +27,18 @@ namespace PlantomaticVM
             //Portrait
             if (Width < Height)
             {
+                mainGrid.ColumnDefinitions[0].Width = new GridLength(1, GridUnitType.Star);
+                mainGrid.ColumnDefinitions[1].Width = new GridLength(0);
+
+                Grid.SetRow(customStack, 2);
+                Grid.SetColumn(customStack, 0);
             }
             else //Landscape
             {
+                mainGrid.ColumnDefinitions[0].Width = new GridLength(1, GridUnitType.Star);
+                mainGrid.ColumnDefinitions[1].Width = new GridLength(1, GridUnitType.Star);
+                Grid.SetRow(customStack, 1);
+                Grid.SetColumn(customStack, 1);
             }
         } //end OnPageSizeChanged
 
