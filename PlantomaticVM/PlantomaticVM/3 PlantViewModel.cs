@@ -11,8 +11,8 @@ namespace PlantomaticVM
         Plant plant;
         bool inCart;
         int count;
-        string nameInCart;     
-               
+        string nameInCart;
+
         public MyPlant()
         {
             Plant = new Plant();

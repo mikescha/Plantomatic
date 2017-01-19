@@ -1,12 +1,13 @@
 ﻿using PlantMan.Plant;
-using System;
 using System.Collections.Generic;
 using System.Windows.Input;
 using Xamarin.Forms;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace PlantomaticVM
 {
-    public class MyCriteria
+    public class MyCriteria : INotifyPropertyChanged
     {
         Plant.AssignableDecimal minWinterTempF = new Plant.AssignableDecimal();
         FloweringMonths floweringMonths;
@@ -32,9 +33,9 @@ namespace PlantomaticVM
         PlantTypes defaultPlantType = PlantTypes.AllPlantTypes;
         decimal defaultMaxHeight = 300;
         decimal defaultMaxWidth = 300;
-        bool defaultCounty = true;
+        bool defaultCounty = false;
         FlowerColor defaultFlowerColors = FlowerColor.AnyColor;
-
+       
         // Constructor
         public MyCriteria()
         {
@@ -66,9 +67,10 @@ namespace PlantomaticVM
 
             Lat = 38.25;
             Lng = -122.28;
+            UserCounty = "";
 
         }
-    
+
         //Resets everything but location and other environmental variables to the default values
         public void ResetCriteria()
         {
@@ -176,15 +178,158 @@ namespace PlantomaticVM
 
 
         //TODO do I need to make this like the other properties, or should I make the other properties like this?
-        public bool NativeTo_Alameda { get; set; }
-        public bool NativeTo_Contra_Costa { get; set; }
-        public bool NativeTo_Marin { get; set; }
-        public bool NativeTo_Napa { get; set; }
-        public bool NativeTo_San_Francisco { get; set; }
-        public bool NativeTo_San_Mateo { get; set; }
-        public bool NativeTo_Santa_Clara  { get; set; }
-        public bool NativeTo_Solano { get; set; }
-        public bool NativeTo_Sonoma { get; set; }
+        bool nativeTo_Alameda;
+        public bool NativeTo_Alameda
+        {
+            set
+            {
+                if (nativeTo_Alameda != value)
+                {
+                    nativeTo_Alameda = value;
+                    OnPropertyChanged();
+                }
+            }
+            get
+            {
+                return nativeTo_Alameda;
+            }
+        }
+
+        bool nativeTo_Contra_Costa;
+        public bool NativeTo_Contra_Costa
+        {
+            set
+            {
+                if (nativeTo_Contra_Costa != value)
+                {
+                    nativeTo_Contra_Costa = value;
+                    OnPropertyChanged();
+                }
+            }
+            get
+            {
+                return nativeTo_Contra_Costa;
+            }
+        }
+
+        bool nativeTo_Marin;
+        public bool NativeTo_Marin
+        {
+            set
+            {
+                if (nativeTo_Marin != value)
+                {
+                    nativeTo_Marin = value;
+                    OnPropertyChanged();
+                }
+            }
+            get
+            {
+                return nativeTo_Marin;
+            }
+        }
+
+        bool nativeTo_Napa;
+        public bool NativeTo_Napa
+        {
+            set
+            {
+                if (nativeTo_Napa != value)
+                {
+                    nativeTo_Napa = value;
+                    OnPropertyChanged();
+                }
+            }
+            get
+            {
+                return nativeTo_Napa;
+            }
+        }
+
+        bool nativeTo_San_Francisco;
+        public bool NativeTo_San_Francisco
+        {
+            set
+            {
+                if (nativeTo_San_Francisco != value)
+                {
+                    nativeTo_San_Francisco = value;
+                    OnPropertyChanged();
+                }
+            }
+            get
+            {
+                return nativeTo_San_Francisco;
+            }
+        }
+
+        bool nativeTo_San_Mateo;
+        public bool NativeTo_San_Mateo
+        {
+            set
+            {
+                if (nativeTo_San_Mateo != value)
+                {
+                    nativeTo_San_Mateo = value;
+                    OnPropertyChanged();
+                }
+            }
+            get
+            {
+                return nativeTo_San_Mateo;
+            }
+        }
+
+        bool nativeTo_Santa_Clara;
+        public bool NativeTo_Santa_Clara
+        {
+            set
+            {
+                if (nativeTo_Santa_Clara != value)
+                {
+                    nativeTo_Santa_Clara = value;
+                    OnPropertyChanged();
+                }
+            }
+            get
+            {
+                return nativeTo_Santa_Clara;
+            }
+        }
+
+        bool nativeTo_Solano;
+        public bool NativeTo_Solano
+        {
+            set
+            {
+                if (nativeTo_Solano != value)
+                {
+                    nativeTo_Solano = value;
+                    OnPropertyChanged();
+                }
+            }
+            get
+            {
+                return nativeTo_Solano;
+            }
+        }
+
+        bool nativeTo_Sonoma;
+        public bool NativeTo_Sonoma
+        {
+            set
+            {
+                if (nativeTo_Sonoma != value)
+                {
+                    nativeTo_Sonoma = value;
+                    OnPropertyChanged();
+                }
+            }
+            get
+            {
+                return nativeTo_Sonoma;
+            }
+        }
 
         public bool AttractsNativeBees { get; set; }
         public bool AttractsButterflies { get; set; }
@@ -193,6 +338,21 @@ namespace PlantomaticVM
 
         public double Lat { get; set; }
         public double Lng { get; set; }
+
+        public string UserCounty { get; set; }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        //the CallerMemberName thing means that if I don't pass in the name of the property, then the
+        //name of the calling function is used by default
+        void OnPropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if (handler != null)
+                handler(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+
     }
 }
 

@@ -24,7 +24,7 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        
+
         <Label x:Name="labelTitle" 
                Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
                Text="{Binding MasterViewModel.PlantList.MyPlants.Count, StringFormat = 'Where are you planting? ({0} matches)'}"
@@ -32,62 +32,88 @@
                HorizontalTextAlignment="Start"
                FontAttributes="Bold"
                TextColor="Black"/>
-        <!--Make two checkboxes, one for search by county and the other search by conditions-->
-        <StackLayout Grid.Row="1" Grid.Column="0" x:Name="counties" HorizontalOptions="Center" VerticalOptions="CenterAndExpand">
+        
+        <StackLayout Grid.Row="1" Grid.Column="0" x:Name="locationStack">
+
+            <StackLayout x:Name="MapStack">
+                <Label x:Name="labelStatus"
+                       Text="Looking for your location..."/>
+            </StackLayout>
+
+            <StackLayout>
+                <!--<Label Text="Lat"/>
+                <Entry x:Name="EntryLat" 
+                       Text="{Binding MasterViewModel.PlantList.TargetPlant.Lat, Mode=TwoWay}"/>
+                <Label Text="Lng"/>
+                <Entry x:Name="EntryLng" 
+                       Text="{Binding MasterViewModel.PlantList.TargetPlant.Lng, Mode=TwoWay}"/>
+                <Button Text="Fetch" Clicked="Button_Clicked"></Button>
+                -->
+                <Label x:Name="labelCityState"/>
+                <Label x:Name="labelCounty"/>
+                <Label x:Name="labelHelpText" 
+                       Text="If this is not the location you want, use the controls to choose a different area or conditions."
+                       IsVisible="False"/>
+            </StackLayout>
+        </StackLayout>
+
+        
+        <!--Dumping all the advanced stuff in this area for now-->
+        <StackLayout Grid.Row="1" Grid.Column="1" x:Name="counties" HorizontalOptions="Center" VerticalOptions="CenterAndExpand">
             <StackLayout Orientation="Horizontal" HorizontalOptions="End">
                 <Label Text="Alameda" 
                        VerticalOptions="Center" />
                 <Switch Toggled="OnSwitchToggled" 
-                        IsToggled="{Binding MasterViewModel.PlantList.TargetPlant.NativeTo_Alameda}" 
+                        IsToggled="{Binding MasterViewModel.PlantList.TargetPlant.NativeTo_Alameda, Mode=TwoWay}" 
                         VerticalOptions="Center"/>
             </StackLayout>
             <StackLayout Orientation="Horizontal" HorizontalOptions="End">
                 <Label Text="Contra Costa"
                        VerticalOptions="Center" />
                 <Switch Toggled="OnSwitchToggled" 
-                        IsToggled="{Binding MasterViewModel.PlantList.TargetPlant.NativeTo_Contra_Costa}"/>
+                        IsToggled="{Binding MasterViewModel.PlantList.TargetPlant.NativeTo_Contra_Costa, Mode=TwoWay}"/>
             </StackLayout>
             <StackLayout Orientation="Horizontal" HorizontalOptions="End">
                 <Label Text="Marin"
                        VerticalOptions="Center" />
                 <Switch Toggled="OnSwitchToggled" 
-                        IsToggled="{Binding MasterViewModel.PlantList.TargetPlant.NativeTo_Marin}"/>
+                        IsToggled="{Binding MasterViewModel.PlantList.TargetPlant.NativeTo_Marin, Mode=TwoWay}"/>
             </StackLayout>
             <StackLayout  Orientation="Horizontal" HorizontalOptions="End">
                 <Label Text="Napa" 
                        VerticalOptions="Center" />
                 <Switch Toggled="OnSwitchToggled" 
-                        IsToggled="{Binding MasterViewModel.PlantList.TargetPlant.NativeTo_Napa}"/>
+                        IsToggled="{Binding MasterViewModel.PlantList.TargetPlant.NativeTo_Napa, Mode=TwoWay}"/>
             </StackLayout>
             <StackLayout  Orientation="Horizontal" HorizontalOptions="End">
                 <Label Text="San Francisco"
                        VerticalOptions="Center" />
                 <Switch Toggled="OnSwitchToggled" 
-                        IsToggled="{Binding MasterViewModel.PlantList.TargetPlant.NativeTo_San_Francisco}"/>
+                        IsToggled="{Binding MasterViewModel.PlantList.TargetPlant.NativeTo_San_Francisco, Mode=TwoWay}"/>
             </StackLayout>
             <StackLayout  Orientation="Horizontal" HorizontalOptions="End">
                 <Label Text="San Mateo"
                        VerticalOptions="Center" />
                 <Switch Toggled="OnSwitchToggled" 
-                        IsToggled="{Binding MasterViewModel.PlantList.TargetPlant.NativeTo_San_Mateo}"/>
+                        IsToggled="{Binding MasterViewModel.PlantList.TargetPlant.NativeTo_San_Mateo, Mode=TwoWay}"/>
             </StackLayout>
             <StackLayout  Orientation="Horizontal" HorizontalOptions="End">
                 <Label Text="Santa Clara" 
                        VerticalOptions="Center" />
                 <Switch Toggled="OnSwitchToggled" 
-                        IsToggled="{Binding MasterViewModel.PlantList.TargetPlant.NativeTo_Santa_Clara}"/>
+                        IsToggled="{Binding MasterViewModel.PlantList.TargetPlant.NativeTo_Santa_Clara, Mode=TwoWay}"/>
             </StackLayout>
             <StackLayout  Orientation="Horizontal" HorizontalOptions="End">
                 <Label Text="Solano"
                        VerticalOptions="Center" />
                 <Switch Toggled="OnSwitchToggled" 
-                        IsToggled="{Binding MasterViewModel.PlantList.TargetPlant.NativeTo_Solano}"/>
+                        IsToggled="{Binding MasterViewModel.PlantList.TargetPlant.NativeTo_Solano, Mode=TwoWay}"/>
             </StackLayout>
             <StackLayout Orientation="Horizontal" HorizontalOptions="End">
                 <Label Text="Sonoma"
                        VerticalOptions="Center" />
                 <Switch Toggled="OnSwitchToggled" 
-                        IsToggled="{Binding MasterViewModel.PlantList.TargetPlant.NativeTo_Sonoma}"/>
+                        IsToggled="{Binding MasterViewModel.PlantList.TargetPlant.NativeTo_Sonoma, Mode=TwoWay}"/>
             </StackLayout>
 
             <Label Text="Customize:"/>
@@ -122,31 +148,6 @@
             </Picker>
         </StackLayout>
 
-        <StackLayout Grid.Row="1" Grid.Column="1" x:Name="customConditions">
-            
-            <StackLayout x:Name="MapStack">
-                <Label x:Name="LabelStatus"
-                       Text="Looking for your location..."/>
-            </StackLayout>
-
-
-            <StackLayout>
-                
-                <Label Text="Lat"/>
-                <Entry x:Name="EntryLat" 
-                       Text="{Binding MasterViewModel.PlantList.TargetPlant.Lat, Mode=TwoWay}"/>
-                <Label Text="Lng"/>
-                <Entry x:Name="EntryLng" 
-                       Text="{Binding MasterViewModel.PlantList.TargetPlant.Lng, Mode=TwoWay}"/>
-                <Button Text="Fetch" Clicked="Button_Clicked"></Button>
-
-                <Label x:Name="LabelCity"/>
-                <Label x:Name="LabelState"/>
-                <Label x:Name="LabelCounty"/>
-            </StackLayout>
-
-
-        </StackLayout>
-
+        
     </Grid>
 </ContentPage>

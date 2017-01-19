@@ -54,11 +54,18 @@ namespace PlantomaticVM
 
             var position = await locator.GetPositionAsync(10000);
 
-            LabelStatus.Text = "Is this your location?";
+            AppData appData = (AppData)BindingContext;
             
-            EntryLat.Text = position.Latitude.ToString();
-            EntryLng.Text = position.Longitude.ToString();
+            labelStatus.Text = "Using this location:";
 
+            appData.MasterViewModel.PlantList.TargetPlant.Lat = position.Latitude;
+            appData.MasterViewModel.PlantList.TargetPlant.Lng = position.Longitude;
+
+            labelHelpText.IsVisible = true;
+            
+            ReverseGeocode();
+
+            EnableUserCounty();
         }
 
         private class AddressElement
@@ -68,15 +75,15 @@ namespace PlantomaticVM
             public string type;
         }
 
-        private void Button_Clicked(object sender, EventArgs e)
+        private void ReverseGeocode()
         {
             string GoogleKey = "AIzaSyCTQFfvVgPT7Czy8ddpbAzVo1QB2y894ws";
-            
+
             AppData appData = (AppData)BindingContext;
             double lat = appData.MasterViewModel.PlantList.TargetPlant.Lat;
             double lng = appData.MasterViewModel.PlantList.TargetPlant.Lng;
 
-            var request = HttpWebRequest.Create(string.Format(@"https://maps.googleapis.com/maps/api/geocode/xml?latlng={0},{1}&key={2}", 
+            var request = HttpWebRequest.Create(string.Format(@"https://maps.googleapis.com/maps/api/geocode/xml?latlng={0},{1}&key={2}",
                 lat.ToString(), lng.ToString(), GoogleKey));
             request.Method = "GET";
 
@@ -102,13 +109,17 @@ namespace PlantomaticVM
                             //State is type=="administrative_area_level_1"
                             //For some reason there are duplicate results in the response, so select just the first one
                             IEnumerable<AddressElement> element = result.Where(p => p.type == "political");
-                            LabelCity.Text = element.Any() ? element.First().long_name : "";
-                            
-                            element = result.Where(p => p.type == "administrative_area_level_1");
-                            LabelState.Text = element.Any() ? element.First().long_name : "";
+                            string city = element.Any() ? element.First().long_name : "";
 
+                            element = result.Where(p => p.type == "administrative_area_level_1");
+                            string state = element.Any() ? element.First().long_name : "";
+
+                            labelCityState.Text = city + ", " + state;
+
+                            //Get the county and write it to both the UI and to the data structure
                             element = result.Where(p => p.type == "administrative_area_level_2");
-                            LabelCounty.Text = element.Any() ? element.First().long_name : "";
+                            labelCounty.Text = element.Any() ? element.First().long_name : "";
+                            appData.MasterViewModel.PlantList.TargetPlant.UserCounty = labelCounty.Text;
                         }
                         else
                         {
@@ -116,80 +127,31 @@ namespace PlantomaticVM
                             ;
                         }
                     }
-                } 
+                }
                 else
                 {
                     // TODO Got some kind of error, should check it out. Put this here so we can put a breakpoint on it
                     string error = response.StatusDescription;
-                }   
-            }
-
-        }
-
-        //TEMP CODE: Do the reverse geocoding using Google Map API
-        private void Old_Button_Clicked(object sender, EventArgs e)
-        {
-            string GoogleKey = "AIzaSyCTQFfvVgPT7Czy8ddpbAzVo1QB2y894ws";
-            
-            AppData appData = (AppData)BindingContext;
-            double lat = appData.MasterViewModel.PlantList.TargetPlant.Lat;
-            double lng = appData.MasterViewModel.PlantList.TargetPlant.Lng;
-
-            string URL = "https://maps.googleapis.com/maps/api/geocode/xml?latlng=" + lat.ToString() + "," + lng.ToString() + "&key=" + GoogleKey;
-            WebRequest request = WebRequest.Create(URL);
-
-            
-            using (WebResponse response = request.GetResponse())
-            {
-                // Open the stream using a StreamReader for easy access.
-                using (Stream dataStream = response.GetResponseStream())
-                {
-                    using (StreamReader reader = new StreamReader(dataStream))
-                    {
-                        // Read the content.
-                        string responseFromServer = reader.ReadToEnd();
-
-                        // Parse this
-                        //XmlReaderSettings settings = new XmlReaderSettings();
-                        //settings.Async = false;
-                        using (XmlReader xml = XmlReader.Create(new StringReader(responseFromServer)))
-                        {
-                            string s;
-                            while (xml.Read())
-                                switch (xml.NodeType)
-                                {
-                                    case XmlNodeType.Element:
-                                       /* {
-                                            if (xml.Name == "address_component")
-                                            {
-                                                //there are exactly four elements, so we'll parse through them
-                                                for (int i = 0; i<4; i++)
-                                                {
-                                                    xml.Read();
-                                                }
-                                            }
-                                        }*/
-                                        s = xml.Name;
-                                        break;
-                                    case XmlNodeType.Text:
-                                        s = xml.Value;
-                                        break;
-                                    case XmlNodeType.XmlDeclaration:
-                                    case XmlNodeType.ProcessingInstruction:
-                                    case XmlNodeType.Comment:
-                                    case XmlNodeType.EndElement:
-                                        break;
-                                }
-                            // Print to the UI for fun
-                            LabelCity.Text = "";
-                            LabelCounty.Text = "";
-                            LabelState.Text = "";
-                        }
-                    }                  
                 }
             }
+        }
 
-            //Apparently the "using" clauses will properly dispose of everything, so do not need to call Dispose myself
+        private void EnableUserCounty()
+        {
+            AppData appData = (AppData)BindingContext;
+
+            var p = appData.MasterViewModel.PlantList.TargetPlant;
+            p.NativeTo_Alameda = appData.MasterViewModel.PlantList.TargetPlant.UserCounty.Contains("Alameda");
+            p.NativeTo_Contra_Costa = appData.MasterViewModel.PlantList.TargetPlant.UserCounty.Contains("Contra");
+            p.NativeTo_Marin = appData.MasterViewModel.PlantList.TargetPlant.UserCounty.Contains("Marin");
+            p.NativeTo_Napa = appData.MasterViewModel.PlantList.TargetPlant.UserCounty.Contains("Napa");
+            p.NativeTo_San_Francisco = appData.MasterViewModel.PlantList.TargetPlant.UserCounty.Contains("Francisco");
+            p.NativeTo_San_Mateo = appData.MasterViewModel.PlantList.TargetPlant.UserCounty.Contains("Mateo");
+            p.NativeTo_Santa_Clara = appData.MasterViewModel.PlantList.TargetPlant.UserCounty.Contains("Clara");
+            p.NativeTo_Solano = appData.MasterViewModel.PlantList.TargetPlant.UserCounty.Contains("Solano");
+            p.NativeTo_Sonoma = appData.MasterViewModel.PlantList.TargetPlant.UserCounty.Contains("Sonoma");
+
         }
     }
 }
+   
