@@ -54,7 +54,8 @@ namespace PlantomaticVM
             {
                 mainGrid.ColumnDefinitions[0].Width = new GridLength(1, GridUnitType.Star);
                 mainGrid.ColumnDefinitions[1].Width = new GridLength(0);
-                mainGrid.RowDefinitions[2].Height = new GridLength(1, GridUnitType.Star);
+                mainGrid.RowDefinitions[1].Height = new GridLength(1, GridUnitType.Star);
+                mainGrid.RowDefinitions[2].Height = new GridLength(3, GridUnitType.Star);
                 Grid.SetRow(detailLayout, 2);
                 Grid.SetColumn(detailLayout, 0);
             }
@@ -63,6 +64,7 @@ namespace PlantomaticVM
             {
                 mainGrid.ColumnDefinitions[0].Width = new GridLength(1, GridUnitType.Star);
                 mainGrid.ColumnDefinitions[1].Width = new GridLength(1, GridUnitType.Star);
+                mainGrid.RowDefinitions[1].Height = new GridLength(1, GridUnitType.Star);
                 mainGrid.RowDefinitions[2].Height = new GridLength(0);
                 Grid.SetRow(detailLayout, 1);
                 Grid.SetColumn(detailLayout, 1);

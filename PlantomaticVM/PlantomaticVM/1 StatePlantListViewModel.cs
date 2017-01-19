@@ -238,6 +238,8 @@ namespace PlantomaticVM
                     OnPropertyChanged();
                 }
             }
+            get { return showingFlowerColors; }
+
         }
 
         public bool ShowingShadeAndDrought
