@@ -57,22 +57,30 @@ namespace PlantomaticVM
             appData.MasterViewModel.PlantList.RefreshShoppingListPlants();
         }
 
-        private void shoppingListView_ItemTapped(object sender, ItemTappedEventArgs e)
+        private void ShoppingListView_ItemTapped(object sender, ItemTappedEventArgs e)
         {
+            /*
             detailView.IsVisible = true;
+            summaryView.IsVisible = false;
             shoppingListView.IsVisible = false;
             labelTitle.IsVisible = false;
             buttonClearCart.IsVisible = false;
-            buttonCloseDetail.IsVisible = true;
+            buttonCloseDetail.IsVisible = true;*/
+            detailGrid.IsVisible = true;
+            mainGrid.IsVisible = false;
         }
 
-        private void buttonCloseDetail_Clicked(object sender, EventArgs e)
+        private void ButtonCloseDetail_Clicked(object sender, EventArgs e)
         {
-            detailView.IsVisible = false;
+            /* detailView.IsVisible = false;
+            summaryView.IsVisible = true;
             shoppingListView.IsVisible = true;
             labelTitle.IsVisible = true;
             buttonClearCart.IsVisible = true;
             buttonCloseDetail.IsVisible = false;
+            */
+            detailGrid.IsVisible = false;
+            mainGrid.IsVisible = true;
 
             //refresh the list so that it shows the proper plants, in case the user removed one
             AppData appData = (AppData)BindingContext;

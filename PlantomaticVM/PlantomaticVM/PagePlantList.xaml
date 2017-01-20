@@ -94,7 +94,7 @@
                              BindingContext="{Binding Source={x:Reference listView}, Path=SelectedItem}" 
                              HorizontalOptions="StartAndExpand" VerticalOptions="Start" 
                              Orientation="Vertical" 
-                             Padding="5" Spacing="5"
+                             Spacing="5"
                              IsVisible="{Binding Source={x:Reference listView}, Path=SelectedItem, Converter={StaticResource objectToBoolConverterOpposite}}">
                     <StackLayout.Resources>
                         <ResourceDictionary>

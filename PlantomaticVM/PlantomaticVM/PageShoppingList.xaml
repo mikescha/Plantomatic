@@ -24,359 +24,396 @@
         
         </ResourceDictionary>
     </ContentPage.Resources>
-        
-    <Grid x:Name="mainGrid">
+
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />  
-            <ColumnDefinition Width="*" /> 
+            <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
 
-        <!--Heading-->        
-        <Grid x:Name="headingGrid"
-              Grid.Row="0" Grid.Column="0">
+
+        <Grid x:Name="mainGrid"
+              IsVisible="True"
+              Grid.Row ="0" Grid.Column="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <!--Heading-->
+            <Grid x:Name="headingGrid"
+                  Grid.Row="0" Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Label  x:Name="labelTitle" 
+                        Grid.Row="0" Grid.Column="0" 
+                        Text="{Binding MasterViewModel.PlantList.ShoppingListPlants.Count, StringFormat = '{0} species in your list'}"
+                        VerticalTextAlignment="Center"
+                        FontAttributes="Bold"
+                        TextColor="Black"/>
+                <Button x:Name="buttonClearCart" 
+                        Grid.Row="0" Grid.Column="1" 
+                        Text="Clear list" 
+                        HorizontalOptions="End"
+                        Command="{Binding MasterViewModel.PlantList.ClearCart}"
+                        BorderWidth="1">
+                    <!--Comment this out until I figure out what the right thing to do is. The Android emulator is white on black, and this looks awful
+                    <Button.BackgroundColor>
+                        <OnPlatform x:TypeArguments="Color" Android="#404040" />
+                    </Button.BackgroundColor>
+                    <Button.BorderColor>
+                        <OnPlatform x:TypeArguments="Color" Android="White" WinPhone="Black" />
+                    </Button.BorderColor>-->
+                </Button>
+            </Grid>
+
+            <!--List of plants from shopping list.  -->
+            <StackLayout Grid.Row="1" Grid.Column="0">
+                <ListView x:Name="shoppingListView"
+                      ItemsSource="{Binding MasterViewModel.PlantList.ShoppingListPlants}"
+                      ItemTapped="ShoppingListView_ItemTapped"
+                      HorizontalOptions="StartAndExpand" VerticalOptions="Start" 
+                      SeparatorVisibility="None"
+                      BackgroundColor="#f9f9f9">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <!--Context menu-->
+                                <ViewCell.ContextActions>
+                                    <MenuItem Text="{Binding InCart, Converter={StaticResource AddRemoveCartText}}"  
+                                          Clicked="OnContextMenuClicked"/>
+                                </ViewCell.ContextActions>
+                                <StackLayout Orientation="Vertical"
+                                         Padding="0"
+                                         Spacing="0"
+                                         Margin="2">
+                                    <Label Text="{Binding NameInCart}" 
+                                        TextColor="Green" />
+                                    <Label Text="{Binding Plant.ScientificName}" 
+                                        TextColor="Gray"
+                                        FontAttributes="Italic"
+                                        FontSize="Micro"/>
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+            </StackLayout>
+
+            <!-- Summary data -->
+            <ScrollView x:Name="summaryView" 
+                        Grid.Row="1" Grid.Column="1" 
+                        IsVisible="{Binding Source={x:Reference shoppingListView}, Path=ItemsSource, Converter={StaticResource listToBoolConverterOpposite}}">
+                <StackLayout Orientation="Vertical" VerticalOptions="Start">
+                    <StackLayout.Resources>
+                        <ResourceDictionary>
+                            <Style TargetType="BoxView">
+                                <Setter Property="WidthRequest" Value="32" />
+                                <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
+                                <Setter Property="VerticalOptions" Value="End" />
+                                <Setter Property="BackgroundColor" Value="#94DC63" />
+                            </Style>
+                            <Style TargetType="Label">
+                                <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
+                                <Setter Property="VerticalOptions" Value="End" />
+                                <Setter Property="FontSize" Value="Micro" />
+                                <Setter Property="TextColor" Value="Gray" />
+                            </Style>
+                            <Style TargetType="Image">
+                                <Setter Property="HorizontalOptions" Value="Center" />
+                            </Style>
+                        </ResourceDictionary>
+                    </StackLayout.Resources>
+                    <Label Text="Months that you have flowers"
+                           FontSize="Small" TextColor="Black"/>
+
+                    <Grid x:Name="monthGrid"
+                          RowSpacing="2"
+                          ColumnSpacing="2"
+                          HorizontalOptions="Center">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="64" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <BoxView Grid.Row="0" Grid.Column="0" 
+                                 HeightRequest="{Binding MasterViewModel.PlantList.SummaryMonthArray[1], 
+                                                         Converter={StaticResource CalcHeight}}" />
+                        <Label   Grid.Row="1" Grid.Column="0" 
+                                 Text="Jan"/>
+
+                        <BoxView Grid.Row="0" Grid.Column="1"
+                                 HeightRequest="{Binding MasterViewModel.PlantList.SummaryMonthArray[2], 
+                                                         Converter={StaticResource CalcHeight}}" />
+                        <Label   Grid.Row="1" Grid.Column="1"
+                                 Text="Feb" />
+
+                        <BoxView Grid.Row="0" Grid.Column="2" 
+                                 HeightRequest="{Binding MasterViewModel.PlantList.SummaryMonthArray[3], 
+                                                         Converter={StaticResource CalcHeight}}" />
+                        <Label   Grid.Row="1" Grid.Column="2" 
+                                 Text="Mar" />
+
+                        <BoxView Grid.Row="0" Grid.Column="3"
+                                 HeightRequest="{Binding MasterViewModel.PlantList.SummaryMonthArray[4], 
+                                                         Converter={StaticResource CalcHeight}}" />
+                        <Label   Grid.Row="1" Grid.Column="3"
+                                 Text="Apr" />
+
+                        <BoxView Grid.Row="0" Grid.Column="4"
+                                 HeightRequest="{Binding MasterViewModel.PlantList.SummaryMonthArray[5], 
+                                                            Converter={StaticResource CalcHeight}}" />
+                        <Label   Grid.Row="1" Grid.Column="4"
+                                 Text="May" />
+
+                        <BoxView Grid.Row="0" Grid.Column="5"
+                                 HeightRequest="{Binding MasterViewModel.PlantList.SummaryMonthArray[6], 
+                                                             Converter={StaticResource CalcHeight}}" />
+                        <Label   Grid.Row="1" Grid.Column="5"
+                                 Text="Jun" />
+
+                        <BoxView Grid.Row="0" Grid.Column="6"
+                                 HeightRequest="{Binding MasterViewModel.PlantList.SummaryMonthArray[7], 
+                                                            Converter={StaticResource CalcHeight}}" />
+                        <Label   Grid.Row="1" Grid.Column="6"
+                                 Text="Jul" />
+
+                        <BoxView Grid.Row="0" Grid.Column="7"
+                                 HeightRequest="{Binding MasterViewModel.PlantList.SummaryMonthArray[8], 
+                                                            Converter={StaticResource CalcHeight}}" />
+                        <Label   Grid.Row="1" Grid.Column="7"
+                                 Text="Aug" />
+
+                        <BoxView Grid.Row="0" Grid.Column="8"
+                                 HeightRequest="{Binding MasterViewModel.PlantList.SummaryMonthArray[9], 
+                                                         Converter={StaticResource CalcHeight}}" />
+                        <Label   Grid.Row="1" Grid.Column="8"
+                                 Text="Sep" />
+
+                        <BoxView Grid.Row="0" Grid.Column="9"
+                                 HeightRequest="{Binding MasterViewModel.PlantList.SummaryMonthArray[10], 
+                                                            Converter={StaticResource CalcHeight}}" />
+                        <Label   Grid.Row="1" Grid.Column="9"
+                                 Text="Oct" />
+
+                        <BoxView Grid.Row="0" Grid.Column="10" 
+                                 HeightRequest="{Binding MasterViewModel.PlantList.SummaryMonthArray[11], 
+                                                            Converter={StaticResource CalcHeight}}" />
+                        <Label   Grid.Row="1" Grid.Column="10" 
+                                 Text="Nov" />
+
+                        <BoxView Grid.Row="0" Grid.Column="11" 
+                                 HeightRequest="{Binding MasterViewModel.PlantList.SummaryMonthArray[12], 
+                                                            Converter={StaticResource CalcHeight}}" />
+                        <Label   Grid.Row="1" Grid.Column="11" 
+                                 Text="Dec" />
+
+                    </Grid>
+
+                    <!--For spacing purposes; TODO use padding or something to make this instead-->
+                    <Label Text=" "/>
+
+                    <Label Text="Plants by sun requirements"
+                                   FontSize="Small" 
+                                   TextColor="Black"/>
+
+                    <Grid x:Name="sunGrid"
+                          RowSpacing="2"
+                          ColumnSpacing="2"
+                          HorizontalOptions="Center">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="64" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="100" />
+                        </Grid.ColumnDefinitions>
+
+                        <Image Grid.Row="0" Grid.Column="0"
+                               Source="{tools:GetImageResource PlantomaticVM.Images.icon-sun.png}"/>
+
+                        <Image Grid.Row="0" Grid.Column="1"
+                                 Source="{tools:GetImageResource PlantomaticVM.Images.icon-partial.png}"/>
+
+                        <Image Grid.Row="0" Grid.Column="2"
+                                 Source="{tools:GetImageResource PlantomaticVM.Images.icon-shade.png}"/>
+
+                        <Label Grid.Row="1" Grid.Column="0"
+                               Text="{Binding MasterViewModel.PlantList.SummarySun[0]}"/>
+
+                        <Label Grid.Row="1" Grid.Column="1"
+                               Text="{Binding MasterViewModel.PlantList.SummarySun[1]}"/>
+
+                        <Label Grid.Row="1" Grid.Column="2"
+                               Text="{Binding MasterViewModel.PlantList.SummarySun[2]}"/>
+                    </Grid>
+
+                    <!--For spacing purposes; TODO use padding or something to make this instead-->
+                    <Label Text=" "/>
+
+                    <Label Text="Minimum temperature tolerated"
+                                   FontSize="Small" 
+                                   TextColor="Black"/>
+                    <Grid x:Name="tempGrid"
+                          RowSpacing="2"
+                          ColumnSpacing="2"
+                          HorizontalOptions="Center"
+                          VerticalOptions="Center">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="100" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <Image Grid.Row="0" Grid.Column="0"
+                               Source="{tools:GetImageResource PlantomaticVM.Images.thermometer.png}"/>
+
+                        <Label Grid.Row="0" Grid.Column="1" 
+                               VerticalOptions="Center"
+                               Text="{Binding MasterViewModel.PlantList.SummaryTemp, StringFormat='{0}F'}"/>
+                    </Grid>
+
+                    <!--For spacing purposes; TODO use padding or something to make this instead-->
+                    <Label Text=" "/>
+
+                    <Label Text="Planting area required"
+                                   FontSize="Small" 
+                                   TextColor="Black"/>
+                    <Grid x:Name="areaGrid"
+                          RowSpacing="2"
+                          ColumnSpacing="2"
+                          HorizontalOptions="Center"
+                          VerticalOptions="Center">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="100" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <Image Grid.Row="0" Grid.Column="0"
+                               Source="{tools:GetImageResource PlantomaticVM.Images.area.png}"/>
+
+                        <Label Grid.Row="0" Grid.Column="1" 
+                               VerticalOptions="Center"
+                               Text="{Binding MasterViewModel.PlantList.SummaryWidth, StringFormat='{0:N0} sq ft'}"/>
+                    </Grid>
+
+                </StackLayout>
+            </ScrollView>
+        </Grid>
+
+        <!--Detail that shows when the user taps on a plant-->
+        <Grid x:Name="detailGrid"
+              IsVisible="False"
+              BindingContext="{Binding Source={x:Reference shoppingListView}, Path=SelectedItem}"
+              Grid.Row="0" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <Label  x:Name="labelTitle" 
-                    Grid.Row="0" Grid.Column="0" 
-                    Text="{Binding MasterViewModel.PlantList.ShoppingListPlants.Count, StringFormat = '{0} species in your list'}"
-                    VerticalTextAlignment="Center"
-                    FontAttributes="Bold"
-                    TextColor="Black"/>
-            <Button x:Name="buttonClearCart" 
-                    Grid.Row="0" Grid.Column="1" 
-                    Text="Clear list" 
-                    HorizontalOptions="End"
-                    Command="{Binding MasterViewModel.PlantList.ClearCart}"
-                    BorderWidth="1">
-                <!--Comment this out until I figure out what the right thing to do is. The Android emulator is white on black, and this looks awful
-                <Button.BackgroundColor>
-                    <OnPlatform x:TypeArguments="Color" Android="#404040" />
-                </Button.BackgroundColor>
-                <Button.BorderColor>
-                    <OnPlatform x:TypeArguments="Color" Android="White" WinPhone="Black" />
-                </Button.BorderColor>-->
-            </Button>
+
+            <!--Heading-->
+            <Label Grid.Row="0" Grid.Column="0"
+                   Text="{Binding Plant.Name}" 
+                   FontSize="Medium"/>
+            
             <Button x:Name="buttonCloseDetail"
+                    Grid.Row="0" Grid.Column="1" 
                     Text="Close"
                     HorizontalOptions="End"
-                    Clicked="buttonCloseDetail_Clicked"
-                    BorderWidth="1"
-                    IsVisible="False">
+                    Clicked="ButtonCloseDetail_Clicked"
+                    BorderWidth="1">
+
                 <!--Comment this out until I figure out what the right thing to do is. The Android emulator is white on black, and this looks awful
-                <Button.BackgroundColor>
-                    <OnPlatform x:TypeArguments="Color" Android="#404040" />
-                </Button.BackgroundColor>
-                <Button.BorderColor>
-                    <OnPlatform x:TypeArguments="Color" Android="White" WinPhone="Black" />
-                </Button.BorderColor>-->
+                    <Button.BackgroundColor>
+                        <OnPlatform x:TypeArguments="Color" Android="#404040" />
+                    </Button.BackgroundColor>
+                    <Button.BorderColor>
+                        <OnPlatform x:TypeArguments="Color" Android="White" WinPhone="Black" />
+                    </Button.BorderColor>-->
             </Button>
-        </Grid>
-        
-        <!--List of plants from shopping list.  -->
-        <StackLayout Grid.Row="1" Grid.Column="0">
-            <ListView x:Name="shoppingListView"
-                  ItemsSource="{Binding MasterViewModel.PlantList.ShoppingListPlants}"
-                  ItemTapped="shoppingListView_ItemTapped"
-                  HorizontalOptions="StartAndExpand" VerticalOptions="Start" 
-                  SeparatorVisibility="None"
-                  BackgroundColor="#f9f9f9">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <!--Context menu-->
-                            <ViewCell.ContextActions>
-                                <MenuItem Text="{Binding InCart, Converter={StaticResource AddRemoveCartText}}"  
-                                      Clicked="OnContextMenuClicked"/>
-                            </ViewCell.ContextActions>
-                            <StackLayout Orientation="Vertical"
-                                     Padding="0"
-                                     Spacing="0"
-                                     Margin="2">
-                                <Label Text="{Binding NameInCart}" 
-                                    TextColor="Green" />
-                                <Label Text="{Binding Plant.ScientificName}" 
-                                    TextColor="Gray"
-                                    FontAttributes="Italic"
-                                    FontSize="Micro"/>
-                            </StackLayout>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+
+
             <ScrollView x:Name="detailView"
-                        IsVisible="False"
+                        Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
                         HorizontalOptions="StartAndExpand" VerticalOptions="Start" 
-                        Orientation="Vertical" 
-                        BindingContext="{Binding Source={x:Reference shoppingListView}, Path=SelectedItem}">
-                <StackLayout> <!--Have to wrap all the text in a StackLayout else it doesn't show-->
-                    <Label Text="{Binding Plant.Name}" FontSize="Medium"/>
-                    <Label Text="{Binding Plant.ScientificName}" FontAttributes="Italic"/>
-                    <Label Text="{Binding Plant.NotableVisuals}"/>
-                    <Label Text="{Binding Plant.Notes}"/>
-                    <Label Text="{Binding Plant.PlantTypes}"/>
-                    <Label Text="{Binding Plant.MinWinterTempF.Value, StringFormat='Minimum low temp: {0}'}" />
-                    <Label Text="{Binding Plant.SunRequirements, StringFormat='Sun requirements: {0}'}" />
-                    <Label Text="{Binding Plant.FloweringMonths, StringFormat='Flowering months: {0}'}" />
-                    <Label Text="{Binding Plant.MaxWidth.Value, StringFormat='Maximum width: {0} ft'}"  />
-                    <Label Text="{Binding Plant.MaxHeight.Value, StringFormat='Maximum height: {0} ft'}"  />
-                    <Label x:Name="MoreInfoURLLabel" Text="More info..." TextColor="Blue" >
-                        <Label.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnMoreInfoTapped"/>
-                        </Label.GestureRecognizers>
-                    </Label>
-                    <StackLayout Orientation="Horizontal" 
-                                 HorizontalOptions="StartAndExpand">
+                        Orientation="Vertical">
+                <StackLayout>
+                    <!--Have to wrap all the text in a StackLayout else it doesn't show-->
+                        <Label Text="{Binding Plant.ScientificName}" FontAttributes="Italic"/>
+                        <Label Text="{Binding Plant.NotableVisuals}"/>
+                        <Label Text="{Binding Plant.Notes}"/>
+                        <Label Text="{Binding Plant.PlantTypes}"/>
+                        <Label Text="{Binding Plant.MinWinterTempF.Value, StringFormat='Minimum low temp: {0}'}" />
+                        <Label Text="{Binding Plant.SunRequirements, StringFormat='Sun requirements: {0}'}" />
+                        <Label Text="{Binding Plant.FloweringMonths, StringFormat='Flowering months: {0}'}" />
+                        <Label Text="{Binding Plant.MaxWidth.Value, StringFormat='Maximum width: {0} ft'}"  />
+                        <Label Text="{Binding Plant.MaxHeight.Value, StringFormat='Maximum height: {0} ft'}"  />
+                        <Label x:Name="MoreInfoURLLabel" Text="More info..." TextColor="Blue" >
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnMoreInfoTapped"/>
+                            </Label.GestureRecognizers>
+                        </Label>
+                        <StackLayout Orientation="Horizontal" 
+                                     HorizontalOptions="StartAndExpand">
                         <Label Text="How many do you want?" />
                         <Entry Text="{Binding Count, Mode=TwoWay}"  Keyboard="Numeric"/>
                         <Button Text="Clear"
-                                BorderWidth="1"
-                                Command="{Binding RemoveItem}">
+                                    BorderWidth="1"
+                                    Command="{Binding RemoveItem}">
                             <!--Comment this out until I figure out what the right thing to do is. The Android emulator is white on black, and this looks awful
-                            <Button.BackgroundColor>
-                                <OnPlatform x:TypeArguments="Color" Android="#404040" />
-                            </Button.BackgroundColor>
-                            <Button.BorderColor>
-                                <OnPlatform x:TypeArguments="Color" Android="White" WinPhone="Black" />
-                            </Button.BorderColor>-->
+                                <Button.BackgroundColor>
+                                    <OnPlatform x:TypeArguments="Color" Android="#404040" />
+                                </Button.BackgroundColor>
+                                <Button.BorderColor>
+                                    <OnPlatform x:TypeArguments="Color" Android="White" WinPhone="Black" />
+                                </Button.BorderColor>-->
                         </Button>
                     </StackLayout>
                 </StackLayout>
             </ScrollView>
-        </StackLayout>
-     
-        <!-- Summary data -->
-        <ScrollView x:Name="summaryView" 
-                    Grid.Row="1" Grid.Column="1" 
-                    IsVisible="{Binding Source={x:Reference shoppingListView}, Path=ItemsSource, Converter={StaticResource listToBoolConverterOpposite}}">
-            <StackLayout Orientation="Vertical" VerticalOptions="Start">
-                <StackLayout.Resources>
-                    <ResourceDictionary>
-                        <Style TargetType="BoxView">
-                            <Setter Property="WidthRequest" Value="32" />
-                            <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
-                            <Setter Property="VerticalOptions" Value="End" />
-                            <Setter Property="BackgroundColor" Value="#94DC63" />
-                        </Style>
-                        <Style TargetType="Label">
-                            <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
-                            <Setter Property="VerticalOptions" Value="End" />
-                            <Setter Property="FontSize" Value="Micro" />
-                            <Setter Property="TextColor" Value="Gray" />
-                        </Style>
-                        <Style TargetType="Image">
-                            <Setter Property="HorizontalOptions" Value="Center" />
-                        </Style>
-                    </ResourceDictionary>
-                </StackLayout.Resources>
-                <Label Text="Months that you have flowers"
-                       FontSize="Small" TextColor="Black"/>
 
-                <Grid x:Name="monthGrid"
-                      RowSpacing="2"
-                      ColumnSpacing="2"
-                      HorizontalOptions="Center">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="64" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-                    
-                    <BoxView Grid.Row="0" Grid.Column="0" 
-                             HeightRequest="{Binding MasterViewModel.PlantList.SummaryMonthArray[1], 
-                                                     Converter={StaticResource CalcHeight}}" />
-                    <Label   Grid.Row="1" Grid.Column="0" 
-                             Text="Jan"/>
-                                        
-                    <BoxView Grid.Row="0" Grid.Column="1"
-                             HeightRequest="{Binding MasterViewModel.PlantList.SummaryMonthArray[2], 
-                                                     Converter={StaticResource CalcHeight}}" />
-                    <Label   Grid.Row="1" Grid.Column="1"
-                             Text="Feb" />
-                    
-                    <BoxView Grid.Row="0" Grid.Column="2" 
-                             HeightRequest="{Binding MasterViewModel.PlantList.SummaryMonthArray[3], 
-                                                     Converter={StaticResource CalcHeight}}" />
-                    <Label   Grid.Row="1" Grid.Column="2" 
-                             Text="Mar" />
-
-                    <BoxView Grid.Row="0" Grid.Column="3"
-                             HeightRequest="{Binding MasterViewModel.PlantList.SummaryMonthArray[4], 
-                                                     Converter={StaticResource CalcHeight}}" />
-                    <Label   Grid.Row="1" Grid.Column="3"
-                             Text="Apr" />
-                    
-                    <BoxView Grid.Row="0" Grid.Column="4"
-                             HeightRequest="{Binding MasterViewModel.PlantList.SummaryMonthArray[5], 
-                                                        Converter={StaticResource CalcHeight}}" />
-                    <Label   Grid.Row="1" Grid.Column="4"
-                             Text="May" />
-
-                    <BoxView Grid.Row="0" Grid.Column="5"
-                             HeightRequest="{Binding MasterViewModel.PlantList.SummaryMonthArray[6], 
-                                                         Converter={StaticResource CalcHeight}}" />
-                    <Label   Grid.Row="1" Grid.Column="5"
-                             Text="Jun" />
-
-                    <BoxView Grid.Row="0" Grid.Column="6"
-                             HeightRequest="{Binding MasterViewModel.PlantList.SummaryMonthArray[7], 
-                                                        Converter={StaticResource CalcHeight}}" />
-                    <Label   Grid.Row="1" Grid.Column="6"
-                             Text="Jul" />
-
-                    <BoxView Grid.Row="0" Grid.Column="7"
-                             HeightRequest="{Binding MasterViewModel.PlantList.SummaryMonthArray[8], 
-                                                        Converter={StaticResource CalcHeight}}" />
-                    <Label   Grid.Row="1" Grid.Column="7"
-                             Text="Aug" />
-                    
-                    <BoxView Grid.Row="0" Grid.Column="8"
-                             HeightRequest="{Binding MasterViewModel.PlantList.SummaryMonthArray[9], 
-                                                     Converter={StaticResource CalcHeight}}" />
-                    <Label   Grid.Row="1" Grid.Column="8"
-                             Text="Sep" />
-
-                    <BoxView Grid.Row="0" Grid.Column="9"
-                             HeightRequest="{Binding MasterViewModel.PlantList.SummaryMonthArray[10], 
-                                                        Converter={StaticResource CalcHeight}}" />
-                    <Label   Grid.Row="1" Grid.Column="9"
-                             Text="Oct" />
-
-                    <BoxView Grid.Row="0" Grid.Column="10" 
-                             HeightRequest="{Binding MasterViewModel.PlantList.SummaryMonthArray[11], 
-                                                        Converter={StaticResource CalcHeight}}" />
-                    <Label   Grid.Row="1" Grid.Column="10" 
-                             Text="Nov" />
-
-                    <BoxView Grid.Row="0" Grid.Column="11" 
-                             HeightRequest="{Binding MasterViewModel.PlantList.SummaryMonthArray[12], 
-                                                        Converter={StaticResource CalcHeight}}" />
-                    <Label   Grid.Row="1" Grid.Column="11" 
-                             Text="Dec" />
-
-                </Grid>
-                
-                <!--For spacing purposes; TODO use padding or something to make this instead-->
-                <Label Text=" "/>
-                
-                <Label Text="Plants by sun requirements"
-                               FontSize="Small" 
-                               TextColor="Black"/>
-
-                <Grid x:Name="sunGrid"
-                      RowSpacing="2"
-                      ColumnSpacing="2"
-                      HorizontalOptions="Center">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="64" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="100" />
-                        <ColumnDefinition Width="100" />
-                        <ColumnDefinition Width="100" />
-                    </Grid.ColumnDefinitions>
-
-                    <Image Grid.Row="0" Grid.Column="0"
-                           Source="{tools:GetImageResource PlantomaticVM.Images.icon-sun.png}"/>
-
-                    <Image Grid.Row="0" Grid.Column="1"
-                             Source="{tools:GetImageResource PlantomaticVM.Images.icon-partial.png}"/>
-
-                    <Image Grid.Row="0" Grid.Column="2"
-                             Source="{tools:GetImageResource PlantomaticVM.Images.icon-shade.png}"/>
-
-                    <Label Grid.Row="1" Grid.Column="0"
-                           Text="{Binding MasterViewModel.PlantList.SummarySun[0]}"/>
-
-                    <Label Grid.Row="1" Grid.Column="1"
-                           Text="{Binding MasterViewModel.PlantList.SummarySun[1]}"/>
-
-                    <Label Grid.Row="1" Grid.Column="2"
-                           Text="{Binding MasterViewModel.PlantList.SummarySun[2]}"/>
-                </Grid>
-
-                <!--For spacing purposes; TODO use padding or something to make this instead-->
-                <Label Text=" "/>
-
-                <Label Text="Minimum temperature tolerated"
-                               FontSize="Small" 
-                               TextColor="Black"/>
-                <Grid x:Name="tempGrid"
-                      RowSpacing="2"
-                      ColumnSpacing="2"
-                      HorizontalOptions="Center"
-                      VerticalOptions="Center">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="100" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="100" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-
-                    <Image Grid.Row="0" Grid.Column="0"
-                           Source="{tools:GetImageResource PlantomaticVM.Images.thermometer.png}"/>
-
-                    <Label Grid.Row="0" Grid.Column="1" 
-                           VerticalOptions="Center"
-                           Text="{Binding MasterViewModel.PlantList.SummaryTemp, StringFormat='{0}F'}"/>
-                </Grid>
-
-                <!--For spacing purposes; TODO use padding or something to make this instead-->
-                <Label Text=" "/>
-
-                <Label Text="Planting area required"
-                               FontSize="Small" 
-                               TextColor="Black"/>
-                <Grid x:Name="areaGrid"
-                      RowSpacing="2"
-                      ColumnSpacing="2"
-                      HorizontalOptions="Center"
-                      VerticalOptions="Center">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="100" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="100" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-
-                    <Image Grid.Row="0" Grid.Column="0"
-                           Source="{tools:GetImageResource PlantomaticVM.Images.area.png}"/>
-
-                    <Label Grid.Row="0" Grid.Column="1" 
-                           VerticalOptions="Center"
-                           Text="{Binding MasterViewModel.PlantList.SummaryWidth, StringFormat='{0:N0} sq ft'}"/>
-                </Grid>
-
-            </StackLayout>    
-      </ScrollView>
+        </Grid>
     </Grid>
-  
-  </ContentPage>
+
+</ContentPage>
 
 <!--OLD UI... 
                 TODO Will I ever use the list of months and counts as a set of strings again?
