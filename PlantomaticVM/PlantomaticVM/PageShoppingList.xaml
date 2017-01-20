@@ -61,8 +61,7 @@
                         Grid.Row="0" Grid.Column="0" 
                         Text="{Binding MasterViewModel.PlantList.ShoppingListPlants.Count, StringFormat = '{0} species in your list'}"
                         VerticalTextAlignment="Center"
-                        FontAttributes="Bold"
-                        TextColor="Black"/>
+                        FontAttributes="Bold"/>
                 <Button x:Name="buttonClearCart" 
                         Grid.Row="0" Grid.Column="1" 
                         Text="Clear list" 
@@ -138,7 +137,7 @@
                         </ResourceDictionary>
                     </StackLayout.Resources>
                     <Label Text="Months that you have flowers"
-                           FontSize="Small" TextColor="Black"/>
+                           FontSize="Small" />
 
                     <Grid x:Name="monthGrid"
                           RowSpacing="2"
@@ -231,7 +230,7 @@
 
                         <BoxView Grid.Row="0" Grid.Column="11" 
                                  HeightRequest="{Binding MasterViewModel.PlantList.SummaryMonthArray[12], 
-                                                            Converter={StaticResource CalcHeight}}" />
+                                                 Converter={StaticResource CalcHeight}}" />
                         <Label   Grid.Row="1" Grid.Column="11" 
                                  Text="Dec" />
 
@@ -241,8 +240,7 @@
                     <Label Text=" "/>
 
                     <Label Text="Plants by sun requirements"
-                                   FontSize="Small" 
-                                   TextColor="Black"/>
+                           FontSize="Small" />
 
                     <Grid x:Name="sunGrid"
                           RowSpacing="2"
@@ -281,8 +279,7 @@
                     <Label Text=" "/>
 
                     <Label Text="Minimum temperature tolerated"
-                                   FontSize="Small" 
-                                   TextColor="Black"/>
+                           FontSize="Small" />
                     <Grid x:Name="tempGrid"
                           RowSpacing="2"
                           ColumnSpacing="2"
@@ -308,8 +305,8 @@
                     <Label Text=" "/>
 
                     <Label Text="Planting area required"
-                                   FontSize="Small" 
-                                   TextColor="Black"/>
+                           FontSize="Small" />
+                    
                     <Grid x:Name="areaGrid"
                           RowSpacing="2"
                           ColumnSpacing="2"

@@ -31,8 +31,7 @@
                    Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
                    Text="{Binding MasterViewModel.PlantList.MyPlants.Count, StringFormat = 'Where are you planting? ({0} matches)'}"
                    HorizontalTextAlignment="Start"
-                   FontAttributes="Bold"
-                   TextColor="Black"/>
+                   FontAttributes="Bold"/>
 
             <StackLayout x:Name="locationStack"
                          Grid.Row="1" Grid.Column="0"

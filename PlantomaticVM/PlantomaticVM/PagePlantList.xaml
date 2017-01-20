@@ -43,8 +43,7 @@
         
         <StackLayout Grid.Row="0" Grid.Column="0">
             <Label Text="{Binding MasterViewModel.PlantList.MyPlants.Count, StringFormat = '{0} matches'}"
-                   FontAttributes="Bold"
-                   TextColor="Black"/>
+                   FontAttributes="Bold"/>
         </StackLayout>
     
         <StackLayout Grid.Row="1" Grid.Column="0">
@@ -96,6 +95,7 @@
                              Orientation="Vertical" 
                              Spacing="5"
                              IsVisible="{Binding Source={x:Reference listView}, Path=SelectedItem, Converter={StaticResource objectToBoolConverterOpposite}}">
+                    <!--TODO is this needed any more?
                     <StackLayout.Resources>
                         <ResourceDictionary>
                             <Style TargetType="Label">
@@ -103,7 +103,7 @@
                             </Style>
                         </ResourceDictionary>
                     </StackLayout.Resources>
-                
+                -->
                     <!--At this point, the context of the binding is the selected item. So, all the labels can just point to specific fields.-->
                     <Label Text="{Binding Plant.Name}" FontSize="Medium"/>
                     <Label Text="{Binding Plant.ScientificName}" FontAttributes="Italic"/>

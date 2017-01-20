@@ -1,5 +1,6 @@
-﻿using Xamarin.Forms;
+﻿using System;
 using System.Collections.Generic;
+using Xamarin.Forms;
 
 /* Update on current design
  * 
@@ -14,13 +15,20 @@ using System.Collections.Generic;
  * 
  */
 
-/*
 namespace PlantomaticVM
 {
-    public class App : Application
+    public partial class App : Application
     {
         public App()
         {
+            InitializeComponent();
+
+            // The Application ResourceDictionary is available in Xamarin.Forms 1.3 and later
+            if (Application.Current.Resources == null)
+            {
+                Application.Current.Resources = new ResourceDictionary();
+            }
+
             //In theory, this should instantiate our view model and make it accessible to the other pages
             AppData = new AppData();
 
@@ -44,7 +52,6 @@ namespace PlantomaticVM
                             p.InCart = true;
                             p.Count = aPlant.Count;
                         }
-                            
                     }
                     this.AppData.MasterViewModel.PlantList.RefreshShoppingListPlants();
                 }
@@ -73,5 +80,5 @@ namespace PlantomaticVM
             // Handle when your app resumes
         }
     }
+
 }
-*/
