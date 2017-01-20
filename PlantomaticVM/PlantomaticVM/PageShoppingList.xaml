@@ -9,18 +9,20 @@
                BindingContext="{Binding Source={x:Static Application.Current}, Path=AppData}">
 
     <ContentPage.Padding>
-        <OnPlatform x:TypeArguments="Thickness" iOS="0, 20, 0, 0" WinPhone="0,5,5,10"/>
+        <OnPlatform x:TypeArguments="Thickness" iOS="0, 20, 0, 0" WinPhone="0,5,5,10" Android="5,5,5,5"/>
     </ContentPage.Padding>
 
     <ContentPage.Resources>
-      <ResourceDictionary>
-        <tools:ListToBoolConverter   x:Key="listToBoolConverter" />
-        <tools:CountToHeightConverter x:Key="CalcHeight"/>
-        <tools:BoolToStringConverter x:Key="AddRemoveCartText"
-                                     TrueText="Remove from cart"
-                                     FalseText="Add to cart"/>
+        <ResourceDictionary>
+            <tools:ListToBoolConverter   x:Key="listToBoolConverter" />
+            <tools:ListToBoolConverterOpposite   x:Key="listToBoolConverterOpposite" />
+
+            <tools:CountToHeightConverter x:Key="CalcHeight"/>
+            <tools:BoolToStringConverter x:Key="AddRemoveCartText"
+                                         TrueText="Remove from cart"
+                                         FalseText="Add to cart"/>
         
-      </ResourceDictionary>
+        </ResourceDictionary>
     </ContentPage.Resources>
         
     <Grid x:Name="mainGrid">
@@ -56,12 +58,13 @@
                     HorizontalOptions="End"
                     Command="{Binding MasterViewModel.PlantList.ClearCart}"
                     BorderWidth="1">
+                <!--Comment this out until I figure out what the right thing to do is. The Android emulator is white on black, and this looks awful
                 <Button.BackgroundColor>
                     <OnPlatform x:TypeArguments="Color" Android="#404040" />
                 </Button.BackgroundColor>
                 <Button.BorderColor>
                     <OnPlatform x:TypeArguments="Color" Android="White" WinPhone="Black" />
-                </Button.BorderColor>
+                </Button.BorderColor>-->
             </Button>
             <Button x:Name="buttonCloseDetail"
                     Text="Close"
@@ -69,12 +72,13 @@
                     Clicked="buttonCloseDetail_Clicked"
                     BorderWidth="1"
                     IsVisible="False">
+                <!--Comment this out until I figure out what the right thing to do is. The Android emulator is white on black, and this looks awful
                 <Button.BackgroundColor>
                     <OnPlatform x:TypeArguments="Color" Android="#404040" />
                 </Button.BackgroundColor>
                 <Button.BorderColor>
                     <OnPlatform x:TypeArguments="Color" Android="White" WinPhone="Black" />
-                </Button.BorderColor>
+                </Button.BorderColor>-->
             </Button>
         </Grid>
         
@@ -137,12 +141,13 @@
                         <Button Text="Clear"
                                 BorderWidth="1"
                                 Command="{Binding RemoveItem}">
+                            <!--Comment this out until I figure out what the right thing to do is. The Android emulator is white on black, and this looks awful
                             <Button.BackgroundColor>
                                 <OnPlatform x:TypeArguments="Color" Android="#404040" />
                             </Button.BackgroundColor>
                             <Button.BorderColor>
                                 <OnPlatform x:TypeArguments="Color" Android="White" WinPhone="Black" />
-                            </Button.BorderColor>
+                            </Button.BorderColor>-->
                         </Button>
                     </StackLayout>
                 </StackLayout>
@@ -150,7 +155,9 @@
         </StackLayout>
      
         <!-- Summary data -->
-        <ScrollView x:Name="summaryView" Grid.Row="1" Grid.Column="1" >
+        <ScrollView x:Name="summaryView" 
+                    Grid.Row="1" Grid.Column="1" 
+                    IsVisible="{Binding Source={x:Reference shoppingListView}, Path=ItemsSource, Converter={StaticResource listToBoolConverterOpposite}}">
             <StackLayout Orientation="Vertical" VerticalOptions="Start">
                 <StackLayout.Resources>
                     <ResourceDictionary>

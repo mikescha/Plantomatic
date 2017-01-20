@@ -7,9 +7,9 @@
              SizeChanged="OnPageSizeChanged"
              Title="Criteria"
              BindingContext="{Binding Source={x:Static Application.Current}, Path=AppData}">
-    
+
     <ContentPage.Padding>
-        <OnPlatform x:TypeArguments="Thickness" iOS="0, 20, 0, 0" WinPhone="0,5,5,10"/>
+        <OnPlatform x:TypeArguments="Thickness" iOS="0, 20, 0, 0" WinPhone="0,5,5,10" Android="5,5,5,5"/>
     </ContentPage.Padding>
 
     <ContentPage.Resources>

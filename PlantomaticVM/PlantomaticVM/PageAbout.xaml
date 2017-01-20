@@ -5,8 +5,11 @@
              Title="About"
              BindingContext="{Binding Source={x:Static Application.Current}, Path=AppData}">
 
-  
-  <Label Text="{Binding MasterViewModel.PlantList.State, StringFormat='Native Plants of {0}'}"
+    <ContentPage.Padding>
+        <OnPlatform x:TypeArguments="Thickness" iOS="0, 20, 0, 0" WinPhone="0,5,5,10" Android="5,5,5,5"/>
+    </ContentPage.Padding>
+
+    <Label Text="{Binding MasterViewModel.PlantList.State, StringFormat='Native Plants of {0}'}"
          FontSize="Large"
          FontAttributes="Bold"
          VerticalTextAlignment="Center"

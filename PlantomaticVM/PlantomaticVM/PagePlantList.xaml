@@ -10,7 +10,7 @@
                BindingContext="{Binding Source={x:Static Application.Current}, Path=AppData}">
     
     <ContentPage.Padding>
-        <OnPlatform x:TypeArguments="Thickness" iOS="0, 20, 0, 0" WinPhone="0,5,5,10"/>
+        <OnPlatform x:TypeArguments="Thickness" iOS="0, 20, 0, 0" WinPhone="0,5,5,10" Android="5,5,5,5"/>
     </ContentPage.Padding>
 
     <ContentPage.Resources>
@@ -31,54 +31,55 @@
     </ContentPage.Resources>
     
     <Grid x:Name="mainGrid">
-      <Grid.RowDefinitions>
+        <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
-      </Grid.RowDefinitions>
-      <Grid.ColumnDefinitions>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="0" />
-      </Grid.ColumnDefinitions>
-  
-    <StackLayout Grid.Row="0" Grid.Column="0">
-      <Label Text="{Binding MasterViewModel.PlantList.MyPlants.Count, StringFormat = '{0} matches'}"
-             FontAttributes="Bold"
-             TextColor="Black"/>
-    </StackLayout>
+        </Grid.ColumnDefinitions>
+        
+        <StackLayout Grid.Row="0" Grid.Column="0">
+            <Label Text="{Binding MasterViewModel.PlantList.MyPlants.Count, StringFormat = '{0} matches'}"
+                   FontAttributes="Bold"
+                   TextColor="Black"/>
+        </StackLayout>
     
-    <StackLayout Grid.Row="1" Grid.Column="0">
-      <Label Text="No matching plants" 
-             IsVisible="{Binding Source={x:Reference listView}, Path=ItemsSource, Converter={StaticResource listToBoolConverter}}"/>
+        <StackLayout Grid.Row="1" Grid.Column="0">
+            <Label Text="No matching plants" 
+                   IsVisible="{Binding Source={x:Reference listView}, Path=ItemsSource, Converter={StaticResource listToBoolConverter}}"/>
       
-      <!--The list of plants-->
-      <ListView x:Name="listView" 
-                ItemsSource="{Binding MasterViewModel.PlantList.MyPlants}" 
-                Grid.Row="1" Grid.Column="0"
-                ItemTapped="OnPlantSelected"
-                SeparatorVisibility="None"
-                BackgroundColor="#f9f9f9">
-         <ListView.ItemTemplate>
-            <DataTemplate>
-              <ViewCell>
-                <ViewCell.ContextActions>
-                  <MenuItem Text="{Binding InCart, Converter={StaticResource AddRemoveCartText}}" 
-                            Clicked="OnToggleCartMenuClicked"/> 
-                </ViewCell.ContextActions>                                                        
-                <StackLayout Orientation="Vertical"
-                             Padding="0"
-                             Margin="2">
-                    <!--TODO This changes label color if the plant is in the list. Decide if this is what we want-->
-                    <Label Text="{Binding Plant.Name}"
-                           TextColor="{Binding InCart, Converter={StaticResource ColorIfInList}}" /> 
-                </StackLayout>
-              </ViewCell>
-            </DataTemplate>
-          </ListView.ItemTemplate>
-        </ListView>
-      </StackLayout>
+          <!--The list of plants-->
+            <ListView x:Name="listView" 
+                    ItemsSource="{Binding MasterViewModel.PlantList.MyPlants}" 
+                    Grid.Row="1" Grid.Column="0"
+                    ItemTapped="OnPlantSelected"
+                    SeparatorVisibility="None"
+                    BackgroundColor="#f9f9f9">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <ViewCell.ContextActions>
+                                <MenuItem Text="{Binding InCart, Converter={StaticResource AddRemoveCartText}}" 
+                                Clicked="OnToggleCartMenuClicked"/>
+                            </ViewCell.ContextActions>
+
+                            <StackLayout>
+                                <!--TODO This changes label color if the plant is in the list. Decide if this is what we want-->
+                                <Label Text="{Binding Plant.Name}"
+                                       TextColor="{Binding InCart, Converter={StaticResource ColorIfInList}}" 
+                                       Margin="0"/>
+                            </StackLayout>
+                            
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
       
-      <!--The detail that shows when a plant is selected-->
+        <!--The detail that shows when a plant is selected-->
         <!--Set visible status of the ScrollViw based on number of items in the list; if there are none then hide it so we don't show detail when there isn't any-->
         <ScrollView x:Name="detailLayout" 
                     Grid.Row="2" Grid.Column="0" 
@@ -98,7 +99,6 @@
                     <StackLayout.Resources>
                         <ResourceDictionary>
                             <Style TargetType="Label">
-                                <Setter Property="Font" Value="Micro" />
                                 <Setter Property="TextColor" Value="Black" />
                             </Style>
                         </ResourceDictionary>
@@ -121,18 +121,23 @@
                         </Label.GestureRecognizers>
                     </Label>
                     <StackLayout Orientation="Horizontal" 
-                                 HorizontalOptions="StartAndExpand">
-                        <Label Text="How many do you want?" />
+                                 HorizontalOptions="StartAndExpand"
+                                 VerticalOptions="Center">
+                        <Label Text="How many do you want?"
+                               VerticalTextAlignment="Center"/>
                         <Entry Text="{Binding Count, Mode=TwoWay}"  Keyboard="Numeric"/>
+
                         <Button Text="Clear"
                                 BorderWidth="1"
                                 Command="{Binding RemoveItem}">
+                            <!--Comment out the border color stuff until I figure out the right thing to do for each platform. On the Android emulator
+                                with the white background, this is super-ugly.
                             <Button.BackgroundColor>
                                 <OnPlatform x:TypeArguments="Color" Android="#404040" />
                             </Button.BackgroundColor>
                             <Button.BorderColor>
                                 <OnPlatform x:TypeArguments="Color" Android="White" WinPhone="Black" />
-                            </Button.BorderColor>
+                            </Button.BorderColor>-->
                         </Button>
                     </StackLayout>
                 

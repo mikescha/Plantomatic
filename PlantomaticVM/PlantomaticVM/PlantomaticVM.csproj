@@ -55,8 +55,8 @@
       <DependentUpon>PageShoppingList.xaml</DependentUpon>
     </Compile>
     <Compile Include="Toolkit.cs" />
-    <Compile Include="PageFilters.xaml.cs">
-      <DependentUpon>PageFilters.xaml</DependentUpon>
+    <Compile Include="zPageFilters.xaml.cs">
+      <DependentUpon>zPageFilters.xaml</DependentUpon>
     </Compile>
     <Compile Include="PagePlantList.xaml.cs">
       <DependentUpon>PagePlantList.xaml</DependentUpon>
@@ -90,7 +90,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="PageFilters.xaml">
+    <EmbeddedResource Include="zPageFilters.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
