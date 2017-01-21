@@ -43,11 +43,12 @@
         
         <StackLayout Grid.Row="0" Grid.Column="0">
             <Label Text="{Binding MasterViewModel.PlantList.MyPlants.Count, StringFormat = '{0} matches'}"
-                   FontAttributes="Bold"/>
+                   Style="{StaticResource H1Style}"/>
         </StackLayout>
     
         <StackLayout Grid.Row="1" Grid.Column="0">
             <Label Text="No matching plants" 
+                   Style="{StaticResource H1Style}"
                    IsVisible="{Binding Source={x:Reference listView}, Path=ItemsSource, Converter={StaticResource listToBoolConverter}}"/>
       
           <!--The list of plants-->
@@ -86,6 +87,7 @@
             <StackLayout>
                 <!--Defaults to true because nothing is selected by default. When something is selected then the binding changes to hide this-->
                 <Label x:Name="nothingSelectedLabel" 
+                       Style="{StaticResource H1Style}"
                        Text="Select a plant to learn more about it." 
                        IsVisible="{Binding Source={x:Reference listView}, Path=SelectedItem, Converter={StaticResource objectToBoolConverter}}"/>
 

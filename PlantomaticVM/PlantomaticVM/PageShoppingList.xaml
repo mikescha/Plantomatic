@@ -58,10 +58,10 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <Label  x:Name="labelTitle" 
+                        Style="{StaticResource H1Style}"
                         Grid.Row="0" Grid.Column="0" 
                         Text="{Binding MasterViewModel.PlantList.ShoppingListPlants.Count, StringFormat = '{0} species in your list'}"
-                        VerticalTextAlignment="Center"
-                        FontAttributes="Bold"/>
+                        VerticalTextAlignment="Center"/>
                 <Button x:Name="buttonClearCart" 
                         Grid.Row="0" Grid.Column="1" 
                         Text="Clear list" 
@@ -137,7 +137,7 @@
                         </ResourceDictionary>
                     </StackLayout.Resources>
                     <Label Text="Months that you have flowers"
-                           FontSize="Small" />
+                           Style="{StaticResource H2Style}"/>
 
                     <Grid x:Name="monthGrid"
                           RowSpacing="2"
@@ -240,8 +240,8 @@
                     <Label Text=" "/>
 
                     <Label Text="Plants by sun requirements"
-                           FontSize="Small" />
-
+                           Style="{StaticResource H2Style}"/>
+                    
                     <Grid x:Name="sunGrid"
                           RowSpacing="2"
                           ColumnSpacing="2"
@@ -279,7 +279,8 @@
                     <Label Text=" "/>
 
                     <Label Text="Minimum temperature tolerated"
-                           FontSize="Small" />
+                           Style="{StaticResource H2Style}"/>
+                    
                     <Grid x:Name="tempGrid"
                           RowSpacing="2"
                           ColumnSpacing="2"
@@ -305,7 +306,7 @@
                     <Label Text=" "/>
 
                     <Label Text="Planting area required"
-                           FontSize="Small" />
+                           Style="{StaticResource H2Style}"/>
                     
                     <Grid x:Name="areaGrid"
                           RowSpacing="2"

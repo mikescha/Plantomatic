@@ -5,9 +5,27 @@
         x:Class="PlantomaticVM.App">
     <Application.Resources>
         <ResourceDictionary>
+            <Color x:Key="textColor">#303030</Color>
+            
+            <!--Headings on each page-->
+            <Style x:Key="H1Style"
+                   TargetType ="Label">
+                <Setter Property="FontSize" Value="Medium" />
+                <Setter Property="TextColor" Value="{DynamicResource textColor}" />
+                <Setter Property="HorizontalTextAlignment" Value="Start" />
+            </Style>
 
+            <Style x:Key="H2Style"
+                   TargetType ="Label">
+                <Setter Property="FontSize" Value="Small" />
+                <Setter Property="TextColor" Value="{DynamicResource textColor}" />
+                <Setter Property="HorizontalTextAlignment" Value="Start" />
+            </Style>
+
+            <!--Generic label-->
             <Style TargetType="Label">
-                <Setter Property="TextColor" Value="Black" />
+                <Setter Property="TextColor" Value="{DynamicResource textColor}" />
+                <Setter Property="HorizontalTextAlignment" Value="Start" />
             </Style>
             
         </ResourceDictionary>

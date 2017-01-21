@@ -11,7 +11,8 @@
     <ContentPage.Padding>
         <OnPlatform x:TypeArguments="Thickness" iOS="0, 20, 0, 0" WinPhone="0,5,5,10" Android="5,5,5,5"/>
     </ContentPage.Padding>
-
+    
+    <!--Put in scrollview so entire page can scroll if needed-->
     <ScrollView>
         
         <Grid x:Name="mainGrid">
@@ -28,19 +29,21 @@
             </Grid.ColumnDefinitions>
 
             <Label x:Name="labelTitle" 
+                   Style="{StaticResource H1Style}"
                    Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
-                   Text="{Binding MasterViewModel.PlantList.MyPlants.Count, StringFormat = 'Where are you planting? ({0} matches)'}"
-                   HorizontalTextAlignment="Start"
-                   FontAttributes="Bold"/>
-
+                   Text="Where are you planting?"/>
+            <!--old version
+                   Text="{Binding MasterViewModel.PlantList.MyPlants.Count, StringFormat = 'Where are you planting? ({0} matches)'}"/>
+            -->
             <StackLayout x:Name="locationStack"
                          Grid.Row="1" Grid.Column="0"
-                         Padding="0,0,0,24"
                          HorizontalOptions="Start">
                 
                 <Label x:Name="labelStatus"
-                        Text="Looking for your location..."/>
+                       Style="{StaticResource H2Style}"
+                       Text="Looking for your location..."/>
 
+                <!--Padding is to indent this area-->
                 <StackLayout Padding="12,0,0,0">
                     <!--<Label Text="Lat"/>
                     <Entry x:Name="EntryLat" 
@@ -51,31 +54,36 @@
                     <Button Text="Fetch" Clicked="Button_Clicked"></Button>
                     -->
                     <Label x:Name="labelCityState"
+                           Style="{DynamicResource BodyStyle}"
                            Text=" "/> <!--placholder so the default height is correct-->
                     <Label x:Name="labelCounty"
+                           Style="{DynamicResource BodyStyle}"
                            Text=" "/>
                 </StackLayout>
                 
+                <!--TODO Need to set a minimum height on this so the page doesn't jump-->
                 <Label x:Name="labelHelpText" 
-                           Text="If this is not the location you want, use the controls to choose a different area or conditions."
-                           IsVisible="False"/>
+                       Style="{DynamicResource BodyStyle}"
+                       Text="If this is not the location you want, use the controls to choose a different area or conditions."
+                       IsVisible="False"/>
             </StackLayout>
 
 
             <!--Dumping all the advanced stuff in this area for now-->
             <StackLayout x:Name="customStack"
                          Grid.Row="1" Grid.Column="1">
-                <Label Text="Customize"/>
+                <Label Style="{StaticResource H2Style}"
+                       Text="Customize"/>
 
                 <StackLayout x:Name="countiesStack"
                              HorizontalOptions="CenterAndExpand"
                              VerticalOptions="Start">
                     <StackLayout Orientation="Horizontal" HorizontalOptions="End">
                         <Label Text="Alameda" 
-                                   VerticalOptions="Center" />
+                               VerticalOptions="Center" />
                         <Switch Toggled="OnSwitchToggled" 
-                                    IsToggled="{Binding MasterViewModel.PlantList.TargetPlant.NativeTo_Alameda, Mode=TwoWay}" 
-                                    VerticalOptions="Center"/>
+                                IsToggled="{Binding MasterViewModel.PlantList.TargetPlant.NativeTo_Alameda, Mode=TwoWay}" 
+                                VerticalOptions="Center"/>
                     </StackLayout>
                     <StackLayout Orientation="Horizontal" HorizontalOptions="End">
                         <Label Text="Contra Costa"
@@ -125,11 +133,11 @@
                         <Switch Toggled="OnSwitchToggled" 
                                     IsToggled="{Binding MasterViewModel.PlantList.TargetPlant.NativeTo_Sonoma, Mode=TwoWay}"/>
                     </StackLayout>
-                    </StackLayout>
+                </StackLayout>
 
                 <Picker x:Name="lowTempPicker"
-                            Title="Coldest temperature"
-                            SelectedIndexChanged="OnPickerSelectedIndexChanged">
+                        Title="Coldest temperature"
+                        SelectedIndexChanged="OnPickerSelectedIndexChanged">
                     <Picker.Items>
                         <x:String>Any</x:String>
                         <x:String>0F</x:String>

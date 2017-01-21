@@ -80,11 +80,10 @@
                     </Grid.ColumnDefinitions>
 
                     <Label x:Name="labelTitle" 
+                           Style="{StaticResource H1Style}"
                            Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
                            Text="{Binding MasterViewModel.PlantList.MyPlants.Count, StringFormat = 'What kinds of plants do you want? ({0} matches)'}"
-                           VerticalTextAlignment="Center"
-                           HorizontalTextAlignment="Start"
-                           FontAttributes="Bold"/>
+                           VerticalTextAlignment="Center"/>
         
                     <Button x:Name="buttonWinterFlowers"
                             Text="Winter Flowers"
@@ -377,28 +376,28 @@
                                          VerticalOptions="Start">
                                 <StackLayout  Orientation="Horizontal" HorizontalOptions="End">
                                     <Label Text="Attracts hummingbirds?" 
-                                   VerticalOptions="Center" />
+                                           VerticalOptions="Center" />
                                     <Switch Toggled="OnSwitchToggled" 
                                     IsToggled="{Binding MasterViewModel.PlantList.TargetPlant.AttractsHummingbirds}"/>
                                 </StackLayout>
 
                                 <StackLayout  Orientation="Horizontal" HorizontalOptions="End">
                                     <Label Text="Attracts any birds?" 
-                                   VerticalOptions="Center" />
+                                           VerticalOptions="Center" />
                                     <Switch Toggled="OnSwitchToggled" 
                                     IsToggled="{Binding MasterViewModel.PlantList.TargetPlant.AttractsBirds}"/>
                                 </StackLayout>
 
                                 <StackLayout  Orientation="Horizontal" HorizontalOptions="End">
                                     <Label Text="Attracts bees?" 
-                                   VerticalOptions="Center" />
+                                           VerticalOptions="Center" />
                                     <Switch Toggled="OnSwitchToggled" 
                                     IsToggled="{Binding MasterViewModel.PlantList.TargetPlant.AttractsNativeBees}"/>
                                 </StackLayout>
 
                                 <StackLayout  Orientation="Horizontal" HorizontalOptions="End">
                                     <Label Text="Attracts butterflies?" 
-                                   VerticalOptions="Center" />
+                                           VerticalOptions="Center" />
                                     <Switch Toggled="OnSwitchToggled" 
                                     IsToggled="{Binding MasterViewModel.PlantList.TargetPlant.AttractsButterflies}"/>
                                 </StackLayout>
@@ -421,9 +420,9 @@
 
                         <!--Footer Elements-->
                         <Label  Grid.Row="0" Grid.Column="0" 
-                            Text="{Binding MasterViewModel.PlantList.MyPlants.Count, StringFormat = '{0} matches'}"
-                            VerticalTextAlignment="Center"
-                            FontAttributes="Bold"/>
+                                Text="{Binding MasterViewModel.PlantList.MyPlants.Count, StringFormat = '{0} matches'}"
+                                VerticalTextAlignment="Center"
+                                FontAttributes="Bold"/>
 
                         <Button Grid.Row="0" Grid.Column="1" 
                                 Text="Reset all" 
