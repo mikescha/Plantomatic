@@ -5,7 +5,15 @@
         x:Class="PlantomaticVM.App">
     <Application.Resources>
         <ResourceDictionary>
-            <Color x:Key="textColor">#303030</Color>
+            <Color x:Key="textColor">#101010</Color>
+            <Color x:Key="myGreen">#94DC63</Color>
+
+            <!--Generic label-->
+            <Style TargetType="Label">
+                <Setter Property="TextColor" Value="{DynamicResource textColor}" />
+                <Setter Property="HorizontalTextAlignment" Value="Start" />
+                <Setter Property="Style" Value="{DynamicResource BodyStyle}" />
+            </Style>
             
             <!--Headings on each page-->
             <Style x:Key="H1Style"
@@ -22,12 +30,14 @@
                 <Setter Property="HorizontalTextAlignment" Value="Start" />
             </Style>
 
-            <!--Generic label-->
-            <Style TargetType="Label">
+            <Style TargetType="Button">
                 <Setter Property="TextColor" Value="{DynamicResource textColor}" />
-                <Setter Property="HorizontalTextAlignment" Value="Start" />
             </Style>
-            
+
+            <Style TargetType="Picker">
+                <Setter Property="TextColor" Value="{DynamicResource textColor}" />
+            </Style>
+
         </ResourceDictionary>
     </Application.Resources>
 </Application>

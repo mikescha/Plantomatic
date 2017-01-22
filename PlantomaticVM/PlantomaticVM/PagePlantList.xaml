@@ -97,15 +97,7 @@
                              Orientation="Vertical" 
                              Spacing="5"
                              IsVisible="{Binding Source={x:Reference listView}, Path=SelectedItem, Converter={StaticResource objectToBoolConverterOpposite}}">
-                    <!--TODO is this needed any more?
-                    <StackLayout.Resources>
-                        <ResourceDictionary>
-                            <Style TargetType="Label">
-                                <Setter Property="TextColor" Value="Black" />
-                            </Style>
-                        </ResourceDictionary>
-                    </StackLayout.Resources>
-                -->
+                   
                     <!--At this point, the context of the binding is the selected item. So, all the labels can just point to specific fields.-->
                     <Label Text="{Binding Plant.Name}" FontSize="Medium"/>
                     <Label Text="{Binding Plant.ScientificName}" FontAttributes="Italic"/>
@@ -117,7 +109,7 @@
                     <Label Text="{Binding Plant.FloweringMonths, StringFormat='Flowering months: {0}'}" />
                     <Label Text="{Binding Plant.MaxWidth.Value, StringFormat='Maximum width: {0} ft'}"  />
                     <Label Text="{Binding Plant.MaxHeight.Value, StringFormat='Maximum height: {0} ft'}"  />
-                    <Label x:Name="MoreInfoURLLabel" Text="More info..." TextColor="Blue" >
+                    <Label x:Name="MoreInfoURLLabel" Text="More info..." TextColor="{DynamicResource myGreen}" >
                         <Label.GestureRecognizers>
                             <TapGestureRecognizer Tapped="OnMoreInfoTapped"/>
                         </Label.GestureRecognizers>

@@ -23,27 +23,11 @@ namespace PlantomaticVM
                 //for the simple controls
                 simpleGrid.ColumnDefinitions[0].Width = new GridLength(1, GridUnitType.Star);
                 simpleGrid.ColumnDefinitions[1].Width = new GridLength(0);
-                
-                Grid.SetRow(buttonWinterFlowers, 1);
-                Grid.SetColumn(buttonWinterFlowers, 0);
 
-                Grid.SetRow(buttonBirds, 2);
-                Grid.SetColumn(buttonBirds, 0);
-
-                Grid.SetRow(buttonPollenators, 3);
-                Grid.SetColumn(buttonPollenators, 0);
-
-                Grid.SetRow(buttonShady, 4);
-                Grid.SetColumn(buttonShady, 0);
-
-                Grid.SetRow(buttonContainers, 5);
-                Grid.SetColumn(buttonContainers, 0);
-
-                Grid.SetRow(buttonSmallYard, 6);
-                Grid.SetColumn(buttonSmallYard, 0);
-
-                Grid.SetRow(buttonRedFlowers, 7);
-                Grid.SetColumn(buttonRedFlowers, 0);
+                Grid.SetRow(buttonStack1, 1);
+                Grid.SetColumn(buttonStack1, 0);
+                Grid.SetRow(buttonStack2, 2);
+                Grid.SetColumn(buttonStack2, 0);
 
                 //for the advanced controls
                 bodyGrid.ColumnDefinitions[0].Width = new GridLength(1, GridUnitType.Star);
@@ -56,26 +40,10 @@ namespace PlantomaticVM
                 simpleGrid.ColumnDefinitions[0].Width = new GridLength(1, GridUnitType.Star);
                 simpleGrid.ColumnDefinitions[1].Width = new GridLength(1, GridUnitType.Star);
 
-                Grid.SetRow(buttonWinterFlowers, 1);
-                Grid.SetColumn(buttonWinterFlowers, 0);
-
-                Grid.SetRow(buttonBirds, 2);
-                Grid.SetColumn(buttonBirds, 0);
-
-                Grid.SetRow(buttonPollenators, 3);
-                Grid.SetColumn(buttonPollenators, 0);
-
-                Grid.SetRow(buttonRedFlowers, 4);
-                Grid.SetColumn(buttonRedFlowers, 0);
-
-                Grid.SetRow(buttonShady, 1);
-                Grid.SetColumn(buttonShady, 1);
-
-                Grid.SetRow(buttonContainers, 2);
-                Grid.SetColumn(buttonContainers, 1);
-
-                Grid.SetRow(buttonSmallYard, 3);
-                Grid.SetColumn(buttonSmallYard, 1);
+                Grid.SetRow(buttonStack1, 1);
+                Grid.SetColumn(buttonStack1, 0);
+                Grid.SetRow(buttonStack2, 1);
+                Grid.SetColumn(buttonStack2, 1);
 
                 //for the advanced controls
                 bodyGrid.ColumnDefinitions[0].Width = new GridLength(1, GridUnitType.Star);
