@@ -42,7 +42,6 @@
     <Compile Include="PageAbout.xaml.cs">
       <DependentUpon>PageAbout.xaml</DependentUpon>
     </Compile>
-    <Compile Include="App.cs" />
     <Compile Include="AppData.cs" />
     <Compile Include="4 Criteria.cs" />
     <Compile Include="PageConditions.xaml.cs">

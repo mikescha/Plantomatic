@@ -25,7 +25,7 @@
             <tools:BoolToStringConverter x:Key="ButtonTextHighlight" 
                                      TrueText="White"   
                                      FalseText="#212121"/>
-
+            
         </ResourceDictionary>
     </ContentPage.Resources>
 
@@ -174,7 +174,7 @@
                                 Title="Flowering month"
                                 SelectedIndexChanged="OnPickerSelectedIndexChanged">
                                 <Picker.Items>
-                                    <x:String>All</x:String>
+                                    <x:String>All months</x:String>
                                     <x:String>January</x:String>
                                     <x:String>February</x:String>
                                     <x:String>March</x:String>
@@ -215,7 +215,7 @@
                                 Title="Plant type"
                                 SelectedIndexChanged="OnPickerSelectedIndexChanged">
                                 <Picker.Items>
-                                    <x:String>All</x:String>
+                                    <x:String>All plant types</x:String>
                                     <x:String>Annual</x:String>
                                     <x:String>Perennial</x:String>
                                     <x:String>Bush</x:String>
@@ -246,7 +246,7 @@
                                 Title="Sun requirements"
                                 SelectedIndexChanged="OnPickerSelectedIndexChanged">
                                 <Picker.Items>
-                                    <x:String>All</x:String>
+                                    <x:String>All sun amounts</x:String>
                                     <x:String>Full sun</x:String>
                                     <x:String>Partial sun</x:String>
                                     <x:String>Shade</x:String>
@@ -269,7 +269,7 @@
                                 Title="Maximum height"
                                 SelectedIndexChanged="OnPickerSelectedIndexChanged">
                                 <Picker.Items>
-                                    <x:String>Any</x:String>
+                                    <x:String>Any height</x:String>
                                     <x:String>2 feet</x:String>
                                     <x:String>4 feet</x:String>
                                     <x:String>6 feet</x:String>
@@ -296,7 +296,7 @@
                                 Title="Maximum width"
                                 SelectedIndexChanged="OnPickerSelectedIndexChanged">
                                 <Picker.Items>
-                                    <x:String>Any</x:String>
+                                    <x:String>Any width</x:String>
                                     <x:String>2 feet</x:String>
                                     <x:String>4 feet</x:String>
                                     <x:String>6 feet</x:String>
@@ -359,7 +359,7 @@
                                 Title="Flower Color"
                                 SelectedIndexChanged="OnPickerSelectedIndexChanged">
                                 <Picker.Items>
-                                    <x:String>Any</x:String>
+                                    <x:String>Any flower color</x:String>
                                     <x:String>Red</x:String>
                                     <x:String>Orange</x:String>
                                     <x:String>Yellow</x:String>

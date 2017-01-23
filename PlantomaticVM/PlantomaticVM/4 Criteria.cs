@@ -65,8 +65,8 @@ namespace PlantomaticVM
             NativeTo_Solano = defaultCounty;
             NativeTo_Sonoma = defaultCounty;
 
-            Lat = 38.25;
-            Lng = -122.28;
+            Lat = 0;
+            Lng = 0;
             UserCounty = "";
 
         }
@@ -336,8 +336,22 @@ namespace PlantomaticVM
         public bool AttractsHummingbirds { get; set; }
         public bool AttractsBirds { get; set; }
 
-        public double Lat { get; set; }
-        public double Lng { get; set; }
+        double lat;
+        public double Lat { 
+            set
+            {
+                if (Lat != value)
+                {
+                    lat = value;
+                    OnPropertyChanged();
+                }
+            }
+            get
+            {
+                return lat;
+            }
+        }
+        public double Lng { set; get; }
 
         public string UserCounty { get; set; }
 

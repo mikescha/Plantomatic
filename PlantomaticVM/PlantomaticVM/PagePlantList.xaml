@@ -54,11 +54,12 @@
       
           <!--The list of plants-->
             <ListView x:Name="listView" 
-                    ItemsSource="{Binding MasterViewModel.PlantList.MyPlants}" 
-                    Grid.Row="1" Grid.Column="0"
-                    ItemTapped="OnPlantSelected"
-                    SeparatorVisibility="None"
-                    BackgroundColor="{DynamicResource dividerColor}">
+                      ItemsSource="{Binding MasterViewModel.PlantList.MyPlants}" 
+                      Grid.Row="1" Grid.Column="0"
+                      ItemTapped="OnPlantSelected"
+                      SeparatorVisibility="None"
+                      BackgroundColor="{DynamicResource dividerColor}"
+                      HasUnevenRows="True">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
@@ -70,8 +71,7 @@
                             <StackLayout>
                                 <!--TODO This changes label color if the plant is in the list. Decide if this is what we want-->
                                 <Label Text="{Binding Plant.Name}"
-                                       TextColor="{Binding InCart, Converter={StaticResource ColorIfInList}}" 
-                                       Margin="0"/>
+                                       TextColor="{Binding InCart, Converter={StaticResource ColorIfInList}}"/>
                             </StackLayout>
                             
                         </ViewCell>

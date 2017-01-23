@@ -4,6 +4,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
         x:Class="PlantomaticVM.App">
     <Application.Resources>
+        <!--Color scheme came from here https://www.materialpalette.com/green/brown-->
         <ResourceDictionary>
             <Color x:Key="textColor">#212121</Color>
             <Color x:Key="secondaryTextColor">#757575</Color>

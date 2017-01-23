@@ -75,11 +75,12 @@
             <!--List of plants from shopping list.  -->
             <StackLayout Grid.Row="1" Grid.Column="0">
                 <ListView x:Name="shoppingListView"
-                      ItemsSource="{Binding MasterViewModel.PlantList.ShoppingListPlants}"
-                      ItemTapped="ShoppingListView_ItemTapped"
-                      HorizontalOptions="StartAndExpand" VerticalOptions="Start" 
-                      SeparatorVisibility="None"
-                      BackgroundColor="{DynamicResource dividerColor}">
+                          ItemsSource="{Binding MasterViewModel.PlantList.ShoppingListPlants}"
+                          ItemTapped="ShoppingListView_ItemTapped"
+                          HorizontalOptions="StartAndExpand" VerticalOptions="Start" 
+                          SeparatorVisibility="None"
+                          BackgroundColor="{DynamicResource dividerColor}"
+                          HasUnevenRows="True">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>

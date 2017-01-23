@@ -11,7 +11,14 @@
     <ContentPage.Padding>
         <OnPlatform x:TypeArguments="Thickness" iOS="0, 20, 0, 0" WinPhone="0,5,5,10" Android="5,5,5,5"/>
     </ContentPage.Padding>
-    
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <tools:NumberToBoolConverterOpposite  x:Key="NumberToBoolConverterOpposite" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+
     <!--Put in scrollview so entire page can scroll if needed-->
     <ScrollView>
         
@@ -42,9 +49,11 @@
                 <Label x:Name="labelStatus"
                        Style="{StaticResource H2Style}"
                        Text="Looking for your location..."/>
+                <ActivityIndicator IsVisible="{Binding MasterViewModel.PlantList.TargetPlant.Lat, Converter={StaticResource NumberToBoolConverterOpposite}}"
+                                   IsRunning="{Binding MasterViewModel.PlantList.TargetPlant.Lat, Converter={StaticResource NumberToBoolConverterOpposite}}"/>
 
                 <!--Padding is to indent this area-->
-                <StackLayout Padding="12,0,0,0">
+                <StackLayout Padding="12,0,4,4">
                     <!-- The code below is what I had when i let the user edit the Lat/Long values
                     <Label Text="Lat"/>
                     <Entry x:Name="EntryLat" 
@@ -137,7 +146,7 @@
                         Title="Coldest temperature"
                         SelectedIndexChanged="OnPickerSelectedIndexChanged">
                     <Picker.Items>
-                        <x:String>Any</x:String>
+                        <x:String>Any low temperature</x:String>
                         <x:String>0F</x:String>
                         <x:String>10F</x:String>
                         <x:String>20F</x:String>
