@@ -17,11 +17,14 @@
             <!-- Using the BoolToStringConverter to pick the text color based on whether the button is highlighted or not. The TrueText 
             should be the same value as MyGreen in App.xaml. Tried using that here as a dynamic resource but doesn't work-->
             <tools:BoolToStringConverter x:Key="ButtonHighlight" 
-                                     TrueText="#94DC63"   
+                                     TrueText="#4CAF50"   
                                      FalseText="White"/>
             <tools:BoolToStringConverter x:Key="TextHighlight" 
                                      TrueText="White"   
-                                     FalseText="Black"/>
+                                     FalseText="#4CAF50"/>
+            <tools:BoolToStringConverter x:Key="ButtonTextHighlight" 
+                                     TrueText="White"   
+                                     FalseText="#212121"/>
 
         </ResourceDictionary>
     </ContentPage.Resources>
@@ -41,8 +44,7 @@
             <Label x:Name="labelTitle" 
                            Style="{StaticResource H1Style}"
                            Grid.Row="0"
-                           Text="{Binding MasterViewModel.PlantList.MyPlants.Count, StringFormat = 'What kinds of plants do you want? ({0} matches)'}"
-                           VerticalTextAlignment="Center"/>
+                           Text="{Binding MasterViewModel.PlantList.MyPlants.Count, StringFormat = 'What kinds of plants do you want? ({0} matches)'}"/>
 
             <!--Buttons for controlling which UI the user sees-->
             <StackLayout Grid.Row="1"
@@ -50,19 +52,19 @@
                          HorizontalOptions="Center"
                          Spacing="0">
                 <Button x:Name="buttonSimple"
-                        BorderColor="{DynamicResource myGreen}"
-                        BorderWidth="1"
+                        BorderColor="{DynamicResource primaryColor}"
                         HorizontalOptions="Start"
                         Text="Simple"
+                        FontSize="Micro"
                         BindingContext="{x:Reference simpleGrid}"
                         BackgroundColor="{Binding Path=IsVisible, Converter={StaticResource ButtonHighlight}}"
                         TextColor="{Binding Path=IsVisible, Converter={StaticResource TextHighlight}}"
                         Clicked="buttonSimple_Clicked" />
                 <Button x:Name="buttonAdvanced"
-                        BorderColor="{DynamicResource myGreen}"
-                        BorderWidth="1"
+                        BorderColor="{DynamicResource primaryColor}"
                         HorizontalOptions="End"
                         Text="Advanced"
+                        FontSize="Micro"
                         BindingContext="{x:Reference advancedGrid}"
                         BackgroundColor="{Binding Path=IsVisible, Converter={StaticResource ButtonHighlight}}"
                         TextColor="{Binding Path=IsVisible, Converter={StaticResource TextHighlight}}"
@@ -91,21 +93,25 @@
                         <Button x:Name="buttonWinterFlowers"
                             Text="Winter Flowers"
                             Command="{Binding MasterViewModel.SetWinterFlowers}"
+                            TextColor="{Binding MasterViewModel.ShowingWinterFlowers, Converter={StaticResource ButtonTextHighlight}}"
                             BackgroundColor="{Binding MasterViewModel.ShowingWinterFlowers, Converter={StaticResource ButtonHighlight}}"/>
 
                         <Button x:Name="buttonBirds" 
                             Text="Attracts Birds"
                             Command="{Binding MasterViewModel.SetAttractsBirds}"
+                            TextColor="{Binding MasterViewModel.ShowingBirds, Converter={StaticResource ButtonTextHighlight}}"
                             BackgroundColor="{Binding MasterViewModel.ShowingBirds, Converter={StaticResource ButtonHighlight}}"/>
 
                         <Button x:Name="buttonPollenators" 
                             Text="Attracts Pollenators"
                             Command="{Binding MasterViewModel.SetPollenators}"
+                            TextColor="{Binding MasterViewModel.ShowingPollenators, Converter={StaticResource ButtonTextHighlight}}"
                             BackgroundColor="{Binding MasterViewModel.ShowingPollenators, Converter={StaticResource ButtonHighlight}}"/>
 
                         <Button x:Name="buttonSmallYard" 
                             Text="Small Yards"
                             Command="{Binding MasterViewModel.SetSmallYard}"
+                            TextColor="{Binding MasterViewModel.ShowingSmallYard, Converter={StaticResource ButtonTextHighlight}}"
                             BackgroundColor="{Binding MasterViewModel.ShowingSmallYard, Converter={StaticResource ButtonHighlight}}"/>
                     </StackLayout>
 
@@ -113,16 +119,19 @@
                         <Button x:Name="buttonShady"
                             Text="Shady and Drought Tolerant"
                             Command="{Binding MasterViewModel.SetShadeAndDrought}"
+                            TextColor="{Binding MasterViewModel.ShowingShadeAndDrought, Converter={StaticResource ButtonTextHighlight}}"
                             BackgroundColor="{Binding MasterViewModel.ShowingShadeAndDrought, Converter={StaticResource ButtonHighlight}}"/>
 
                         <Button x:Name="buttonContainers"
                             Text="Containers and Hummingbirds"
                             Command="{Binding MasterViewModel.SetContainersAndHummingbirds}"
+                            TextColor="{Binding MasterViewModel.ShowingContainersAndHummingbirds, Converter={StaticResource ButtonTextHighlight}}"
                             BackgroundColor="{Binding MasterViewModel.ShowingContainersAndHummingbirds, Converter={StaticResource ButtonHighlight}}"/>
 
                         <Button x:Name="buttonRedFlowers"
                             Text="Red, Yellow, or Orange Flowers"
                             Command="{Binding MasterViewModel.SetWarmColorFlowers}"
+                            TextColor="{Binding MasterViewModel.ShowingFlowerColors, Converter={StaticResource ButtonTextHighlight}}"
                             BackgroundColor="{Binding MasterViewModel.ShowingFlowerColors, Converter={StaticResource ButtonHighlight}}"/>
                     </StackLayout>
 
@@ -312,7 +321,7 @@
                         </StackLayout>
 
                         <StackLayout x:Name="filtersSet2">
-                            <!-- NOT READY YET
+                            <!-- NOT READY YET ... IDEA IS TO CHANGE THE COLOR PICKER FROM A LIST TO A GRID OF BOXES
                             <StackLayout x:Name="ColorPickers"
                                          Spacing="0"
                                          HorizontalOptions="Center">
@@ -428,20 +437,12 @@
                         <!--Footer Elements-->
                         <Label  Grid.Row="0" Grid.Column="0" 
                                 Text="{Binding MasterViewModel.PlantList.MyPlants.Count, StringFormat = '{0} matches'}"
-                                VerticalTextAlignment="Center"
                                 FontAttributes="Bold"/>
 
                         <Button Grid.Row="0" Grid.Column="1" 
                                 Text="Reset all" 
                                 HorizontalOptions="End"
-                                Command="{Binding MasterViewModel.PlantList.ResetCriteria}"
-                                BorderWidth="1">
-                            <!--<Button.BackgroundColor>
-                                <OnPlatform x:TypeArguments="Color" Android="#404040" />
-                            </Button.BackgroundColor>
-                            <Button.BorderColor>
-                                <OnPlatform x:TypeArguments="Color" Android="White" WinPhone="Black" />
-                            </Button.BorderColor>-->
+                                Command="{Binding MasterViewModel.PlantList.ResetCriteria}">
                         </Button>
                     </Grid>
 

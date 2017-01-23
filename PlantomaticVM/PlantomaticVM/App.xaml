@@ -5,22 +5,35 @@
         x:Class="PlantomaticVM.App">
     <Application.Resources>
         <ResourceDictionary>
-            <Color x:Key="textColor">#101010</Color>
-            <Color x:Key="myGreen">#94DC63</Color>
+            <Color x:Key="textColor">#212121</Color>
+            <Color x:Key="secondaryTextColor">#757575</Color>
+            <Color x:Key="accentColor">#795548</Color>
+            <Color x:Key="primaryColor">#4CAF50</Color>
+            <Color x:Key="darkPrimaryColor">#388E3C</Color>
+            <Color x:Key="lightPrimaryColor">#C8E6C9</Color>
+            <Color x:Key="dividerColor">#EDEDED</Color>
 
             <!--Generic label-->
             <Style TargetType="Label">
+                <Setter Property="Style" Value="{DynamicResource BodyStyle}" />
                 <Setter Property="TextColor" Value="{DynamicResource textColor}" />
                 <Setter Property="HorizontalTextAlignment" Value="Start" />
+                <Setter Property="VerticalTextAlignment" Value="Center" />
+            </Style>
+
+            <Style x:Key="secondaryText"
+                   TargetType="Label">
                 <Setter Property="Style" Value="{DynamicResource BodyStyle}" />
+                <Setter Property="TextColor" Value="{DynamicResource secondaryTextColor}" />
+                <Setter Property="HorizontalTextAlignment" Value="Start" />
+                <Setter Property="VerticalTextAlignment" Value="Center" />
             </Style>
             
             <!--Headings on each page-->
             <Style x:Key="H1Style"
                    TargetType ="Label">
                 <Setter Property="FontSize" Value="Medium" />
-                <Setter Property="TextColor" Value="{DynamicResource textColor}" />
-                <Setter Property="HorizontalTextAlignment" Value="Start" />
+                <Setter Property="TextColor" Value="{DynamicResource primaryColor}" />
             </Style>
 
             <Style x:Key="H2Style"
@@ -32,6 +45,8 @@
 
             <Style TargetType="Button">
                 <Setter Property="TextColor" Value="{DynamicResource textColor}" />
+                <Setter Property="BorderWidth" Value="1" />
+                <Setter Property="BorderColor" Value="{DynamicResource accentColor}" />
             </Style>
 
             <Style TargetType="Picker">

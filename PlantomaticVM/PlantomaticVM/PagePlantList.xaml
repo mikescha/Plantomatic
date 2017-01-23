@@ -26,8 +26,8 @@
                                          FalseText="Add to cart"/>
 
             <tools:BoolToStringConverter x:Key="ColorIfInList" 
-                                         TrueText="Green"
-                                         FalseText="Black"/>
+                                         TrueText="#388E3C"
+                                         FalseText="#212121"/>
         </ResourceDictionary> 
     </ContentPage.Resources>
     
@@ -58,7 +58,7 @@
                     Grid.Row="1" Grid.Column="0"
                     ItemTapped="OnPlantSelected"
                     SeparatorVisibility="None"
-                    BackgroundColor="#f9f9f9">
+                    BackgroundColor="{DynamicResource dividerColor}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
@@ -110,22 +110,19 @@
                     <Label Text="{Binding Plant.FloweringMonths, StringFormat='Flowering months: {0}'}" />
                     <Label Text="{Binding Plant.MaxWidth.Value, StringFormat='Maximum width: {0} ft'}"  />
                     <Label Text="{Binding Plant.MaxHeight.Value, StringFormat='Maximum height: {0} ft'}"  />
-                    <Label x:Name="MoreInfoURLLabel" Text="More info..." TextColor="{DynamicResource myGreen}" >
+                    <Label x:Name="MoreInfoURLLabel" Text="More info..." TextColor="{DynamicResource primaryColor}" >
                         <Label.GestureRecognizers>
                             <TapGestureRecognizer Tapped="OnMoreInfoTapped"/>
                         </Label.GestureRecognizers>
                     </Label>
+                    <Label Text="How many do you want?"/>
                     <StackLayout Orientation="Horizontal" 
                                  HorizontalOptions="StartAndExpand"
                                  VerticalOptions="Center">
-                        
-                        <Label Text="How many do you want?"
-                               VerticalTextAlignment="Center"/>
-                        
                         <Button Text="+"
                                 Command="{Binding IncrementPlantCount}">
                         </Button>
-                        
+
                         <Entry Text="{Binding Count, Mode=TwoWay}"  
                                Keyboard="Numeric"/>
 
@@ -139,29 +136,6 @@
                                 IsEnabled="{Binding Count, Converter={StaticResource numberToBoolConverter}}">
                         </Button>
                     </StackLayout>
-                
-                
-                    <!-- If I can figure out how to do this as part of the viewmodel with binding, then instead of Clicked I would have 
-                     something like, Command="{Binding ToggleCartStatus}"  
-                
-                    Do I need this any more?
-                
-                    <tools:BoolToStringConverter x:Key="ShowListText" 
-                                         TrueText="Show matching plants"
-                                         FalseText="Show shopping list"/>
-
-                    <Button x:Name="AddToCartButton" Text="{Binding InCart, Converter={StaticResource AddRemoveCartText}}" 
-                        BorderWidth="1"     
-                        Clicked="OnToggleCartButtonClicked"
-                        IsVisible="false">
-                        <Button.BackgroundColor>
-                            <OnPlatform x:TypeArguments="Color" Android="#404040" />
-                        </Button.BackgroundColor>
-                        <Button.BorderColor>
-                            <OnPlatform x:TypeArguments="Color" Android="White" WinPhone="Black" />
-                        </Button.BorderColor>
-                    </Button>
-    -->
                 </StackLayout>
             </StackLayout>
         </ScrollView>

@@ -27,7 +27,7 @@ namespace PlantomaticVM
         // We are using FALSE for the attracts to mean, "I don't care" instead of No, so that we don't have to support a 3-state switch and because
         // it seems unlikely that the user will want to choose plants that explicitly DO NOT attract wildlife. 
         bool defaultAttracts = false;
-        decimal defaultLowTemp = 40;
+        decimal defaultLowTemp = 99;
         FloweringMonths defaultFloweringMonths = FloweringMonths.AllMonths;
         SunRequirements defaultSunRequirements = SunRequirements.AllSunTypes;
         PlantTypes defaultPlantType = PlantTypes.AllPlantTypes;

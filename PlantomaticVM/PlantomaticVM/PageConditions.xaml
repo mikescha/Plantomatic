@@ -45,7 +45,8 @@
 
                 <!--Padding is to indent this area-->
                 <StackLayout Padding="12,0,0,0">
-                    <!--<Label Text="Lat"/>
+                    <!-- The code below is what I had when i let the user edit the Lat/Long values
+                    <Label Text="Lat"/>
                     <Entry x:Name="EntryLat" 
                            Text="{Binding MasterViewModel.PlantList.TargetPlant.Lat, Mode=TwoWay}"/>
                     <Label Text="Lng"/>
@@ -54,16 +55,13 @@
                     <Button Text="Fetch" Clicked="Button_Clicked"></Button>
                     -->
                     <Label x:Name="labelCityState"
-                           Style="{DynamicResource BodyStyle}"
                            Text=" "/> <!--placholder so the default height is correct-->
                     <Label x:Name="labelCounty"
-                           Style="{DynamicResource BodyStyle}"
                            Text=" "/>
                 </StackLayout>
                 
                 <!--TODO Need to set a minimum height on this so the page doesn't jump-->
                 <Label x:Name="labelHelpText" 
-                       Style="{DynamicResource BodyStyle}"
                        Text="If this is not the location you want, use the controls to choose a different area or conditions."
                        IsVisible="False"/>
             </StackLayout>

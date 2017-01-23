@@ -1091,32 +1091,32 @@ namespace PlantomaticVM.Droid
 		public partial class Color
 		{
 			
-			// aapt resource value: 0x7f0b0048
-			public const int abc_background_cache_hint_selector_material_dark = 2131427400;
+			// aapt resource value: 0x7f0b0051
+			public const int abc_background_cache_hint_selector_material_dark = 2131427409;
 			
-			// aapt resource value: 0x7f0b0049
-			public const int abc_background_cache_hint_selector_material_light = 2131427401;
+			// aapt resource value: 0x7f0b0052
+			public const int abc_background_cache_hint_selector_material_light = 2131427410;
 			
-			// aapt resource value: 0x7f0b004a
-			public const int abc_color_highlight_material = 2131427402;
+			// aapt resource value: 0x7f0b0053
+			public const int abc_color_highlight_material = 2131427411;
 			
 			// aapt resource value: 0x7f0b0004
 			public const int abc_input_method_navigation_guard = 2131427332;
 			
-			// aapt resource value: 0x7f0b004b
-			public const int abc_primary_text_disable_only_material_dark = 2131427403;
+			// aapt resource value: 0x7f0b0054
+			public const int abc_primary_text_disable_only_material_dark = 2131427412;
 			
-			// aapt resource value: 0x7f0b004c
-			public const int abc_primary_text_disable_only_material_light = 2131427404;
+			// aapt resource value: 0x7f0b0055
+			public const int abc_primary_text_disable_only_material_light = 2131427413;
 			
-			// aapt resource value: 0x7f0b004d
-			public const int abc_primary_text_material_dark = 2131427405;
+			// aapt resource value: 0x7f0b0056
+			public const int abc_primary_text_material_dark = 2131427414;
 			
-			// aapt resource value: 0x7f0b004e
-			public const int abc_primary_text_material_light = 2131427406;
+			// aapt resource value: 0x7f0b0057
+			public const int abc_primary_text_material_light = 2131427415;
 			
-			// aapt resource value: 0x7f0b004f
-			public const int abc_search_url_text = 2131427407;
+			// aapt resource value: 0x7f0b0058
+			public const int abc_search_url_text = 2131427416;
 			
 			// aapt resource value: 0x7f0b0005
 			public const int abc_search_url_text_normal = 2131427333;
@@ -1127,11 +1127,14 @@ namespace PlantomaticVM.Droid
 			// aapt resource value: 0x7f0b0007
 			public const int abc_search_url_text_selected = 2131427335;
 			
-			// aapt resource value: 0x7f0b0050
-			public const int abc_secondary_text_material_dark = 2131427408;
+			// aapt resource value: 0x7f0b0059
+			public const int abc_secondary_text_material_dark = 2131427417;
 			
-			// aapt resource value: 0x7f0b0051
-			public const int abc_secondary_text_material_light = 2131427409;
+			// aapt resource value: 0x7f0b005a
+			public const int abc_secondary_text_material_light = 2131427418;
+			
+			// aapt resource value: 0x7f0b004b
+			public const int accent = 2131427403;
 			
 			// aapt resource value: 0x7f0b0008
 			public const int accent_material_dark = 2131427336;
@@ -1229,6 +1232,9 @@ namespace PlantomaticVM.Droid
 			// aapt resource value: 0x7f0b0019
 			public const int dim_foreground_material_light = 2131427353;
 			
+			// aapt resource value: 0x7f0b004f
+			public const int divider = 2131427407;
+			
 			// aapt resource value: 0x7f0b001a
 			public const int foreground_material_dark = 2131427354;
 			
@@ -1246,6 +1252,9 @@ namespace PlantomaticVM.Droid
 			
 			// aapt resource value: 0x7f0b001f
 			public const int hint_foreground_material_light = 2131427359;
+			
+			// aapt resource value: 0x7f0b004e
+			public const int icons = 2131427406;
 			
 			// aapt resource value: 0x7f0b0020
 			public const int material_blue_grey_800 = 2131427360;
@@ -1283,17 +1292,29 @@ namespace PlantomaticVM.Droid
 			// aapt resource value: 0x7f0b002b
 			public const int material_grey_900 = 2131427371;
 			
+			// aapt resource value: 0x7f0b0048
+			public const int primary = 2131427400;
+			
+			// aapt resource value: 0x7f0b0049
+			public const int primary_dark = 2131427401;
+			
 			// aapt resource value: 0x7f0b002c
 			public const int primary_dark_material_dark = 2131427372;
 			
 			// aapt resource value: 0x7f0b002d
 			public const int primary_dark_material_light = 2131427373;
 			
+			// aapt resource value: 0x7f0b004a
+			public const int primary_light = 2131427402;
+			
 			// aapt resource value: 0x7f0b002e
 			public const int primary_material_dark = 2131427374;
 			
 			// aapt resource value: 0x7f0b002f
 			public const int primary_material_light = 2131427375;
+			
+			// aapt resource value: 0x7f0b004c
+			public const int primary_text = 2131427404;
 			
 			// aapt resource value: 0x7f0b0030
 			public const int primary_text_default_material_dark = 2131427376;
@@ -1313,6 +1334,9 @@ namespace PlantomaticVM.Droid
 			// aapt resource value: 0x7f0b0035
 			public const int ripple_material_light = 2131427381;
 			
+			// aapt resource value: 0x7f0b004d
+			public const int secondary_text = 2131427405;
+			
 			// aapt resource value: 0x7f0b0036
 			public const int secondary_text_default_material_dark = 2131427382;
 			
@@ -1331,17 +1355,20 @@ namespace PlantomaticVM.Droid
 			// aapt resource value: 0x7f0b003b
 			public const int switch_thumb_disabled_material_light = 2131427387;
 			
-			// aapt resource value: 0x7f0b0052
-			public const int switch_thumb_material_dark = 2131427410;
+			// aapt resource value: 0x7f0b005b
+			public const int switch_thumb_material_dark = 2131427419;
 			
-			// aapt resource value: 0x7f0b0053
-			public const int switch_thumb_material_light = 2131427411;
+			// aapt resource value: 0x7f0b005c
+			public const int switch_thumb_material_light = 2131427420;
 			
 			// aapt resource value: 0x7f0b003c
 			public const int switch_thumb_normal_material_dark = 2131427388;
 			
 			// aapt resource value: 0x7f0b003d
 			public const int switch_thumb_normal_material_light = 2131427389;
+			
+			// aapt resource value: 0x7f0b0050
+			public const int window_background = 2131427408;
 			
 			static Color()
 			{

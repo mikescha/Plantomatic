@@ -278,21 +278,13 @@ That is all.
             <!--Footer Elements-->
             <Label  Grid.Row="0" Grid.Column="0" 
                     Text="{Binding MasterViewModel.PlantList.MyPlants.Count, StringFormat = '{0} matches'}"
-                    VerticalTextAlignment="Center"
                     FontAttributes="Bold"
-                    TextColor="Black"/>
+                    TextColor="{DynamicResource accentColor}"/>
 
             <Button Grid.Row="0" Grid.Column="1" 
                     Text="Reset all" 
                     HorizontalOptions="End"
-                    Command="{Binding MasterViewModel.PlantList.ResetCriteria}"
-                    BorderWidth="1">
-                <Button.BackgroundColor>
-                    <OnPlatform x:TypeArguments="Color" Android="#404040" />
-                </Button.BackgroundColor>
-                <Button.BorderColor>
-                    <OnPlatform x:TypeArguments="Color" Android="White" WinPhone="Black" />
-                </Button.BorderColor>
+                    Command="{Binding MasterViewModel.PlantList.ResetCriteria}">
             </Button>
         </Grid>
 
