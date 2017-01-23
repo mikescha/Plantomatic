@@ -14,9 +14,12 @@
 
     <ContentPage.Resources>
         <ResourceDictionary>
-            <tools:ListToBoolConverter   x:Key="listToBoolConverter" />
+            <tools:ListToBoolConverter           x:Key="listToBoolConverter" />
             <tools:ListToBoolConverterOpposite   x:Key="listToBoolConverterOpposite" />
-
+            <tools:ObjectToBoolConverter         x:Key="objectToBoolConverter" />
+            <tools:ObjectToBoolConverterOpposite x:Key="objectToBoolConverterOpposite" />
+            <tools:NumberToBoolConverter         x:Key="numberToBoolConverter" />
+            
             <tools:CountToHeightConverter x:Key="CalcHeight"/>
             <tools:BoolToStringConverter x:Key="AddRemoveCartText"
                                          TrueText="Remove from cart"
@@ -392,18 +395,23 @@
                         <StackLayout Orientation="Horizontal" 
                                      HorizontalOptions="StartAndExpand">
                         <Label Text="How many do you want?" />
-                        <Entry Text="{Binding Count, Mode=TwoWay}"  Keyboard="Numeric"/>
-                        <Button Text="Clear"
-                                    BorderWidth="1"
-                                    Command="{Binding RemoveItem}">
-                            <!--Comment this out until I figure out what the right thing to do is. The Android emulator is white on black, and this looks awful
-                                <Button.BackgroundColor>
-                                    <OnPlatform x:TypeArguments="Color" Android="#404040" />
-                                </Button.BackgroundColor>
-                                <Button.BorderColor>
-                                    <OnPlatform x:TypeArguments="Color" Android="White" WinPhone="Black" />
-                                </Button.BorderColor>-->
+
+                        <Button Text="+"
+                                Command="{Binding IncrementPlantCount}">
                         </Button>
+
+                        <Entry Text="{Binding Count, Mode=TwoWay}"  Keyboard="Numeric"/>
+
+                        <Button Text="-"
+                                Command="{Binding DecrementPlantCount}"
+                                IsEnabled="{Binding Count, Converter={StaticResource numberToBoolConverter}}">
+                        </Button>
+
+                        <Button Text="X"
+                                Command="{Binding RemoveItem}"
+                                IsEnabled="{Binding Count, Converter={StaticResource numberToBoolConverter}}">
+                        </Button>
+                            
                     </StackLayout>
                 </StackLayout>
             </ScrollView>

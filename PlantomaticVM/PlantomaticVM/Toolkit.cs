@@ -97,6 +97,23 @@ namespace PlantomaticVM
         }
     }
 
+    // Takes an object, and if the object exists then it returns True. If the object is null, it returns False. 
+    // One use: If nothing is selected in the list of plants, then set the visible state of the Show Detail panel to False.
+    public class NumberToBoolConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value == null)
+                return false;
+
+            return ((int) value > 0) ? true : false;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return value;
+        }
+    }
     // Takes a list, and if the list has at least one element then it returns TRUE. If the list is null or has zero elements, it returns True. 
     // One use: If the list of plants is empty, then set the visible state of the Detail panel label to False.
     public class ListToBoolConverterOpposite : IValueConverter

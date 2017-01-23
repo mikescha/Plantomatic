@@ -97,7 +97,8 @@ namespace PlantomaticVM
             {
                 if (count != value)
                 {
-                    count = value;
+                    count = (value >= 0) ? value : 0; //ensure that we don't decrement to negative numbers
+
                     //Since the name reflects the count, we need to update the name
                     SetNameInCart();
 
@@ -105,6 +106,7 @@ namespace PlantomaticVM
                     //count for a plant to zero and have the plant be removed from the cart.
                     inCart = (count > 0) ? true : false;
                     
+                    //Tell the world that everything has changed
                     OnPropertyChanged();
                     OnPropertyChanged(nameof(InCart));
                     OnPropertyChanged(nameof(NameInCart));
@@ -129,6 +131,14 @@ namespace PlantomaticVM
             return InCart;
         }
 
+        public bool ClearCart()
+        {
+            InCart = false;
+            Count = 0;
+
+            return InCart;
+        }
+
         //Command for clearing item from cart
         private Command _removeItem;
         public ICommand RemoveItem
@@ -139,10 +149,44 @@ namespace PlantomaticVM
                 {
                     _removeItem = new Command(() =>
                     {
-                        TogglePlantCartStatus();
+                        ClearCart();
                     });
                 }
                 return _removeItem;
+            }
+        }
+
+        //Command for adding one plant
+        private Command _incrementPlantCount;
+        public ICommand IncrementPlantCount
+        {
+            get
+            {
+                if (_incrementPlantCount == null)
+                {
+                    _incrementPlantCount = new Command(() =>
+                    {
+                        Count++;
+                    });
+                }
+                return _incrementPlantCount;
+            }
+        }
+
+        //Command for removing one plant
+        private Command _decrementPlantCount;
+        public ICommand DecrementPlantCount
+        {
+            get
+            {
+                if (_decrementPlantCount == null)
+                {
+                    _decrementPlantCount = new Command(() =>
+                    {
+                        Count--;
+                    });
+                }
+                return _decrementPlantCount;
             }
         }
 
