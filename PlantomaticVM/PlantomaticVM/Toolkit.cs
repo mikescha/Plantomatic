@@ -7,10 +7,82 @@ using System.Collections;
 using System.IO;
 using System.Net;
 using System.Threading;
-
+using System.Collections.ObjectModel;
+using PlantMan.Plant;
 
 namespace PlantomaticVM
 {
+    //Used for doing the grouping in the listview of plants
+    public class Grouping<K, T> : ObservableCollection<T>
+    {
+        public K Key { get; private set; }
+
+        public Grouping(K key, IEnumerable<T> items)
+        {
+            Key = key;
+            foreach (var item in items)
+            {
+                Items.Add(item);
+            }
+        }
+    }
+
+
+    // Takes a PlantType and returns a string associated with that type 
+    public class PlantTypeToStringConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value == null)
+                return "";
+
+            //TODO should just be able to do this, but I don't know how to add it into Joe's code
+            //string typeString = (PlantTypes)value.ToString();
+
+            string typeString = "";
+            switch ((PlantTypes)value)
+            {
+                case PlantTypes.AllPlantTypes:
+                    typeString = "Multiple types";
+                    break;
+                case PlantTypes.Annual_herb:
+                    typeString = "Annuals";
+                    break;
+                case PlantTypes.Bush:
+                    typeString = "Bushes";
+                    break;
+                case PlantTypes.Fern:
+                    typeString = "Ferns";
+                    break;
+                case PlantTypes.Grass:
+                    typeString = "Grasses";
+                    break;
+                case PlantTypes.Perennial_herb:
+                    typeString = "Perennials";
+                    break;
+                case PlantTypes.Tree:
+                    typeString = "Trees";
+                    break;
+                case PlantTypes.Vine:
+                    typeString = "Vines";
+                    break;
+                case PlantTypes.Unassigned:
+                    typeString = "Unassigned";
+                    break;
+                case PlantTypes.Unknown:
+                    typeString = "Unknown";
+                    break;
+            }
+            return typeString;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return value;
+        }
+    }
+
+
     [ContentProperty("Source")]
     public class GetImageResource : IMarkupExtension
     {
@@ -231,6 +303,7 @@ namespace PlantomaticVM
             return Items[index];
         }
     }
+
 }
 
 

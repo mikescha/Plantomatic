@@ -14,10 +14,8 @@ using Xamarin.Forms;
  * (and so should I let people type in the number of plants they want in their cart, so we can calculate sq ft needed? i.e. change the Add TO Cart from a BOOL to INT)
  * 
  * Then, I'd like to 
- * 3) add more filters
  * 5) add grouping to the list of plants https://mallibone.com/post/xamarin.forms-grouped-listview
  * 6) Add multiple selection to the list of flowering months http://thatcsharpguy.com/post/multiselect-listview-mvvm-en/
- * 7) why, when the app is resumed (alt tab away, then back), does the list not redraw?
  */
 namespace PlantomaticVM
 {
@@ -99,26 +97,6 @@ namespace PlantomaticVM
             listView.SelectedItem = null;
         }
 
-        /* ********** Archive ********** 
-         * This is for code we used to have, but no longer need
-         */
-
-        /* This function allowed us to change which list was associated with the PlantList page. It was called by code in the XAML
-         * that looked like this:
-         * <Button x:Name="ToggleViewButton" Text="{Binding MasterViewModel.ShowingShoppingList, Converter={StaticResource ShowListText}}" BorderWidth="1" Clicked="OnToggleViewButtonClicked"></Button>
-         
-
-        void OnToggleViewButtonClicked(object sender, EventArgs e)
-        {
-            AppData appData = (AppData)BindingContext;
-
-            //Switch the source of the listview to be the proper list
-            listView.ItemsSource = appData.MasterViewModel.ShowingShoppingList ? appData.MasterViewModel.PlantList.MyPlants : appData.MasterViewModel.PlantList.ShoppingListPlants;
-
-            //Toggle the state so we keep track of what we did for the next toggle
-            appData.MasterViewModel.ShowingShoppingList = !appData.MasterViewModel.ShowingShoppingList;
-        }
-        */
     }
 }
  

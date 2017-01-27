@@ -12,6 +12,7 @@ namespace PlantomaticVM
         bool inCart;
         int count;
         string nameInCart;
+       // string plantTypeString;
 
         public MyPlant()
         {

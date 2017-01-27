@@ -88,8 +88,19 @@ namespace PlantomaticVM
                 .OrderBy(p => p.Plant.ScientificName)
                 .ToList();
 
-            //MyPlants is the field that stores the matching plants. Here, we take the list and convert it to an ObservableCollection for the UI 
-            PlantList.MyPlants = new ObservableCollection<MyPlant>(list);
+            //This is calculated and stored because I don't know how to get the total count of items in the UI once the list is grouped
+            PlantList.MatchingPlantCount = list.Count();
+
+            //Use LINQ to do the grouping. TODO: Change this to the LINQ style above
+            var grouped = from p in list
+                          orderby p.Plant.PlantTypes
+                          group p by p.Plant.PlantTypes into plantGroups
+                          select new Grouping<PlantTypes, MyPlant>(plantGroups.Key, plantGroups);
+
+            PlantList.MyPlants = new ObservableCollection<Grouping<PlantTypes, MyPlant>>(grouped);
+
+            //If I want to get rid of the grouping, then delete the stuff above and go back to this 
+            //PlantList.MyPlants = new ObservableCollection<MyPlant>(list);
         }
 
         // Returns false if the user wants a particular color and the plant does not have it

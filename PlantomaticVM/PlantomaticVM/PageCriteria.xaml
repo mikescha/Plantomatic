@@ -44,7 +44,7 @@
             <Label x:Name="labelTitle" 
                            Style="{StaticResource H1Style}"
                            Grid.Row="0"
-                           Text="{Binding MasterViewModel.PlantList.MyPlants.Count, StringFormat = 'What kinds of plants do you want? ({0} matches)'}"/>
+                           Text="{Binding MasterViewModel.PlantList.MatchingPlantCount, StringFormat = 'What kinds of plants do you want? ({0} matches)'}"/>
 
             <!--Buttons for controlling which UI the user sees-->
             <StackLayout Grid.Row="1"

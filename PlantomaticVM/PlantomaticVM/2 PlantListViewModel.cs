@@ -32,14 +32,16 @@ namespace PlantomaticVM
         #region Fields
         string state;  // The US state that the list of plants is associated with
         List<MyPlant> allPlants = new List<MyPlant>(); // All the plants in the database
-        ObservableCollection<MyPlant> myPlants = new ObservableCollection<MyPlant>(); // The subset of plants that match the current target
+        ObservableCollection<Grouping<PlantTypes, MyPlant>> myPlants = new ObservableCollection<Grouping<PlantTypes, MyPlant>>(); // The subset of plants that match the current target
         ObservableCollection<MyPlant> shoppingListPlants = new ObservableCollection<MyPlant>(); // The subset of plants that are in the list
         MyCriteria targetPlant = new MyCriteria(); // The criteria that the user has selected so far
         double[] summaryMonthArray = new double[13]; //used for summarizing the flowering months. 0 is for max value, 1-12 are for each month
+        int matchingPlantCount;
         #endregion Fields
 
         #region Constructors
-        public ObservableCollection<MyPlant> MyPlants
+        //This is the list of plants that match the criteria
+        public ObservableCollection<Grouping<PlantTypes, MyPlant>> MyPlants
         {
             set
             {
@@ -50,6 +52,24 @@ namespace PlantomaticVM
                 }
             }
             get { return myPlants; }
+        }
+
+        //The count of plants that match the criteria. Stored as a value so that we can bind to it and show in the UI. We can't just bind
+        //to list.count because the list is grouped, so we would only get the number of groups, not the total number of elements.
+        public int MatchingPlantCount
+        {
+            set
+            {
+                if (matchingPlantCount != value)
+                {
+                    matchingPlantCount = value;
+                    OnPropertyChanged();
+                }
+            }
+            get
+            {
+                return matchingPlantCount;
+            }
         }
 
         // Generic set/get for the ShoppingList
