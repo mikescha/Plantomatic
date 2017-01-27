@@ -26,25 +26,38 @@ namespace PlantomaticVM
             //Portrait view
             if (Width < Height)
             {
-                mainGrid.ColumnDefinitions[0].Width = new GridLength(1, GridUnitType.Star);
+                mainGrid.ColumnDefinitions[0].Width = new GridLength(2, GridUnitType.Star);
                 mainGrid.ColumnDefinitions[1].Width = new GridLength(0);
 
+                mainGrid.RowDefinitions[0].Height = new GridLength(1, GridUnitType.Auto);
                 mainGrid.RowDefinitions[1].Height = new GridLength(1, GridUnitType.Star);
-                mainGrid.RowDefinitions[2].Height = new GridLength(3, GridUnitType.Star);
+                mainGrid.RowDefinitions[2].Height = new GridLength(1, GridUnitType.Auto);
+                mainGrid.RowDefinitions[3].Height = new GridLength(3, GridUnitType.Star);
 
-                Grid.SetRow(summaryView, 2);
+                Grid.SetRow(summaryHeadingGrid, 2);
+                Grid.SetColumn(summaryHeadingGrid, 0);
+                Grid.SetRow(summaryView, 3);
                 Grid.SetColumn(summaryView, 0);
+
+                buttonHideSummary.IsVisible = true;
             }
             else //Landscape view
             {
                 mainGrid.ColumnDefinitions[0].Width = new GridLength(1, GridUnitType.Star);
                 mainGrid.ColumnDefinitions[1].Width = new GridLength(1, GridUnitType.Star);
 
+                mainGrid.RowDefinitions[0].Height = new GridLength(1, GridUnitType.Auto);
                 mainGrid.RowDefinitions[1].Height = new GridLength(1, GridUnitType.Star);
-                mainGrid.RowDefinitions[2].Height = new GridLength(1, GridUnitType.Auto);
+                mainGrid.RowDefinitions[2].Height = new GridLength(0);
+                mainGrid.RowDefinitions[3].Height = new GridLength(0);
 
+                Grid.SetRow(summaryHeadingGrid, 0);
+                Grid.SetColumn(summaryHeadingGrid, 1);
                 Grid.SetRow(summaryView, 1);
                 Grid.SetColumn(summaryView, 1);
+
+                buttonHideSummary.Text = "Close";
+                buttonHideSummary.IsVisible = false;
             }
         }
 
@@ -98,6 +111,25 @@ namespace PlantomaticVM
             else
             {
                 //TODO: what to do if there is no URL for the plant
+            }
+        }
+
+        //used to hide the Summary panel in portrait view. I don't bother checking for screen dimensions before doing this
+        //since the button is hidden by the page resize code when the window is too small
+        private void buttonHideSummary_Clicked(object sender, EventArgs e)
+        {
+            var converter = new GridLengthTypeConverter();
+
+            // if it's star then the area is expanded and we should collapse it
+            if (mainGrid.RowDefinitions[3].Height.IsStar)
+            {
+                mainGrid.RowDefinitions[3].Height = new GridLength(0);
+                buttonHideSummary.Text = "Open";
+            }
+            else
+            {
+                mainGrid.RowDefinitions[3].Height = new GridLength(3, GridUnitType.Star);
+                buttonHideSummary.Text = "Close";
             }
         }
     }

@@ -66,9 +66,11 @@
                 
                 <ListView.GroupHeaderTemplate>
                     <DataTemplate>
-                        <ViewCell> 
-                            <StackLayout VerticalOptions="Center"
-                                         BackgroundColor="{DynamicResource primaryColor}">
+                        <ViewCell Height="44"> 
+                            <StackLayout VerticalOptions="FillAndExpand"
+                                         HorizontalOptions="FillAndExpand"
+                                         BackgroundColor="{DynamicResource primaryColor}"
+                                         Padding="5,0,0,0">
                                 <Label Text="{Binding Key, Converter={StaticResource plantTypeToStringConverter}}"
                                        TextColor="White"
                                        Style="{StaticResource H2Style}"/>
@@ -79,7 +81,7 @@
 
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <ViewCell>
+                        <ViewCell Height="20">
                             <ViewCell.ContextActions>
                                 <MenuItem Text="{Binding InCart, Converter={StaticResource AddRemoveCartText}}" 
                                 Clicked="OnToggleCartMenuClicked"/>

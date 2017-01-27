@@ -43,6 +43,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
@@ -107,6 +108,25 @@
 
             </StackLayout>
 
+            <Grid x:Name="summaryHeadingGrid"
+                  Grid.Row="0" Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Label  Style="{StaticResource H1Style}"
+                        Grid.Row="0" Grid.Column="0" 
+                        Text="Summary"/>
+                <Button x:Name="buttonHideSummary" 
+                        Grid.Row="0" Grid.Column="1" 
+                        Text="Close" 
+                        HorizontalOptions="End"
+                        Clicked="buttonHideSummary_Clicked"/>
+            </Grid>
+            
             <!-- Summary data -->
             <ScrollView x:Name="summaryView" 
                         Grid.Row="1" Grid.Column="1" 
