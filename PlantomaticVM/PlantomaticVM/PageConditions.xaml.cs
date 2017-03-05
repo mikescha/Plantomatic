@@ -61,20 +61,35 @@ namespace PlantomaticVM
             var locator = CrossGeolocator.Current;
             locator.DesiredAccuracy = 50;
 
-            var position = await locator.GetPositionAsync(10000);
+            Plugin.Geolocator.Abstractions.Position position = null;
+
+            try {
+                position = await locator.GetPositionAsync(10000);
+            }
+            catch (Exception e) {
+                position = null;
+                //TODO TURN OFF THE SPINNER
+                //SHOW THE ERROR MESSAGE LABEL
+
+            }
 
             AppData appData = (AppData)BindingContext;
-            
-            labelStatus.Text = "Using this location:";
 
-            appData.MasterViewModel.PlantList.TargetPlant.Lat = position.Latitude;
-            appData.MasterViewModel.PlantList.TargetPlant.Lng = position.Longitude;
+            labelStatus.Text = "Your location:";
 
-            labelHelpText.IsVisible = true;
-            
-            ReverseGeocode();
+            if (position != null)
+            {
+                appData.MasterViewModel.PlantList.TargetPlant.Lat = position.Latitude;
+                appData.MasterViewModel.PlantList.TargetPlant.Lng = position.Longitude;
+
+                ReverseGeocode();
+            }
 
             EnableUserCounty();
+
+            labelNotInArea.IsVisible = appData.MasterViewModel.PlantList.TargetPlant.NativeTo_None; //IS THERE A WAY FOR THIS TO KNOW THAT THE ERROR OCCURRED?
+
+            labelTip.IsVisible = !appData.MasterViewModel.PlantList.TargetPlant.NativeTo_None;
         }
 
         private class AddressElement
@@ -159,7 +174,8 @@ namespace PlantomaticVM
             p.NativeTo_Santa_Clara = appData.MasterViewModel.PlantList.TargetPlant.UserCounty.Contains("Clara");
             p.NativeTo_Solano = appData.MasterViewModel.PlantList.TargetPlant.UserCounty.Contains("Solano");
             p.NativeTo_Sonoma = appData.MasterViewModel.PlantList.TargetPlant.UserCounty.Contains("Sonoma");
-
+            p.NativeTo_None = !(p.NativeTo_Alameda || p.NativeTo_Contra_Costa || p.NativeTo_Marin || p.NativeTo_Napa || p.NativeTo_San_Francisco ||
+                p.NativeTo_San_Mateo || p.NativeTo_Santa_Clara || p.NativeTo_Solano || p.NativeTo_Sonoma);
         }
     }
 }

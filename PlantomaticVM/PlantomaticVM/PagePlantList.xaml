@@ -66,34 +66,47 @@
                 
                 <ListView.GroupHeaderTemplate>
                     <DataTemplate>
-                        <ViewCell Height="44"> 
+
+                        <TextCell Text="{Binding Key, Converter={StaticResource plantTypeToStringConverter}}"
+                                  TextColor="Green"/>
+
+                        <!--TODO When i use a Viewcell, it gets the height of the TextCell no matter what I specify. How to fix?
+                         <ViewCell Height="32">
                             <StackLayout VerticalOptions="FillAndExpand"
                                          HorizontalOptions="FillAndExpand"
                                          BackgroundColor="{DynamicResource primaryColor}"
-                                         Padding="5,0,0,0">
+                                         Padding="3,0,0,0"
+                                         Spacing="0">
                                 <Label Text="{Binding Key, Converter={StaticResource plantTypeToStringConverter}}"
                                        TextColor="White"
+                                       VerticalOptions="CenterAndExpand"
                                        Style="{StaticResource H2Style}"/>
                             </StackLayout>
                         </ViewCell>
+     
+-->
                     </DataTemplate>
                 </ListView.GroupHeaderTemplate>
 
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <ViewCell Height="20">
+                        <ViewCell>
                             <ViewCell.ContextActions>
                                 <MenuItem Text="{Binding InCart, Converter={StaticResource AddRemoveCartText}}" 
                                 Clicked="OnToggleCartMenuClicked"/>
                             </ViewCell.ContextActions>
 
-                            <StackLayout>
-                                <!--TODO This changes label color if the plant is in the list. Decide if this is what we want
-                                         Also, do we want the NameInCart, which includes the count, or just Plant.Name?-->
+                                <!-- This changes label color if the plant is in the list.
+                                     Also, this uses NameInCart, which includes the count, but could be just Plant.Name-->
+                                <Label Text="{Binding NameInCart}" 
+                                       TextColor="{Binding InCart, Converter={StaticResource ColorIfInList}}"/>
+                            
+<!--
+                            <StackLayout Padding="3,0,0,0">
                                 <Label Text="{Binding NameInCart}" 
                                        TextColor="{Binding InCart, Converter={StaticResource ColorIfInList}}"/>
                             </StackLayout>
-                            
+        -->                            
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>

@@ -44,6 +44,7 @@
             -->
             <StackLayout x:Name="locationStack"
                          Grid.Row="1" Grid.Column="0"
+                         HeightRequest="150"
                          HorizontalOptions="Start">
                 
                 <Label x:Name="labelStatus"
@@ -63,18 +64,18 @@
                            Text="{Binding MasterViewModel.PlantList.TargetPlant.Lng, Mode=TwoWay}"/>
                     <Button Text="Fetch" Clicked="Button_Clicked"></Button>
                     -->
-                    <Label x:Name="labelCityState"
-                           Text=" "/> <!--placholder so the default height is correct-->
-                    <Label x:Name="labelCounty"
-                           Text=" "/>
+                    <Label x:Name="labelCityState"/> <!--text set in the code-behind file-->
+                    <Label x:Name="labelCounty"/>
                 </StackLayout>
+
+                <Label x:Name="labelNotInArea" 
+                       Text="You are outside the area supported by this app. Use the Customize controls to choose an area within range."
+                       IsVisible="False"/>
                 
-                <!--TODO Need to set a minimum height on this so the page doesn't jump-->
-                <Label x:Name="labelHelpText" 
-                       Text="If this is not the location you want, use the controls to choose a different area or conditions."
+                <Label x:Name="labelTip" 
+                       Text="If this is not the location you want, use the Customize controls to choose a different area or conditions."
                        IsVisible="False"/>
             </StackLayout>
-
 
             <!--Dumping all the advanced stuff in this area for now-->
             <StackLayout x:Name="customStack"
@@ -83,62 +84,70 @@
                        Text="Customize"/>
 
                 <StackLayout x:Name="countiesStack"
+                             Orientation="Vertical"
                              HorizontalOptions="CenterAndExpand"
-                             VerticalOptions="Start">
-                    <StackLayout Orientation="Horizontal" HorizontalOptions="End">
-                        <Label Text="Alameda" 
-                               VerticalOptions="Center" />
+                             VerticalOptions="Start"
+                             Margin="0">
+                    <StackLayout.Resources>
+                        <ResourceDictionary>
+                            <Style TargetType="StackLayout">
+                                <Setter Property="Orientation" Value="Horizontal" />
+                                <Setter Property="HorizontalOptions" Value="End" />
+                                <Setter Property="Padding" Value="0" />
+                            </Style>
+                            <Style TargetType="Label">
+                                <Setter Property="VerticalOptions" Value="Center" />
+                            </Style>
+                            <Style TargetType="Switch">
+                                <Setter Property="VerticalOptions" Value="Center" />
+                                <Setter Property="HeightRequest" Value="32"/>
+                            </Style>
+                        </ResourceDictionary>
+                    </StackLayout.Resources>
+                    <StackLayout>
+                        <Label Text="Alameda"/>
                         <Switch Toggled="OnSwitchToggled" 
-                                IsToggled="{Binding MasterViewModel.PlantList.TargetPlant.NativeTo_Alameda, Mode=TwoWay}" 
-                                VerticalOptions="Center"/>
+                                IsToggled="{Binding MasterViewModel.PlantList.TargetPlant.NativeTo_Alameda, Mode=TwoWay}"/>
                     </StackLayout>
-                    <StackLayout Orientation="Horizontal" HorizontalOptions="End">
-                        <Label Text="Contra Costa"
-                                   VerticalOptions="Center" />
+                    <StackLayout>
+                        <Label Text="Contra Costa"/>
                         <Switch Toggled="OnSwitchToggled" 
-                                    IsToggled="{Binding MasterViewModel.PlantList.TargetPlant.NativeTo_Contra_Costa, Mode=TwoWay}"/>
+                                IsToggled="{Binding MasterViewModel.PlantList.TargetPlant.NativeTo_Contra_Costa, Mode=TwoWay}"/>
                     </StackLayout>
-                    <StackLayout Orientation="Horizontal" HorizontalOptions="End">
-                        <Label Text="Marin"
-                                   VerticalOptions="Center" />
+                    <StackLayout>
+                        <Label Text="Marin"/>
                         <Switch Toggled="OnSwitchToggled" 
-                                    IsToggled="{Binding MasterViewModel.PlantList.TargetPlant.NativeTo_Marin, Mode=TwoWay}"/>
+                                IsToggled="{Binding MasterViewModel.PlantList.TargetPlant.NativeTo_Marin, Mode=TwoWay}"/>
                     </StackLayout>
-                    <StackLayout  Orientation="Horizontal" HorizontalOptions="End">
-                        <Label Text="Napa" 
-                                   VerticalOptions="Center" />
+                    <StackLayout>
+                        <Label Text="Napa" />
                         <Switch Toggled="OnSwitchToggled" 
-                                    IsToggled="{Binding MasterViewModel.PlantList.TargetPlant.NativeTo_Napa, Mode=TwoWay}"/>
+                                IsToggled="{Binding MasterViewModel.PlantList.TargetPlant.NativeTo_Napa, Mode=TwoWay}"/>
                     </StackLayout>
-                    <StackLayout  Orientation="Horizontal" HorizontalOptions="End">
-                        <Label Text="San Francisco"
-                                   VerticalOptions="Center" />
+                    <StackLayout>
+                        <Label Text="San Francisco"/>
                         <Switch Toggled="OnSwitchToggled" 
-                                    IsToggled="{Binding MasterViewModel.PlantList.TargetPlant.NativeTo_San_Francisco, Mode=TwoWay}"/>
+                                IsToggled="{Binding MasterViewModel.PlantList.TargetPlant.NativeTo_San_Francisco, Mode=TwoWay}"/>
                     </StackLayout>
-                    <StackLayout  Orientation="Horizontal" HorizontalOptions="End">
-                        <Label Text="San Mateo"
-                                   VerticalOptions="Center" />
+                    <StackLayout>
+                        <Label Text="San Mateo"/>
                         <Switch Toggled="OnSwitchToggled" 
-                                    IsToggled="{Binding MasterViewModel.PlantList.TargetPlant.NativeTo_San_Mateo, Mode=TwoWay}"/>
+                                IsToggled="{Binding MasterViewModel.PlantList.TargetPlant.NativeTo_San_Mateo, Mode=TwoWay}"/>
                     </StackLayout>
-                    <StackLayout  Orientation="Horizontal" HorizontalOptions="End">
-                        <Label Text="Santa Clara" 
-                                   VerticalOptions="Center" />
+                    <StackLayout >
+                        <Label Text="Santa Clara" />
                         <Switch Toggled="OnSwitchToggled" 
-                                    IsToggled="{Binding MasterViewModel.PlantList.TargetPlant.NativeTo_Santa_Clara, Mode=TwoWay}"/>
+                                IsToggled="{Binding MasterViewModel.PlantList.TargetPlant.NativeTo_Santa_Clara, Mode=TwoWay}"/>
                     </StackLayout>
-                    <StackLayout  Orientation="Horizontal" HorizontalOptions="End">
-                        <Label Text="Solano"
-                                   VerticalOptions="Center" />
+                    <StackLayout>
+                        <Label Text="Solano"/>
                         <Switch Toggled="OnSwitchToggled" 
-                                    IsToggled="{Binding MasterViewModel.PlantList.TargetPlant.NativeTo_Solano, Mode=TwoWay}"/>
+                                IsToggled="{Binding MasterViewModel.PlantList.TargetPlant.NativeTo_Solano, Mode=TwoWay}"/>
                     </StackLayout>
-                    <StackLayout Orientation="Horizontal" HorizontalOptions="End">
-                        <Label Text="Sonoma"
-                                   VerticalOptions="Center" />
+                    <StackLayout>
+                        <Label Text="Sonoma"/>
                         <Switch Toggled="OnSwitchToggled" 
-                                    IsToggled="{Binding MasterViewModel.PlantList.TargetPlant.NativeTo_Sonoma, Mode=TwoWay}"/>
+                                IsToggled="{Binding MasterViewModel.PlantList.TargetPlant.NativeTo_Sonoma, Mode=TwoWay}"/>
                     </StackLayout>
                 </StackLayout>
 

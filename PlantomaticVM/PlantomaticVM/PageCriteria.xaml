@@ -435,10 +435,12 @@
                         </Grid.ColumnDefinitions>
 
                         <!--Footer Elements-->
+                        <!--TODO Do I want this element here?
                         <Label  Grid.Row="0" Grid.Column="0" 
-                                Text="{Binding MasterViewModel.PlantList.MyPlants.Count, StringFormat = '{0} matches'}"
+                                Text="{Binding MasterViewModel.PlantList.MatchingPlantCount, StringFormat = '{0} matches'}"
                                 FontAttributes="Bold"/>
-
+-->
+                        <!--TODO Where should this be positioned?-->
                         <Button Grid.Row="0" Grid.Column="1" 
                                 Text="Reset all" 
                                 HorizontalOptions="End"

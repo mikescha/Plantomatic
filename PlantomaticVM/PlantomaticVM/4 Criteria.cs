@@ -331,6 +331,23 @@ namespace PlantomaticVM
             }
         }
 
+        bool nativeTo_None;
+        public bool NativeTo_None
+        {
+            set
+            {
+                if (nativeTo_None != value)
+                {
+                    nativeTo_None = value;
+                    OnPropertyChanged();
+                }
+            }
+            get
+            {
+                return nativeTo_None;
+            }
+        }
+
         public bool AttractsNativeBees { get; set; }
         public bool AttractsButterflies { get; set; }
         public bool AttractsHummingbirds { get; set; }
